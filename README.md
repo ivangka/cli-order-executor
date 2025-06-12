@@ -6,7 +6,7 @@ A console application that places market perpetual futures orders on Bybit. It e
 
 The program supports the following commands:
 
-### Open Order
+### Open Market Order
 
 ```
 !o [symbol] [stoploss] [takeprofit] [risk]

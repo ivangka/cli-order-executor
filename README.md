@@ -23,6 +23,8 @@ Opens a market perpetual futures order with the specified parameters:
 ```
 This command opens a position on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
 
+---
+
 ### Exit Program
 
 ```

@@ -6,30 +6,36 @@ A console application that places market perpetual futures orders on Bybit. It e
 
 The program supports the following commands:
 
-### Open Market Order
+    !o     open market order
+    !ex    exit program
+
+---
+
+### Open Market Order `!o`
 
 ```
 !o [symbol] [stoploss] [takeprofit] [risk]
 ```
+
 Opens a market perpetual futures order with the specified parameters:
+
 - `symbol` — trading pair
 - `stoploss` — stop loss price
 - `takeprofit` — take profit price
 - `risk` — amount in USD to risk on the trade
 
 **Example:**
+
 ```
 !o ethusdt 2550.14 2610.1 50
 ```
+
 This command opens a position on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
 
 ---
 
-### Exit Program
+### Exit Program `!ex`
 
-```
-!ex
-```
 Stops the program.
 
 ## License

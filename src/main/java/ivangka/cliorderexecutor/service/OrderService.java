@@ -1,5 +1,7 @@
 package ivangka.cliorderexecutor.service;
 
+import ivangka.cliorderexecutor.exception.InvalidCommandException;
+import ivangka.cliorderexecutor.exception.UnknownSymbolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,8 @@ public class OrderService {
     }
 
     // place a market order
-    public String placeOrder(String symbol, String stopLoss, String takeProfit, String risk) {
+    public String placeOrder(String symbol, String stopLoss, String takeProfit, String risk)
+            throws UnknownSymbolException, InvalidCommandException {
         String lastPrice = apiService.lastPrice(symbol);
         String orderSizeStep = apiService.orderSizeStep(symbol);
         String orderSize = riskCalculatorService.calculateOrderSize(risk, lastPrice, stopLoss, orderSizeStep);

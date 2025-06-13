@@ -1,5 +1,6 @@
 package ivangka.cliorderexecutor.service;
 
+import ivangka.cliorderexecutor.exception.InvalidCommandException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,19 @@ public class RiskCalculatorService {
     private BigDecimal orderCommissionPercent;
 
     // get order size in base coin
-    public String calculateOrderSize(String risk, String lastPrice, String stopLoss, String priceStep) {
-        BigDecimal riskBD = new BigDecimal(risk);
-        BigDecimal lastPriceBD = new BigDecimal(lastPrice);
-        BigDecimal stopLossBD = new BigDecimal(stopLoss);
-        BigDecimal stepBD = new BigDecimal(priceStep);
+    public String calculateOrderSize(String risk, String lastPrice, String stopLoss, String priceStep)
+            throws InvalidCommandException {
+
+        BigDecimal riskBD, lastPriceBD, stopLossBD, stepBD;
+        try {
+            riskBD = new BigDecimal(risk);
+            lastPriceBD = new BigDecimal(lastPrice);
+            stopLossBD = new BigDecimal(stopLoss);
+            stepBD = new BigDecimal(priceStep);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Incorrect command format");
+        }
+
         BigDecimal commissionDecimal = orderCommissionPercent.divide(BigDecimal.valueOf(100), 10,
                 RoundingMode.HALF_UP);
 

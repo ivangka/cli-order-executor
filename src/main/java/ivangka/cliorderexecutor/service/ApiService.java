@@ -4,6 +4,7 @@ import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
+import ivangka.cliorderexecutor.exception.UnknownSymbolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,30 +49,36 @@ public class ApiService {
     }
 
     // get last price (linear contract)
-    public String lastPrice(String symbol) {
+    public String lastPrice(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
                 .build();
-        Object rawResponse = bybitApiMarketRestClient.getMarketTickers(request);
+        Object response = bybitApiMarketRestClient.getMarketTickers(request);
 
-        Map<String, Object> response = (Map<String, Object>) rawResponse;
-        Map<String, Object> result = (Map<String, Object>) response.get("result");
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            throw new UnknownSymbolException("The symbol was not found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
         Map<String, Object> firstItem = list.get(0);
         return (String) firstItem.get("lastPrice");
     }
 
     // get number of decimal places in order
-    public String orderSizeStep(String symbol) {
+    public String orderSizeStep(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
                 .build();
-        Object rawResponse = bybitApiMarketRestClient.getInstrumentsInfo(request);
+        Object response = bybitApiMarketRestClient.getInstrumentsInfo(request);
 
-        Map<String, Object> response = (Map<String, Object>) rawResponse;
-        Map<String, Object> result = (Map<String, Object>) response.get("result");
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            throw new UnknownSymbolException("The symbol was not found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
         Map<String, Object> firstItem = list.get(0);
         Map<String, Object> lotSizeFilter = (Map<String, Object>) firstItem.get("lotSizeFilter");

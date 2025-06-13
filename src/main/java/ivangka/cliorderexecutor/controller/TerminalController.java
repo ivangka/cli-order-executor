@@ -51,7 +51,6 @@ public class TerminalController {
                     System.out.println("Invalid command, try again");
                     break;
             }
-            System.out.println();
         }
     }
 

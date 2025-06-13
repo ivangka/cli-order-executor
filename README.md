@@ -11,9 +11,7 @@ The program supports the following commands:
 
 ### Open Order `!o`
 
-```
-!o [symbol] [stoploss] [takeprofit] [risk]
-```
+`!o [symbol] [stoploss] [takeprofit] [risk]`
 
 Opens a market perpetual futures order with the specified parameters:
 
@@ -24,9 +22,7 @@ Opens a market perpetual futures order with the specified parameters:
 
 **Example:**
 
-```
-!o ethusdt 2550.14 2610.1 50
-```
+`!o ethusdt 2550.14 2610.1 50`
 
 This command opens a position on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
 

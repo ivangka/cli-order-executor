@@ -21,6 +21,7 @@ public class TerminalController {
         System.out.println("The program is running");
 
         while (true) {
+            System.out.print("> ");
             String command = scanner.nextLine();
             String[] commandParts = command.split(" ");
 
@@ -43,6 +44,7 @@ public class TerminalController {
                 case "!ex":
                     scanner.close();
                     System.exit(1);
+                    break;
 
                 // invalid command
                 default:

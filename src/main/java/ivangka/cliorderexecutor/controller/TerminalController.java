@@ -40,19 +40,19 @@ public class TerminalController {
             return;
         }
 
+        String retCode;
         switch (commandParts[0]) {
             // place an order
             case "!o": // !o [symbol] [sl] [tp] [risk $]
                 if (commandParts.length != 5) {
                     throw new InvalidCommandException("Incorrect command format");
                 }
-                String retCode = orderService.placeOrder(
+                retCode = orderService.placeOrder(
                         commandParts[1].toUpperCase(),
                         commandParts[2],
                         commandParts[3],
                         commandParts[4]
                 );
-
                 if (retCode.equals("0")) {
                     System.out.println("The order has been placed");
                 } else {

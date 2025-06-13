@@ -31,7 +31,7 @@ public class ApiService {
         BigDecimal takeProfitBD = new BigDecimal(takeProfit);
         String side = stopLossBD.compareTo(takeProfitBD) < 0 ? "Buy" : "Sell";
         Map<String, Object> orderParams = Map.of(
-                "category", "linear",
+                "category", CategoryType.LINEAR,
                 "symbol", symbol,
                 "isLeverage", "1",
                 "side", side,

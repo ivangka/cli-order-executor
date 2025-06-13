@@ -1,15 +1,15 @@
 # CLI Order Executor
 
-A console application that places market perpetual futures orders on Bybit. It enables users to open positions with precise position sizing based on a specified risk amount, while accounting for trading fees.
+A console application that places market perpetual futures orders on Bybit. The program opens positions with precise position sizing based on a specified risk amount, while accounting for trading fees.
 
 ## Usage
 
 The program supports the following commands:
 
-    !o     open market order
+    !o     open order
     !ex    exit program
 
-### Open Market Order `!o`
+### Open Order `!o`
 
 ```
 !o [symbol] [stoploss] [takeprofit] [risk]

@@ -8,7 +8,6 @@ import ivangka.cliorderexecutor.exception.UnknownSymbolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +24,8 @@ public class ApiService {
         this.bybitApiTradeRestClient = bybitApiTradeRestClient;
     }
 
-    // create market order (linear contract)
-    public String createOrder(String symbol, String orderSize, String stopLoss, String takeProfit) {
-        BigDecimal stopLossBD = new BigDecimal(stopLoss);
-        BigDecimal takeProfitBD = new BigDecimal(takeProfit);
-        String side = stopLossBD.compareTo(takeProfitBD) < 0 ? "Buy" : "Sell";
+    // create market order
+    public String createMarketOrder(String symbol, String side, String orderSize, String stopLoss, String takeProfit) {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -48,11 +44,28 @@ public class ApiService {
         return retCode.toString();
     }
 
-    // create limit order (linear contract)
-    public String createOrder(String symbol, String orderSize, String price, String stopLoss, String takeProfit) {
-        BigDecimal stopLossBD = new BigDecimal(stopLoss);
-        BigDecimal takeProfitBD = new BigDecimal(takeProfit);
-        String side = stopLossBD.compareTo(takeProfitBD) < 0 ? "Buy" : "Sell";
+    // create market order without tp
+    public String createMarketOrder(String symbol, String side, String orderSize, String stopLoss) {
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "isLeverage", "1",
+                "side", side,
+                "orderType", "Market",
+                "qty", orderSize,
+                "stopLoss", stopLoss
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
+    }
+
+    // create limit order
+    public String createLimitOrder(String symbol, String side, String orderSize, String price,
+                                   String stopLoss, String takeProfit) {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -63,6 +76,26 @@ public class ApiService {
                 "price", price,
                 "stopLoss", stopLoss,
                 "takeProfit", takeProfit
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
+    }
+
+    // create limit order without tp
+    public String createLimitOrder(String symbol, String side, String orderSize, String price, String stopLoss) {
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "isLeverage", "1",
+                "side", side,
+                "orderType", "Limit",
+                "qty", orderSize,
+                "price", price,
+                "stopLoss", stopLoss
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 

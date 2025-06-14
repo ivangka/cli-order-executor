@@ -45,7 +45,7 @@ public class TerminalController {
             case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
                 // market order
                 if (commandParts.length == 5) {
-                    retCode = orderService.placeOrder(
+                    retCode = orderService.openMarketOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3],
@@ -57,14 +57,41 @@ public class TerminalController {
                         System.out.println("The order hasn't been opened (retCode: " + retCode + ")");
                     }
 
+                // market order without tp
+                } else if (commandParts.length == 4) {
+                    retCode = orderService.openMarketOrder(
+                            commandParts[1].toUpperCase(),
+                            commandParts[2],
+                            commandParts[3]
+                    );
+                    if (retCode.equals("0")) {
+                        System.out.println("Market order has been opened");
+                    } else {
+                        System.out.println("The order hasn't been opened (retCode: " + retCode + ")");
+                    }
+
                 // limit order
                 } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
-                    retCode = orderService.placeOrder(
+                    retCode = orderService.placeLimitOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3],
                             commandParts[4],
                             commandParts[6]
+                    );
+                    if (retCode.equals("0")) {
+                        System.out.println("Limit order has been placed");
+                    } else {
+                        System.out.println("The order hasn't been placed (retCode: " + retCode + ")");
+                    }
+
+                // limit order without tp
+                } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
+                    retCode = orderService.placeLimitOrder(
+                            commandParts[1].toUpperCase(),
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[5]
                     );
                     if (retCode.equals("0")) {
                         System.out.println("Limit order has been placed");

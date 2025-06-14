@@ -17,24 +17,13 @@ public class RiskCalculatorService {
     private BigDecimal orderCommissionPercent;
 
     // get order size in base coin
-    public String calculateOrderSize(String risk, String price, String stopLoss, String priceStep)
+    public String calculateOrderSize(BigDecimal risk, BigDecimal price, BigDecimal stopLoss, BigDecimal step)
             throws InvalidCommandException {
-
-        BigDecimal riskBD, lastPriceBD, stopLossBD, stepBD;
-        try {
-            riskBD = new BigDecimal(risk);
-            lastPriceBD = new BigDecimal(price);
-            stopLossBD = new BigDecimal(stopLoss);
-            stepBD = new BigDecimal(priceStep);
-        } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Incorrect command format");
-        }
 
         BigDecimal commissionDecimal = orderCommissionPercent.divide(BigDecimal.valueOf(100), 10,
                 RoundingMode.HALF_UP);
 
         /*
-
                       R
         V = ----------------------
             ∣(P - SL)∣ + c(P + SL)
@@ -46,13 +35,13 @@ public class RiskCalculatorService {
         c  - orderCommission (in decimal form)
 
          */
-        BigDecimal priceDiff = lastPriceBD.subtract(stopLossBD).abs();
-        BigDecimal commissionComponent = commissionDecimal.multiply(lastPriceBD.add(stopLossBD));
+        BigDecimal priceDiff = price.subtract(stopLoss).abs();
+        BigDecimal commissionComponent = commissionDecimal.multiply(price.add(stopLoss));
         BigDecimal denominator = priceDiff.add(commissionComponent);
-        BigDecimal orderSize = riskBD.divide(denominator, 10, RoundingMode.HALF_UP);
+        BigDecimal orderSize = risk.divide(denominator, 10, RoundingMode.HALF_UP);
 
         // formatting size by price step
-        BigDecimal roundedOrderSize = orderSize.divide(stepBD, 0, RoundingMode.DOWN).multiply(stepBD);
+        BigDecimal roundedOrderSize = orderSize.divide(step, 0, RoundingMode.DOWN).multiply(step);
         return roundedOrderSize.stripTrailingZeros().toPlainString();
     }
 

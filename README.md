@@ -29,7 +29,7 @@ Parameters:
 !o ethusdt 2550.14 2610.1 50
 ```
 
-This command opens a **market** order on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
+This command opens a **market** order (long) on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
 
 **Example 2 (limit order):**
 
@@ -37,7 +37,15 @@ This command opens a **market** order on `ETHUSDT` with a stop loss at 2550.14, 
 !o suiusdt 2.44 3.12 200 -l 2.7
 ```
 
-This command places a **limit** order on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+This command places a **limit** order (long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+
+**Example 3 (market order without TP):**
+
+```
+!o xrpusdt 2.1512 15
+```
+
+This command places a **market** order on `XRPUSDT` with a stop loss at 2.1512, risking $15.
 
 ### Exit Program `!ex`
 

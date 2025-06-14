@@ -65,8 +65,7 @@ This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop los
 !lev [symbol]
 ```
 
-Sets the leverage to maximum for the specified trading pair.  
-This applies to both existing positions and any new orders for this symbol.
+Sets the leverage to maximum for the specified trading pair. This applies to both existing positions and any new orders for this symbol.
 
 Parameters:
 
@@ -86,10 +85,10 @@ Stops the program.
 
 ## Error 10002
 
-If you get **Error Code 10002**, it means your PC's clock is out of sync with the server's time.   
+If you get "Error Code 10002", it means your PC's clock is out of sync with the server's time.   
 To fix this, you just need to synchronize the time in your PC settings.
 
-If you get a different error code, you can find a full list of codes in the [Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/error).
+*If you get a different error code, you can find a full list of codes in the [Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/error).*
 
 ## License
 

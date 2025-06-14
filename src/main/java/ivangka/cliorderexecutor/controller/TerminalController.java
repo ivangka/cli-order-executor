@@ -150,7 +150,6 @@ public class TerminalController {
 
             // stop the program
             case "!ex":
-                System.out.println(ansi().fgGreen().a("  Bye!").reset());
                 System.exit(0);
                 break;
 

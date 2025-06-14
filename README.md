@@ -17,7 +17,7 @@ A console application for managing perpetual futures orders on Bybit.
     !lev_max    set leverage to maximum
     !ex         exit program
 
-### Open Order `!o`
+### Open order `!o`
 
 ```
 !o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
@@ -61,7 +61,7 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
-### Set Leverage `!lev`
+### Set leverage `!lev`
 
 ```
 !lev [symbol] [leverage]
@@ -82,7 +82,7 @@ Parameters:
 
 This command sets the leverage to 5.5 for the all `ETHUSDT` orders.
 
-### Set Leverage to Maximum `!lev_max`
+### Set leverage to maximum `!lev_max`
 
 ```
 !lev_max [symbol]
@@ -102,7 +102,7 @@ Parameters:
 
 This command sets the leverage to maximum for the all `BTCUSDT` orders.
 
-### Exit Program `!ex`
+### Exit program `!ex`
 
 Stops the program.
 

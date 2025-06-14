@@ -2,17 +2,7 @@
 
 A console application for managing perpetual futures orders on Bybit.
 
-## Usage
-
-To use this tool, you need to provide your Bybit API credentials in the `application.properties` file:
-
-```properties
-# bybit api
-api.bybit.key=<BYBIT_API_KEY>
-api.bybit.secret=<BYBIT_API_SECRET>
-```
-
-The program supports the following commands:
+## Commands
 
     !o     open order
     !ex    exit program
@@ -31,7 +21,7 @@ Parameters:
 - `stoploss` — stop loss price
 - `takeprofit` — take profit price
 - `risk` — amount in USD to risk on the trade
-- `-l [price]` (optional) - limit order price
+- `-l [price]` (optional) — limit order price
 
 **Example 1 (market order):**
 

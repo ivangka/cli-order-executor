@@ -2,6 +2,13 @@
 
 A console application for managing perpetual futures orders on Bybit.
 
+* [Commands](#commands)
+    * [Open order](#open-order-o)
+    * [Set leverage to maximum](#set-leverage-to-maximum-lev)
+    * [Exit program](#exit-program-ex)
+* [Error 10002](#error-10002)
+* [License](#license)
+
 ## Commands
 
     !o       open order
@@ -24,13 +31,25 @@ Parameters:
 - `risk` — amount in USD to risk on the trade
 - `-l [price]` — limit order price (optional)
 
+All variations:
+
+```
+Market:
+!o [symbol] [sl] [tp] [risk]
+!o [symbol] [sl] [risk]
+
+Limit:
+!o [symbol] [sl] [tp] [risk] -l [price]
+!o [symbol] [sl] [risk] -l [price]
+```
+
 **Example 1 (market order):**
 
 ```
-!o ethusdt 2550.14 2610.1 50
+!o ethusdt 2610.1 2550.14 50
 ```
 
-This command opens a **market** order (long) on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
+This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.1, take profit at 2550.14, risking $50.
 
 **Example 2 (limit order):**
 
@@ -38,17 +57,9 @@ This command opens a **market** order (long) on `ETHUSDT` with a stop loss at 25
 !o suiusdt 2.44 3.12 200 -l 2.7
 ```
 
-This command places a **limit** order (long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
-**Example 3 (market order without TP):**
-
-```
-!o xrpusdt 2.1512 15
-```
-
-This command places a **market** order on `XRPUSDT` with a stop loss at 2.1512, risking $15.
-
-### Set the leverage to maximum `!lev`
+### Set leverage to maximum `!lev`
 
 ```
 !lev [symbol]
@@ -72,6 +83,13 @@ This command sets the leverage to maximum for the all `BTCUSDT` orders.
 ### Exit Program `!ex`
 
 Stops the program.
+
+## Error 10002
+
+If you get **Error Code 10002**, it means your PC's clock is out of sync with the server's time.   
+To fix this, you just need to synchronize the time in your PC settings.
+
+If you get a different error code, you can find a full list of codes in the [Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/error).
 
 ## License
 

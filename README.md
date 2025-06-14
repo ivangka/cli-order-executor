@@ -19,7 +19,7 @@ Parameters:
 
 - `symbol` — trading pair
 - `stopLoss` — stop loss price
-- `takeProfit` — take profit price
+- `takeProfit` — take profit price (optional)
 - `risk` — amount in USD to risk on the trade
 - `-l [price]` — limit order price (optional)
 

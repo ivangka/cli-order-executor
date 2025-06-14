@@ -88,7 +88,7 @@ Stops the program.
 If you get "Error Code 10002", it means your PC's clock is out of sync with the server's time.   
 To fix this, you just need to synchronize the time in your PC settings.
 
-*If you get a different error code, you can find a full list of codes in the [Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/error).*
+[See the full list of error codes.](https://bybit-exchange.github.io/docs/v5/error)
 
 ## License
 

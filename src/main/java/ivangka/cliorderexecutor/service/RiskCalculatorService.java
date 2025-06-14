@@ -17,13 +17,13 @@ public class RiskCalculatorService {
     private BigDecimal orderCommissionPercent;
 
     // get order size in base coin
-    public String calculateOrderSize(String risk, String lastPrice, String stopLoss, String priceStep)
+    public String calculateOrderSize(String risk, String price, String stopLoss, String priceStep)
             throws InvalidCommandException {
 
         BigDecimal riskBD, lastPriceBD, stopLossBD, stepBD;
         try {
             riskBD = new BigDecimal(risk);
-            lastPriceBD = new BigDecimal(lastPrice);
+            lastPriceBD = new BigDecimal(price);
             stopLossBD = new BigDecimal(stopLoss);
             stepBD = new BigDecimal(priceStep);
         } catch (NumberFormatException e) {
@@ -40,7 +40,7 @@ public class RiskCalculatorService {
             ∣(P - SL)∣ + c(P + SL)
 
         V  - orderSize ($)
-        P  - currentPrice
+        P  - price
         R  - risk ($)
         SL - stopLoss
         c  - orderCommission (in decimal form)

@@ -26,4 +26,12 @@ public class OrderService {
         return apiService.createOrder(symbol, orderSize, stopLoss, takeProfit);
     }
 
+    // place a limit order
+    public String placeOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
+            throws UnknownSymbolException, InvalidCommandException {
+        String orderSizeStep = apiService.orderSizeStep(symbol);
+        String orderSize = riskCalculatorService.calculateOrderSize(risk, price, stopLoss, orderSizeStep);
+        return apiService.createOrder(symbol, orderSize, price, stopLoss, takeProfit);
+    }
+
 }

@@ -20,7 +20,6 @@ public class TerminalController {
 
     public void controller() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("The program is running");
 
         while (true) {
             System.out.print("> ");
@@ -43,20 +42,38 @@ public class TerminalController {
         String retCode;
         switch (commandParts[0]) {
             // place an order
-            case "!o": // !o [symbol] [sl] [tp] [risk $]
-                if (commandParts.length != 5) {
-                    throw new InvalidCommandException("Incorrect command format");
-                }
-                retCode = orderService.placeOrder(
-                        commandParts[1].toUpperCase(),
-                        commandParts[2],
-                        commandParts[3],
-                        commandParts[4]
-                );
-                if (retCode.equals("0")) {
-                    System.out.println("The order has been placed");
+            case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
+                // market order
+                if (commandParts.length == 5) {
+                    retCode = orderService.placeOrder(
+                            commandParts[1].toUpperCase(),
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[4]
+                    );
+                    if (retCode.equals("0")) {
+                        System.out.println("Market order has been opened");
+                    } else {
+                        System.out.println("The order hasn't been opened (retCode: " + retCode + ")");
+                    }
+
+                // limit order
+                } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
+                    retCode = orderService.placeOrder(
+                            commandParts[1].toUpperCase(),
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[4],
+                            commandParts[6]
+                    );
+                    if (retCode.equals("0")) {
+                        System.out.println("Limit order has been placed");
+                    } else {
+                        System.out.println("The order hasn't been placed (retCode: " + retCode + ")");
+                    }
+
                 } else {
-                    System.out.println("The order hasn't been placed (retCode: " + retCode + ")");
+                    throw new InvalidCommandException("Incorrect command format");
                 }
                 break;
 

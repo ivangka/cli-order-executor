@@ -48,7 +48,31 @@ public class ApiService {
         return retCode.toString();
     }
 
-    // get last price (linear contract)
+    // create limit order (linear contract)
+    public String createOrder(String symbol, String orderSize, String price, String stopLoss, String takeProfit) {
+        BigDecimal stopLossBD = new BigDecimal(stopLoss);
+        BigDecimal takeProfitBD = new BigDecimal(takeProfit);
+        String side = stopLossBD.compareTo(takeProfitBD) < 0 ? "Buy" : "Sell";
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "isLeverage", "1",
+                "side", side,
+                "orderType", "Limit",
+                "qty", orderSize,
+                "price", price,
+                "stopLoss", stopLoss,
+                "takeProfit", takeProfit
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
+    }
+
+    // get last price
     public String lastPrice(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)

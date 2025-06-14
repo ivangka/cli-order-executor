@@ -104,7 +104,7 @@ public class TerminalController {
                 }
                 break;
 
-            // set the leverage to maximum for the trading pair
+            // set the leverage to maximum for specified pair
             case "!lev":
                 if (commandParts.length == 2) {
                     retCode = orderService.setMaxLeverage(
@@ -113,7 +113,8 @@ public class TerminalController {
                     if (retCode.equals("0")) {
                         System.out.println("Leverage successfully set to maximum.");
                     } else {
-                        System.out.println("Leverage wasn't set (retCode: " + retCode + ")");
+                        System.out.println("Leverage wasn't set, " +
+                                "it may already have a maximum value (retCode: " + retCode + ")");
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");

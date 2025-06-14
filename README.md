@@ -1,8 +1,16 @@
 # CLI Order Executor
 
-A console application that places market perpetual futures orders on Bybit. The program opens positions with precise position sizing based on a specified risk amount, while accounting for trading fees.
+A console application for managing perpetual futures orders on Bybit.
 
 ## Usage
+
+To use this tool, you need to provide your Bybit API credentials in the `application.properties` file:
+
+```properties
+# bybit api
+api.bybit.key=<BYBIT_API_KEY>
+api.bybit.secret=<BYBIT_API_SECRET>
+```
 
 The program supports the following commands:
 
@@ -15,7 +23,9 @@ The program supports the following commands:
 !o [symbol] [stoploss] [takeprofit] [risk] -l [price]
 ```
 
-Opens a perpetual futures order with the specified parameters:
+Opens a perpetual futures order with exact position sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
+
+Parameters:
 
 - `symbol` — trading pair
 - `stoploss` — stop loss price
@@ -23,7 +33,7 @@ Opens a perpetual futures order with the specified parameters:
 - `risk` — amount in USD to risk on the trade
 - `-l [price]` (optional) - limit order price
 
-**Example 1:**
+**Example 1 (market order):**
 
 ```
 !o ethusdt 2550.14 2610.1 50
@@ -31,13 +41,13 @@ Opens a perpetual futures order with the specified parameters:
 
 This command opens a **market** order on `ETHUSDT` with a stop loss at 2550.14, take profit at 2610.1, risking $50.
 
-**Example 2:**
+**Example 2 (limit order):**
 
 ```
 !o suiusdt 2.44 3.12 200 -l 2.7
 ```
 
-This command opens a **limit** order on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+This command places a **limit** order on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
 ### Exit Program `!ex`
 

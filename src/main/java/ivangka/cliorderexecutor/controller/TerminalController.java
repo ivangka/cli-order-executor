@@ -31,7 +31,7 @@ public class TerminalController {
             try {
                 executeCommand(commandParts);
             } catch (InvalidCommandException | UnknownSymbolException e) {
-                System.out.println(ansi().fgYellow().a("  " + e.getMessage()).reset());
+                System.out.println(ansi().fgBrightRed().a("  " + e.getMessage()).reset());
             }
         }
     }
@@ -54,9 +54,9 @@ public class TerminalController {
                             commandParts[4]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen().a("  Market order has been opened").reset());
+                        System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println(ansi().fgYellow()
+                        System.out.println(ansi().fgBrightRed()
                                 .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
                     }
 
@@ -68,9 +68,9 @@ public class TerminalController {
                             commandParts[3]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen().a("  Market order has been opened").reset());
+                        System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println(ansi().fgYellow()
+                        System.out.println(ansi().fgBrightRed()
                                 .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
                     }
 
@@ -84,9 +84,9 @@ public class TerminalController {
                             commandParts[6]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen().a("  Limit order has been placed").reset());
+                        System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println(ansi().fgYellow()
+                        System.out.println(ansi().fgBrightRed()
                                 .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
                     }
 
@@ -99,9 +99,9 @@ public class TerminalController {
                             commandParts[5]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen().a("  Limit order has been placed").reset());
+                        System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println(ansi().fgYellow()
+                        System.out.println(ansi().fgBrightRed()
                                 .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
                     }
 
@@ -118,10 +118,10 @@ public class TerminalController {
                             commandParts[2]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen()
+                        System.out.println(ansi().fgBrightGreen()
                                 .a("  Leverage successfully set").reset());
                     } else {
-                        System.out.println(ansi().fgYellow().a("  Leverage wasn't set, " +
+                        System.out.println(ansi().fgBrightRed().a("  Leverage wasn't set, " +
                                 "it may already have this value (retCode: " + retCode + ")").reset());
                     }
                 } else {
@@ -137,10 +137,10 @@ public class TerminalController {
                             commandParts[1].toUpperCase()
                     );
                     if (retCode.equals("0")) {
-                        System.out.println(ansi().fgGreen()
+                        System.out.println(ansi().fgBrightGreen()
                                 .a("  Leverage successfully set to maximum").reset());
                     } else {
-                        System.out.println(ansi().fgYellow().a("  Leverage wasn't set, " +
+                        System.out.println(ansi().fgBrightRed().a("  Leverage wasn't set, " +
                                 "it may already have a maximum value (retCode: " + retCode + ")").reset());
                     }
                 } else {

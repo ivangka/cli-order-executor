@@ -6,6 +6,8 @@ import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.util.Scanner;
 
 @Controller
@@ -29,7 +31,7 @@ public class TerminalController {
             try {
                 executeCommand(commandParts);
             } catch (InvalidCommandException | UnknownSymbolException e) {
-                System.out.println(e.getMessage());
+                System.out.println(ansi().fgYellow().a("  " + e.getMessage()).reset());
             }
         }
     }
@@ -52,9 +54,10 @@ public class TerminalController {
                             commandParts[4]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Market order has been opened");
+                        System.out.println(ansi().fgGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println("The order hasn't been opened (retCode: " + retCode + ")");
+                        System.out.println(ansi().fgYellow()
+                                .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
                     }
 
                 // market order without tp
@@ -65,9 +68,10 @@ public class TerminalController {
                             commandParts[3]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Market order has been opened");
+                        System.out.println(ansi().fgGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println("The order hasn't been opened (retCode: " + retCode + ")");
+                        System.out.println(ansi().fgYellow()
+                                .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
                     }
 
                 // limit order
@@ -80,9 +84,10 @@ public class TerminalController {
                             commandParts[6]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Limit order has been placed");
+                        System.out.println(ansi().fgGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println("The order hasn't been placed (retCode: " + retCode + ")");
+                        System.out.println(ansi().fgYellow()
+                                .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
                     }
 
                 // limit order without tp
@@ -94,9 +99,10 @@ public class TerminalController {
                             commandParts[5]
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Limit order has been placed");
+                        System.out.println(ansi().fgGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println("The order hasn't been placed (retCode: " + retCode + ")");
+                        System.out.println(ansi().fgYellow()
+                                .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
                     }
 
                 } else {
@@ -111,10 +117,11 @@ public class TerminalController {
                             commandParts[1].toUpperCase()
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Leverage successfully set to maximum.");
+                        System.out.println(ansi().fgGreen()
+                                .a("  Leverage successfully set to maximum").reset());
                     } else {
-                        System.out.println("Leverage wasn't set, " +
-                                "it may already have a maximum value (retCode: " + retCode + ")");
+                        System.out.println(ansi().fgYellow().a("  Leverage wasn't set, " +
+                                "it may already have a maximum value (retCode: " + retCode + ")").reset());
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -123,7 +130,7 @@ public class TerminalController {
 
             // stop the program
             case "!ex":
-                System.out.println("Bye!");
+                System.out.println(ansi().fgGreen().a("  Bye!").reset());
                 System.exit(0);
                 break;
 

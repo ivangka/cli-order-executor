@@ -111,7 +111,7 @@ public class TerminalController {
                             commandParts[1].toUpperCase()
                     );
                     if (retCode.equals("0")) {
-                        System.out.println("Leverage successfully set to maximum for" + commandParts[1].toUpperCase());
+                        System.out.println("Leverage successfully set to maximum.");
                     } else {
                         System.out.println("Leverage wasn't set (retCode: " + retCode + ")");
                     }

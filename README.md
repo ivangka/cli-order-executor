@@ -4,9 +4,9 @@ A console application for managing perpetual futures orders on Bybit.
 
 ## Commands
 
-    !o     open order
-    !lev   set the leverage to maximum
-    !ex    exit program
+    !o       open order
+    !lev     set leverage to maximum
+    !ex      exit program
 
 ### Open Order `!o`
 

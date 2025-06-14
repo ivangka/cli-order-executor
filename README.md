@@ -51,6 +51,19 @@ This command places a **market** order on `XRPUSDT` with a stop loss at 2.1512, 
 
 Stops the program.
 
+## Error Codes
+
+### Code 10002 — "invalid request, please check your timestamp"
+
+If you get **Error 10002**, it means your PC's clock is out of sync with the server's time.
+
+**How to fix:**  
+Synchronize your computer's clock with the internet (for example, by clicking **Sync now** in Windows or **Set date and time automatically** in macOS).
+
+### Other Error Codes
+
+If you get a different error code, you can find a full list of codes in the [Bybit API Documentation](https://bybit-exchange.github.io/docs/v5/error).
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

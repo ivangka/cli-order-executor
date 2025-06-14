@@ -10,7 +10,7 @@ A console application for managing perpetual futures orders on Bybit.
 ### Open Order `!o`
 
 ```
-!o [symbol] [stoploss] [takeprofit] [risk] -l [price]
+!o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
 ```
 
 Opens a perpetual futures order with exact position sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
@@ -18,10 +18,10 @@ Opens a perpetual futures order with exact position sizing based on a specified 
 Parameters:
 
 - `symbol` — trading pair
-- `stoploss` — stop loss price
-- `takeprofit` — take profit price
+- `stopLoss` — stop loss price
+- `takeProfit` — take profit price
 - `risk` — amount in USD to risk on the trade
-- `-l [price]` (optional) — limit order price
+- `-l [price]` — limit order price (optional)
 
 **Example 1 (market order):**
 

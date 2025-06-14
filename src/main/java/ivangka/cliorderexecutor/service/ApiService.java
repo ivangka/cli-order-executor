@@ -2,7 +2,9 @@ package ivangka.cliorderexecutor.service;
 
 import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
+import com.bybit.api.client.domain.position.request.PositionDataRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
+import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,15 @@ public class ApiService {
 
     private final BybitApiMarketRestClient bybitApiMarketRestClient;
     private final BybitApiTradeRestClient bybitApiTradeRestClient;
+    private final BybitApiPositionRestClient bybitApiPositionRestClient;
 
     @Autowired
     public ApiService(BybitApiMarketRestClient bybitApiMarketRestClient,
-                      BybitApiTradeRestClient bybitApiTradeRestClient) {
+                      BybitApiTradeRestClient bybitApiTradeRestClient,
+                      BybitApiPositionRestClient bybitApiPositionRestClient) {
         this.bybitApiMarketRestClient = bybitApiMarketRestClient;
         this.bybitApiTradeRestClient = bybitApiTradeRestClient;
+        this.bybitApiPositionRestClient = bybitApiPositionRestClient;
     }
 
     // create market order
@@ -115,7 +120,7 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol was not found");
+            throw new UnknownSymbolException("The symbol wasn't found");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -133,13 +138,47 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol was not found");
+            throw new UnknownSymbolException("The symbol wasn't found");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
         Map<String, Object> firstItem = list.get(0);
         Map<String, Object> lotSizeFilter = (Map<String, Object>) firstItem.get("lotSizeFilter");
         return (String) lotSizeFilter.get("qtyStep");
+    }
+
+    // get the max leverage of the trading pair
+    public String maxLeverage(String symbol) throws UnknownSymbolException {
+        var request = MarketDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .build();
+        Object response = bybitApiMarketRestClient.getRiskLimit(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            throw new UnknownSymbolException("The symbol wasn't found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        Map<String, Object> firstItem = list.get(0);
+        return (String) firstItem.get("maxLeverage");
+    }
+
+    // set the leverage to maximum for the trading pair
+    public String setLeverage(String symbol, String leverage) {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .buyLeverage(leverage)
+                .sellLeverage(leverage)
+                .build();
+        Object response = bybitApiPositionRestClient.setPositionLeverage(request);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
     }
 
 }

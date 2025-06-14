@@ -91,4 +91,10 @@ public class OrderService {
         return riskCalculatorService.calculateOrderSize(riskBD, priceBD, stopLossBD, stepBD);
     }
 
+    // set the leverage to maximum for the trading pair
+    public String setMaxLeverage(String symbol) throws UnknownSymbolException {
+        String maxLeverage = apiService.maxLeverage(symbol);
+        return apiService.setLeverage(symbol, maxLeverage);
+    }
+
 }

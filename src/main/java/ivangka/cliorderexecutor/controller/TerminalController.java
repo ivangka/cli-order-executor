@@ -110,8 +110,28 @@ public class TerminalController {
                 }
                 break;
 
-            // set the leverage to maximum for specified pair
+            // set the leverage for specified pair
             case "!lev":
+                if (commandParts.length == 3) {
+                    retCode = orderService.setLeverage(
+                            commandParts[1].toUpperCase(),
+                            commandParts[2]
+                    );
+                    if (retCode.equals("0")) {
+                        System.out.println(ansi().fgGreen()
+                                .a("  Leverage successfully set").reset());
+                    } else {
+                        System.out.println(ansi().fgYellow().a("  Leverage wasn't set, " +
+                                "it may already have this value (retCode: " + retCode + ")").reset());
+                    }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
+
+            // set the leverage to maximum for specified pair
+            case "!lev_max":
                 if (commandParts.length == 2) {
                     retCode = orderService.setMaxLeverage(
                             commandParts[1].toUpperCase()

@@ -4,16 +4,18 @@ A console application for managing perpetual futures orders on Bybit.
 
 * [Commands](#commands)
     * [Open order](#open-order-o)
-    * [Set leverage to maximum](#set-leverage-to-maximum-lev)
+    * [Set leverage](#set-leverage-lev)
+    * [Set leverage to maximum](#set-leverage-to-maximum-lev_max)
     * [Exit program](#exit-program-ex)
 * [Error 10002](#error-10002)
 * [License](#license)
 
 ## Commands
 
-    !o       open order
-    !lev     set leverage to maximum
-    !ex      exit program
+    !o          open order
+    !lev        set leverage
+    !lev_max    set leverage to maximum
+    !ex         exit program
 
 ### Open Order `!o`
 
@@ -59,10 +61,31 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
-### Set leverage to maximum `!lev`
+### Set Leverage `!lev`
 
 ```
-!lev [symbol]
+!lev [symbol] [leverage]
+```
+
+Sets the specified leverage for the trading pair.  This applies to both existing positions and any new orders for this symbol.
+
+Parameters:
+
+- `symbol` — trading pair
+- `leverage` — leverage size
+
+**Example:**
+
+```
+!lev ethusdt 5.5
+```
+
+This command sets the leverage to 5.5 for the all `ETHUSDT` orders.
+
+### Set Leverage to Maximum `!lev_max`
+
+```
+!lev_max [symbol]
 ```
 
 Sets the leverage to maximum for the specified trading pair. This applies to both existing positions and any new orders for this symbol.
@@ -71,10 +94,10 @@ Parameters:
 
 - `symbol` — trading pair
 
-**Example 1:**
+**Example:**
 
 ```
-!lev btcusdt
+!lev_max btcusdt
 ```
 
 This command sets the leverage to maximum for the all `BTCUSDT` orders.

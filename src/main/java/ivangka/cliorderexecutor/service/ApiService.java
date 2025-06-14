@@ -165,7 +165,7 @@ public class ApiService {
         return (String) firstItem.get("maxLeverage");
     }
 
-    // set the leverage to maximum for the trading pair
+    // set the leverage for the trading pair
     public String setLeverage(String symbol, String leverage) {
         var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)

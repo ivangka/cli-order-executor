@@ -121,8 +121,8 @@ public class TerminalController {
                         System.out.println(ansi().fgBrightGreen()
                                 .a("  Leverage successfully set").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed().a("  Leverage wasn't set, " +
-                                "it may already have this value (retCode: " + retCode + ")").reset());
+                        System.out.println(ansi().fgBrightRed().a(
+                                "  Leverage wasn't set (retCode: " + retCode + ")").reset());
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -138,10 +138,10 @@ public class TerminalController {
                     );
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen()
-                                .a("  Leverage successfully set to maximum").reset());
+                                .a("  Leverage successfully set").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed().a("  Leverage wasn't set, " +
-                                "it may already have a maximum value (retCode: " + retCode + ")").reset());
+                        System.out.println(ansi().fgBrightRed().a(
+                                "  Leverage wasn't set (retCode: " + retCode + ")").reset());
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");

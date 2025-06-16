@@ -27,6 +27,10 @@ A console application for managing perpetual futures orders on Bybit.
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
 
+> [!INFO]
+> 
+> Slippage is not considered in the order size calculation.
+
 Parameters:
 
 - `symbol` — trading pair
@@ -149,7 +153,7 @@ Stops the program.
 If you get "Error Code 10002", it means your PC's clock is out of sync with the server's time.   
 To fix this, you just need to synchronize the time in your PC settings.
 
-[See the full list of error codes.](https://bybit-exchange.github.io/docs/v5/error)
+*[See the full list of error codes.](https://bybit-exchange.github.io/docs/v5/error)*
 
 ## License
 

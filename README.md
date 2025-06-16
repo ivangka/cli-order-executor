@@ -11,7 +11,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Cancel limit orders](#cancel-limit-orders-c)
   * [Set leverage](#set-leverage-lev)
   * [Exit program](#exit-program-ex)
-* [How to Use](#how-to-use)
+* [How to Use?](#how-to-use)
 * [Error 10002](#error-10002)
 * [License](#license)
 
@@ -177,7 +177,7 @@ This command sets the leverage to maximum for the all `BTCUSDT` positions and ne
 
 Stops the program.
 
-## How to Use
+## How to Use?
 
 Follow these steps to get started.
 

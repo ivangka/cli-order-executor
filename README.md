@@ -13,11 +13,11 @@ A console application for managing perpetual futures orders on Bybit.
 
 ## Commands
 
-    !o          open order
-    !x          close position
-    !lev        set leverage
-    !lev_max    set leverage to maximum
-    !ex         exit program
+    !o           open order
+    !x           close position
+    !lev         set leverage
+    !lev_max     set leverage to maximum
+    !ex          exit program
 
 ### Open order `!o`
 
@@ -27,7 +27,7 @@ A console application for managing perpetual futures orders on Bybit.
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
 
-> [!NOTE]
+> [!IMPORTANT]
 > 
 > Slippage is not considered in the order size calculation.
 

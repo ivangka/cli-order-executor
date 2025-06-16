@@ -118,10 +118,10 @@ Parameters:
 **Example:**
 
 ```angular2html
-!c dogeusdt
+!c trumpusdt
 ```
 
-Cancels all active limit orders for `DOGEUSDT`.
+Cancels all active limit orders for `TRUMPUSDT`.
 
 ### Set leverage `!lev`
 
@@ -139,8 +139,8 @@ Parameters:
 All variations
 
 ```
-!x [symbol] [leverage]
-!x [symbol]
+!lev [symbol] [leverage]
+!lev [symbol]
 ```
 
 **Example 1:**

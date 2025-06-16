@@ -5,8 +5,8 @@ A console application for managing perpetual futures orders on Bybit.
 * [Commands](#commands)
     * [Open order](#open-order-o)
     * [Close position](#close-position-x)
+    * [Cancel limit orders](#cancel-limit-orders-c)
     * [Set leverage](#set-leverage-lev)
-    * [Set leverage to maximum](#set-leverage-to-maximum-lev_max)
     * [Exit program](#exit-program-ex)
 * [Error 10002](#error-10002)
 * [License](#license)
@@ -15,8 +15,8 @@ A console application for managing perpetual futures orders on Bybit.
 
     !o           open order
     !x           close position
+    !c           cancel limit orders
     !lev         set leverage
-    !lev_max     set leverage to maximum
     !ex          exit program
 
 ### Open order `!o`
@@ -95,13 +95,33 @@ All variations:
 
 !x ethusdt 50
 
-This command closes 50% of the current ETHUSDT position.
+This command closes 50% of the current `ETHUSDT` position.
 
 **Example 2 (full close):**
 
 !x solusdt
 
-This command closes 100% of the current SOLUSDT position.
+This command closes 100% of the current `SOLUSDT` position.
+
+### Cancel limit orders !c
+
+```
+!c [symbol]
+```
+
+Cancels all active limit orders for the specified trading pair.
+
+Parameters:
+
+- `symbol` — trading pair
+
+**Example:**
+
+```angular2html
+!c dogeusdt
+```
+
+Cancels all active limit orders for `DOGEUSDT`.
 
 ### Set leverage `!lev`
 
@@ -109,20 +129,35 @@ This command closes 100% of the current SOLUSDT position.
 !lev [symbol] [leverage]
 ```
 
-Sets the specified leverage for the trading pair.  This applies to both existing positions and any new orders for this symbol.
+Sets the specified leverage for the trading pair. If no leverage is provided, the maximum allowed leverage will be set. This applies to both existing positions and any new orders for this symbol.
 
 Parameters:
 
 - `symbol` — trading pair
-- `leverage` — leverage size
+- `leverage` — leverage size (optional)
 
-**Example:**
+All variations
+
+```
+!x [symbol] [leverage]
+!x [symbol]
+```
+
+**Example 1:**
 
 ```
 !lev ethusdt 5.5
 ```
 
 This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new orders.
+
+**Example 2:**
+
+```
+!lev btcusdt
+```
+
+This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
 ### Set leverage to maximum `!lev_max`
 

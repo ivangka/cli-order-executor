@@ -3,11 +3,15 @@ package ivangka.cliorderexecutor.service;
 import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.domain.position.request.PositionDataRequest;
+import com.bybit.api.client.domain.trade.request.TradeOrderRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.model.InstrumentInfo;
 import ivangka.cliorderexecutor.model.Position;
+import ivangka.cliorderexecutor.model.RiskLimit;
+import ivangka.cliorderexecutor.model.Ticker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -130,22 +134,18 @@ public class ApiService {
         return retCode.toString();
     }
 
-    // get the max leverage of the trading pair
-    public String maxLeverage(String symbol) throws UnknownSymbolException {
-        var request = MarketDataRequest.builder()
+    // cancel all limit orders for specified pair
+    public String cancelOrders(String symbol) {
+        var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
                 .build();
-        Object response = bybitApiMarketRestClient.getRiskLimit(request);
+        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
 
-        Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol wasn't found");
-        }
-        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
-        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-        Map<String, Object> firstItem = list.get(0);
-        return (String) firstItem.get("maxLeverage");
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
     }
 
     // set the leverage for the trading pair
@@ -164,8 +164,29 @@ public class ApiService {
         return retCode.toString();
     }
 
-    // get last price
-    public String lastPrice(String symbol) throws UnknownSymbolException {
+    // [max leverage]
+    public RiskLimit riskLimit(String symbol) throws UnknownSymbolException {
+        var request = MarketDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .build();
+        Object response = bybitApiMarketRestClient.getRiskLimit(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            throw new UnknownSymbolException("The symbol wasn't found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        Map<String, Object> firstItem = list.get(0);
+        String maxLeverage = (String) firstItem.get("maxLeverage");
+
+        RiskLimit riskLimit = new RiskLimit(maxLeverage);
+        return riskLimit;
+    }
+
+    // [last price]
+    public Ticker ticker(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -179,11 +200,14 @@ public class ApiService {
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
         Map<String, Object> firstItem = list.get(0);
-        return (String) firstItem.get("lastPrice");
+        String lastPrice = (String) firstItem.get("lastPrice");
+
+        Ticker ticker = new Ticker(lastPrice);
+        return ticker;
     }
 
-    // get number of decimal places in order
-    public String orderSizeStep(String symbol) throws UnknownSymbolException {
+    // [min order qty, qty step]
+    public InstrumentInfo instrumentInfo(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -198,27 +222,11 @@ public class ApiService {
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
         Map<String, Object> firstItem = list.get(0);
         Map<String, Object> lotSizeFilter = (Map<String, Object>) firstItem.get("lotSizeFilter");
-        return (String) lotSizeFilter.get("qtyStep");
-    }
+        String minOrderQty = (String) lotSizeFilter.get("minOrderQty");
+        String qtyStep = (String) lotSizeFilter.get("qtyStep");
 
-    // get minimal order size by symbol
-    public String minOrderSize(String symbol) throws UnknownSymbolException {
-        var request = MarketDataRequest.builder()
-                .category(CategoryType.LINEAR)
-                .symbol(symbol)
-                .build();
-        Object response = bybitApiMarketRestClient.getInstrumentsInfo(request);
-
-        Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            System.out.println("HAHA");
-            throw new UnknownSymbolException("The symbol wasn't found");
-        }
-        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
-        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-        Map<String, Object> firstItem = list.get(0);
-        Map<String, Object> lotSizeFilter = (Map<String, Object>) firstItem.get("lotSizeFilter");
-        return (String) lotSizeFilter.get("minOrderQty");
+        InstrumentInfo instrumentInfo = new InstrumentInfo(minOrderQty, qtyStep);
+        return instrumentInfo;
     }
 
     // get positions by symbol

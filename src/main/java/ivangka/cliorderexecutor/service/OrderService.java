@@ -4,7 +4,10 @@ import ivangka.cliorderexecutor.exception.InvalidCommandException;
 import ivangka.cliorderexecutor.exception.OrderNotFoundException;
 import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.model.InstrumentInfo;
 import ivangka.cliorderexecutor.model.Position;
+import ivangka.cliorderexecutor.model.RiskLimit;
+import ivangka.cliorderexecutor.model.Ticker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +31,12 @@ public class OrderService {
     public String openMarketOrder(String symbol, String stopLoss, String takeProfit, String risk)
             throws UnknownSymbolException, InvalidCommandException {
 
-        String lastPrice = apiService.lastPrice(symbol);
-        String orderSizeStep = apiService.orderSizeStep(symbol);
-        String orderSize = orderSize(risk, lastPrice, stopLoss, orderSizeStep);
+        Ticker ticker = apiService.ticker(symbol);
+        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrumentInfo.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
-        BigDecimal priceBD = new BigDecimal(lastPrice);
+        BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
         return apiService.createMarketOrder(symbol, side, orderSize, stopLoss, takeProfit);
@@ -43,12 +46,12 @@ public class OrderService {
     public String openMarketOrder(String symbol, String stopLoss, String risk)
             throws UnknownSymbolException, InvalidCommandException {
 
-        String lastPrice = apiService.lastPrice(symbol);
-        String orderSizeStep = apiService.orderSizeStep(symbol);
-        String orderSize = orderSize(risk, lastPrice, stopLoss, orderSizeStep);
+        Ticker ticker = apiService.ticker(symbol);
+        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrumentInfo.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
-        BigDecimal priceBD = new BigDecimal(lastPrice);
+        BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
         return apiService.createMarketOrder(symbol, side, orderSize, stopLoss);
@@ -58,8 +61,8 @@ public class OrderService {
     public String placeLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
             throws UnknownSymbolException, InvalidCommandException {
 
-        String orderSizeStep = apiService.orderSizeStep(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, orderSizeStep);
+        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrumentInfo.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -72,8 +75,8 @@ public class OrderService {
     public String placeLimitOrder(String symbol, String stopLoss, String risk, String price)
             throws UnknownSymbolException, InvalidCommandException {
 
-        String orderSizeStep = apiService.orderSizeStep(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, orderSizeStep);
+        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrumentInfo.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -82,7 +85,7 @@ public class OrderService {
         return apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
     }
 
-    // close position by symbol
+    // close position for specified pair
     public String closePositions(String symbol, String percent)
             throws UnknownSymbolException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
         List<Position> positions = apiService.positions(symbol);
@@ -102,21 +105,19 @@ public class OrderService {
             throw new InvalidCommandException("Value of percent is incorrect");
         }
 
-        // get min order size of the symbol
-        String minOrderSize = apiService.minOrderSize(symbol);
-        BigDecimal minOrderSizeBD = new BigDecimal(minOrderSize);
-
-        // get order size step of the symbol
-        String orderSizeStep = apiService.orderSizeStep(symbol);
-        BigDecimal stepBD = new BigDecimal(orderSizeStep);
+        // get min order size and step of the symbol
+        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
+        BigDecimal minOrderSizeBD = new BigDecimal(instrumentInfo.getMinOrderQty());
+        BigDecimal stepBD = new BigDecimal(instrumentInfo.getQtyStep());
 
         for (Position position : positions) {
             String side = position.getSide().equals("Buy") ? "Sell" : "Buy";
 
-            // calculating and rounding final size
+            // calculating final size
             BigDecimal orderSizeBD = new BigDecimal(position.getSize());
             BigDecimal percentFactor = percentBD.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
             BigDecimal sizeBD = orderSizeBD.multiply(percentFactor);
+            // formatting size by price step
             BigDecimal roundedSizeBD = sizeBD.divide(stepBD, 0, RoundingMode.DOWN).multiply(stepBD)
                     .stripTrailingZeros();
 
@@ -133,15 +134,18 @@ public class OrderService {
         return "0";
     }
 
-    // set the leverage for the trading pair
-    public String setLeverage(String symbol, String leverage) throws UnknownSymbolException {
-        return apiService.setLeverage(symbol, leverage);
+    // cancel all limit orders for specified pair
+    public String cancelOrders(String symbol) {
+        return apiService.cancelOrders(symbol);
     }
 
-    // set the leverage to maximum for the trading pair
-    public String setMaxLeverage(String symbol) throws UnknownSymbolException {
-        String maxLeverage = apiService.maxLeverage(symbol);
-        return apiService.setLeverage(symbol, maxLeverage);
+    // set the leverage for the trading pair
+    public String setLeverage(String symbol, String leverage) throws UnknownSymbolException {
+        if (leverage.equals("Max")) {
+            RiskLimit riskLimit = apiService.riskLimit(symbol);
+            leverage = riskLimit.getMaxLeverage();
+        }
+        return apiService.setLeverage(symbol, leverage);
     }
 
     // get order size

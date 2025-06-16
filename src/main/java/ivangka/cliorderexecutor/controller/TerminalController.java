@@ -114,9 +114,9 @@ public class TerminalController {
                 }
                 break;
 
-            // close position by symbol
+            // close position for specified pair
             case "!x": // !x [symbol] [percent]
-                if (commandParts.length == 2 || commandParts.length == 3) {
+                if (commandParts.length == 3 || commandParts.length == 2) {
                     if (commandParts.length == 3) {
                         retCode = orderService.closePositions(
                                 commandParts[1].toUpperCase(),
@@ -140,31 +140,38 @@ public class TerminalController {
                 }
                 break;
 
-            // set the leverage for specified pair
-            case "!lev": // !lev [symbol] [leverage]
-                if (commandParts.length == 3) {
-                    retCode = orderService.setLeverage(
-                            commandParts[1].toUpperCase(),
-                            commandParts[2]
+            // cancel all limit orders for specified pair
+            case "!c":
+                if (commandParts.length == 2) {
+                    retCode = orderService.cancelOrders(
+                            commandParts[1].toUpperCase()
                     );
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen()
-                                .a("  Leverage successfully set").reset());
+                                .a("  Limit orders successfully cancelled").reset());
                     } else {
                         System.out.println(ansi().fgBrightRed().a(
-                                "  Leverage wasn't set (retCode: " + retCode + ")").reset());
+                                "  Limit orders aren't cancelled (retCode: " + retCode + ")").reset());
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }
                 break;
 
-            // set the leverage to maximum for specified pair
-            case "!lev_max": // !lev_max [symbol]
-                if (commandParts.length == 2) {
-                    retCode = orderService.setMaxLeverage(
-                            commandParts[1].toUpperCase()
-                    );
+            // set the leverage for specified pair
+            case "!lev": // !lev [symbol] [leverage]
+                if (commandParts.length == 3 || commandParts.length == 2) {
+                    if (commandParts.length == 3) {
+                        retCode = orderService.setLeverage(
+                                commandParts[1].toUpperCase(),
+                                commandParts[2]
+                        );
+                    } else {
+                        retCode = orderService.setLeverage(
+                                commandParts[1].toUpperCase(),
+                                "Max"
+                        );
+                    }
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen()
                                 .a("  Leverage successfully set").reset());

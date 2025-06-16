@@ -103,7 +103,7 @@ This command closes 50% of the current `ETHUSDT` position.
 
 This command closes 100% of the current `SOLUSDT` position.
 
-### Cancel limit orders !c
+### Cancel limit orders `!c`
 
 ```
 !c [symbol]

@@ -173,26 +173,6 @@ This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new or
 
 This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
-### Set leverage to maximum `!lev_max`
-
-```
-!lev_max [symbol]
-```
-
-Sets the leverage to maximum for the specified trading pair. This applies to both existing positions and any new orders for this symbol.
-
-Parameters:
-
-- `symbol` — trading pair
-
-**Example:**
-
-```
-!lev_max btcusdt
-```
-
-This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
-
 ### Exit program `!ex`
 
 Stops the program.

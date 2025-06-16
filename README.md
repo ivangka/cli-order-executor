@@ -1,23 +1,37 @@
 # CLI Order Executor
 
-A console application for managing perpetual futures orders on Bybit.
+A console-based tool for managing perpetual futures orders on Bybit via API.
 
+**Table of contents:**
+
+* [Risk Management](#risk-management)
 * [Commands](#commands)
-    * [Open order](#open-order-o)
-    * [Close position](#close-position-x)
-    * [Cancel limit orders](#cancel-limit-orders-c)
-    * [Set leverage](#set-leverage-lev)
-    * [Exit program](#exit-program-ex)
+  * [Open order](#open-order-o)
+  * [Close position](#close-position-x)
+  * [Cancel limit orders](#cancel-limit-orders-c)
+  * [Set leverage](#set-leverage-lev)
+  * [Exit program](#exit-program-ex)
 * [Error 10002](#error-10002)
 * [License](#license)
 
+## Risk Management
+
+This program uses an approach that requires setting a stop-loss for each trade and automatically calculates the total position size based on:
+
+1. Your specified risk amount (in USD)
+2. The distance between entry and stop-loss prices
+3. Bybit's trading fees
+
+With this approach, leverage does not affect your actual risk exposure - your risk is fixed by the stop-loss distance and position size calculation.
+Leverage only affects the number of concurrent positions—the higher the leverage, the more positions you can open within your available margin.
+
 ## Commands
 
-    !o           open order
-    !x           close position
-    !c           cancel limit orders
-    !lev         set leverage
-    !ex          exit program
+    !o          open order
+    !x          close position
+    !c          cancel limit orders
+    !lev        set leverage
+    !ex         exit program
 
 ### Open order `!o`
 

@@ -7,9 +7,11 @@ import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -110,6 +112,58 @@ public class ApiService {
         return retCode.toString();
     }
 
+    // close position by symbol
+    public String closePositions(String symbol, String side, String size) {
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "side", side,
+                "orderType", "Market",
+                "qty", size,
+                "reduceOnly", true
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
+    }
+
+    // get the max leverage of the trading pair
+    public String maxLeverage(String symbol) throws UnknownSymbolException {
+        var request = MarketDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .build();
+        Object response = bybitApiMarketRestClient.getRiskLimit(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            throw new UnknownSymbolException("The symbol wasn't found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        Map<String, Object> firstItem = list.get(0);
+        return (String) firstItem.get("maxLeverage");
+    }
+
+    // set the leverage for the trading pair
+    public String setLeverage(String symbol, String leverage) {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .buyLeverage(leverage)
+                .sellLeverage(leverage)
+                .build();
+        Object response = bybitApiPositionRestClient.setPositionLeverage(request);
+
+        // get and return retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        Object retCode = responseMap.get("retCode");
+        return retCode.toString();
+    }
+
     // get last price
     public String lastPrice(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
@@ -147,13 +201,33 @@ public class ApiService {
         return (String) lotSizeFilter.get("qtyStep");
     }
 
-    // get the max leverage of the trading pair
-    public String maxLeverage(String symbol) throws UnknownSymbolException {
+    // get minimal order size by symbol
+    public String minOrderSize(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
                 .build();
-        Object response = bybitApiMarketRestClient.getRiskLimit(request);
+        Object response = bybitApiMarketRestClient.getInstrumentsInfo(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        if (!responseMap.get("retCode").toString().equals("0")) {
+            System.out.println("HAHA");
+            throw new UnknownSymbolException("The symbol wasn't found");
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        Map<String, Object> firstItem = list.get(0);
+        Map<String, Object> lotSizeFilter = (Map<String, Object>) firstItem.get("lotSizeFilter");
+        return (String) lotSizeFilter.get("minOrderQty");
+    }
+
+    // get positions by symbol
+    public List<Position> positions(String symbol) throws UnknownSymbolException {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .build();
+        Object response = bybitApiPositionRestClient.getPositionInfo(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
@@ -161,24 +235,18 @@ public class ApiService {
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-        Map<String, Object> firstItem = list.get(0);
-        return (String) firstItem.get("maxLeverage");
-    }
 
-    // set the leverage for the trading pair
-    public String setLeverage(String symbol, String leverage) {
-        var request = PositionDataRequest.builder()
-                .category(CategoryType.LINEAR)
-                .symbol(symbol)
-                .buyLeverage(leverage)
-                .sellLeverage(leverage)
-                .build();
-        Object response = bybitApiPositionRestClient.setPositionLeverage(request);
-
-        // get and return retCode from the response
-        Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        List<Position> positions = new LinkedList<>();
+        String positionSymbol;
+        String positionSide;
+        String positionSize;
+        for (Map<String, Object> item : list) {
+            positionSymbol = (String) item.get("symbol");
+            positionSide = (String) item.get("side");
+            positionSize = (String) item.get("size");
+            positions.add(new Position(positionSymbol, positionSide, positionSize));
+        }
+        return positions;
     }
 
 }

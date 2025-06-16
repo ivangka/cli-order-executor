@@ -26,7 +26,7 @@ public class ApiConfig {
     }
 
     @Bean
-    public BybitApiTradeRestClient bybitApiTradeRestClient() {
+    public BybitApiTradeRestClient bybitApiTradeRestClient() { // MAINNET_DOMAIN TESTNET_DOMAIN
         return BybitApiClientFactory.newInstance(apiKey, apiSecret, BybitApiConfig.MAINNET_DOMAIN).newTradeRestClient();
     }
 

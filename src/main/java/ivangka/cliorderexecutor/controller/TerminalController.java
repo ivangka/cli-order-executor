@@ -1,6 +1,8 @@
 package ivangka.cliorderexecutor.controller;
 
 import ivangka.cliorderexecutor.exception.InvalidCommandException;
+import ivangka.cliorderexecutor.exception.OrderNotFoundException;
+import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +32,15 @@ public class TerminalController {
 
             try {
                 executeCommand(commandParts);
-            } catch (InvalidCommandException | UnknownSymbolException e) {
+            } catch (InvalidCommandException | UnknownSymbolException | OrderNotFoundException |
+                     TooSmallOrderSizeException e) {
                 System.out.println(ansi().fgBrightRed().a("  " + e.getMessage()).reset());
             }
         }
     }
 
-    private void executeCommand(String[] commandParts) throws InvalidCommandException, UnknownSymbolException {
+    private void executeCommand(String[] commandParts)
+            throws InvalidCommandException, UnknownSymbolException, OrderNotFoundException, TooSmallOrderSizeException {
         if (commandParts.length == 0 || commandParts[0].isEmpty()) {
             return;
         }
@@ -110,8 +114,34 @@ public class TerminalController {
                 }
                 break;
 
+            // close position by symbol
+            case "!x": // !x [symbol] [percent]
+                if (commandParts.length == 2 || commandParts.length == 3) {
+                    if (commandParts.length == 3) {
+                        retCode = orderService.closePositions(
+                                commandParts[1].toUpperCase(),
+                                commandParts[2]
+                        );
+                    } else {
+                        retCode = orderService.closePositions(
+                                commandParts[1].toUpperCase(),
+                               "100"
+                        );
+                    }
+                    if (retCode.equals("0")) {
+                        System.out.println(ansi().fgBrightGreen()
+                                .a("  The position successfully closed").reset());
+                    } else {
+                        System.out.println(ansi().fgBrightRed().a(
+                                "  The position wasn't closed (retCode: " + retCode + ")").reset());
+                    }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
             // set the leverage for specified pair
-            case "!lev":
+            case "!lev": // !lev [symbol] [leverage]
                 if (commandParts.length == 3) {
                     retCode = orderService.setLeverage(
                             commandParts[1].toUpperCase(),
@@ -129,9 +159,8 @@ public class TerminalController {
                 }
                 break;
 
-
             // set the leverage to maximum for specified pair
-            case "!lev_max":
+            case "!lev_max": // !lev_max [symbol]
                 if (commandParts.length == 2) {
                     retCode = orderService.setMaxLeverage(
                             commandParts[1].toUpperCase()

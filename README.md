@@ -4,6 +4,7 @@ A console application for managing perpetual futures orders on Bybit.
 
 * [Commands](#commands)
     * [Open order](#open-order-o)
+    * [Close position](#close-position-x)
     * [Set leverage](#set-leverage-lev)
     * [Set leverage to maximum](#set-leverage-to-maximum-lev_max)
     * [Exit program](#exit-program-ex)
@@ -13,6 +14,7 @@ A console application for managing perpetual futures orders on Bybit.
 ## Commands
 
     !o          open order
+    !x          close position
     !lev        set leverage
     !lev_max    set leverage to maximum
     !ex         exit program
@@ -23,7 +25,7 @@ A console application for managing perpetual futures orders on Bybit.
 !o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
 ```
 
-Opens a perpetual futures order with exact position sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
+Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
 
 Parameters:
 
@@ -61,6 +63,42 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
+### Close position `!x`
+
+```
+!x [symbol] [percent]
+```
+
+Closes a specified percentage of an open position for the given trading pair. If no percentage is specified, closes the entire order (100%).
+
+Parameters:
+
+- `symbol` — trading pair
+- `percent` — percentage of position to close (optional)
+
+Constraints:
+
+- `0 < percent <= 100`
+
+All variations:
+
+```
+!x [symbol] [percent]
+!x [symbol]
+```
+
+**Example 1 (partial close):**
+
+!x ethusdt 50
+
+This command closes 50% of the current ETHUSDT position.
+
+**Example 2 (full close):**
+
+!x solusdt
+
+This command closes 100% of the current SOLUSDT position.
+
 ### Set leverage `!lev`
 
 ```
@@ -80,7 +118,7 @@ Parameters:
 !lev ethusdt 5.5
 ```
 
-This command sets the leverage to 5.5 for the all `ETHUSDT` orders.
+This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new orders.
 
 ### Set leverage to maximum `!lev_max`
 
@@ -100,7 +138,7 @@ Parameters:
 !lev_max btcusdt
 ```
 
-This command sets the leverage to maximum for the all `BTCUSDT` orders.
+This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
 ### Exit program `!ex`
 

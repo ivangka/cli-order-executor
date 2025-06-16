@@ -201,7 +201,7 @@ Stops the program.
 
 Follow these steps to get started.
 
-1. Install Java and Maven.
+1. Install `Java` and `Maven`.
 2. Download or clone this repository:
 
 ```

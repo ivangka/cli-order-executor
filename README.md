@@ -22,7 +22,7 @@ This program uses an approach that requires setting a stop-loss for each trade a
 2. The distance between entry and stop-loss prices
 3. Bybit's trading fees
 
-With this approach, leverage does not affect your actual risk exposure - your risk is fixed by the stop-loss distance and position size calculation. Leverage only affects the number of concurrent positions - the higher the leverage, the more positions you can open within your available margin.
+With this approach, **leverage does not affect your risk** - your risk is fixed by the stop-loss distance and position size calculation. Leverage only affects the number of concurrent positions - the higher the leverage, the more positions you can open within your available margin.
 
 ## Commands
 

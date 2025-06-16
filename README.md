@@ -193,7 +193,7 @@ Parameters:
 !gpi sandusdt
 ```
 
-This command displays position details for ETHUSDT.
+This command displays position details for `SANDUSDT`.
 
 ### Exit program `!ex`
 

@@ -1,21 +1,24 @@
 package ivangka.cliorderexecutor.model;
 
-public class InstrumentInfo {
+public class Instrument {
 
     private String minOrderQty;
     private String qtyStep;
-
-    public InstrumentInfo(String minOrderQty, String qtyStep) {
-        this.minOrderQty = minOrderQty;
-        this.qtyStep = qtyStep;
-    }
 
     public String getMinOrderQty() {
         return minOrderQty;
     }
 
+    public void setMinOrderQty(String minOrderQty) {
+        this.minOrderQty = minOrderQty;
+    }
+
     public String getQtyStep() {
         return qtyStep;
+    }
+
+    public void setQtyStep(String qtyStep) {
+        this.qtyStep = qtyStep;
     }
 
 }

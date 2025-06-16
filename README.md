@@ -10,6 +10,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Close position](#close-position-x)
   * [Cancel limit orders](#cancel-limit-orders-c)
   * [Set leverage](#set-leverage-lev)
+  * [Get position info](#get-position-info-gpi)
   * [Exit program](#exit-program-ex)
 * [How to Use?](#how-to-use)
 * [Error 10002](#error-10002)
@@ -31,6 +32,7 @@ With this approach, **leverage does not affect your risk** - your risk is fixed 
     !x          close position
     !c          cancel limit orders
     !lev        set leverage
+    !gpi        get position info
     !ex         exit program
 
 ### Open order `!o`
@@ -87,7 +89,7 @@ This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop los
 !x [symbol] [percent]
 ```
 
-Closes a specified percentage of an open position for the given trading pair. If no percentage is specified, closes the entire order (100%).
+Closes a specified percentage of an open position(s) for the given trading pair. If no percentage is specified, closes the entire order (100%).
 
 Parameters:
 
@@ -109,13 +111,13 @@ All variations:
 
 !x ethusdt 50
 
-This command closes 50% of the current `ETHUSDT` position.
+This command closes 50% of the current `ETHUSDT` position(s).
 
 **Example 2 (full close):**
 
 !x solusdt
 
-This command closes 100% of the current `SOLUSDT` position.
+This command closes 100% of the current `SOLUSDT` position(s).
 
 ### Cancel limit orders `!c`
 
@@ -135,7 +137,7 @@ Parameters:
 !c trumpusdt
 ```
 
-Cancels all active limit orders for `TRUMPUSDT`.
+This command cancels all active limit orders for `TRUMPUSDT`.
 
 ### Set leverage `!lev`
 
@@ -172,6 +174,26 @@ This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new or
 ```
 
 This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
+
+### Get position info `!gpi`
+
+```
+!gpi [symbol]
+```
+
+Displays information about the current position(s) for the specified trading pair.
+
+Parameters:
+
+- `symbol` — trading pair
+
+**Example:**
+
+```
+!gpi sandusdt
+```
+
+This command displays position details for ETHUSDT.
 
 ### Exit program `!ex`
 

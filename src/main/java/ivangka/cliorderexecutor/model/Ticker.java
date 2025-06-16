@@ -4,12 +4,12 @@ public class Ticker {
 
     private String lastPrice;
 
-    public Ticker(String lastPrice) {
-        this.lastPrice = lastPrice;
-    }
-
     public String getLastPrice() {
         return lastPrice;
+    }
+
+    public void setLastPrice(String lastPrice) {
+        this.lastPrice = lastPrice;
     }
 
 }

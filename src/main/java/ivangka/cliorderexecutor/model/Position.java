@@ -5,28 +5,92 @@ public class Position {
     private String symbol;
     private String side;
     private String size;
-
-    public Position(String symbol, String side, String size) {
-        this.symbol = symbol;
-        this.side = side;
-        this.size = size;
-    }
+    private String avgPrice;
+    private String leverage;
+    private String liqPrice;
+    private String stopLoss;
+    private String takeProfit;
 
     public String getSymbol() {
         return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getSide() {
         return side;
     }
 
+    public void setSide(String side) {
+        this.side = side;
+    }
+
     public String getSize() {
         return size;
     }
 
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getAvgPrice() {
+        return avgPrice;
+    }
+
+    public void setAvgPrice(String avgPrice) {
+        this.avgPrice = avgPrice;
+    }
+
+    public String getLeverage() {
+        return leverage;
+    }
+
+    public void setLeverage(String leverage) {
+        this.leverage = leverage;
+    }
+
+    public String getLiqPrice() {
+        return liqPrice;
+    }
+
+    public void setLiqPrice(String liqPrice) {
+        this.liqPrice = liqPrice;
+    }
+
+    public String getStopLoss() {
+        return stopLoss;
+    }
+
+    public void setStopLoss(String stopLoss) {
+        this.stopLoss = stopLoss;
+    }
+
+    public String getTakeProfit() {
+        return takeProfit;
+    }
+
+    public void setTakeProfit(String takeProfit) {
+        this.takeProfit = takeProfit;
+    }
+
     @Override
     public String toString() {
-        return "Position " + symbol + ": " + size + " (" + side + ")";
+        String displaySymbol = symbol.length() > 13 ? symbol.substring(0, 11) + ".." : symbol;
+        String displayLiqPrice = liqPrice.length() > 13 ? liqPrice.substring(0, 11) + ".." : liqPrice;
+        String displayAvgPrice = avgPrice.length() > 13 ? avgPrice.substring(0, 11) + ".." : avgPrice;
+        return ""
+                + "  +-------------+----------------+" + System.lineSeparator()
+                + String.format("  + %-11s + %14s +%n", "symbol", displaySymbol)
+                + String.format("  + %-11s + %14s +%n", "side", side)
+                + String.format("  + %-11s + %14s +%n", "size", size)
+                + String.format("  + %-11s + %14s +%n", "avgPrice", displayAvgPrice)
+                + String.format("  + %-11s + %14s +%n", "leverage", leverage)
+                + String.format("  + %-11s + %14s +%n", "liqPrice", displayLiqPrice)
+                + String.format("  + %-11s + %14s +%n", "stopLoss", stopLoss)
+                + String.format("  + %-11s + %14s +%n", "takeProfit", takeProfit)
+                + "  +-------------+----------------+";
     }
 
 }

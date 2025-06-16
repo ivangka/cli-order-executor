@@ -32,7 +32,8 @@ public class ApiConfig {
 
     @Bean
     public BybitApiPositionRestClient bybitApiPositionRestClient() {
-        return BybitApiClientFactory.newInstance(apiKey, apiSecret, BybitApiConfig.MAINNET_DOMAIN).newPositionRestClient();
+        return BybitApiClientFactory.newInstance(apiKey, apiSecret, BybitApiConfig.MAINNET_DOMAIN)
+                .newPositionRestClient();
     }
 
 }

@@ -8,7 +8,7 @@ import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
-import ivangka.cliorderexecutor.model.InstrumentInfo;
+import ivangka.cliorderexecutor.model.Instrument;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.model.RiskLimit;
 import ivangka.cliorderexecutor.model.Ticker;
@@ -181,7 +181,8 @@ public class ApiService {
         Map<String, Object> firstItem = list.get(0);
         String maxLeverage = (String) firstItem.get("maxLeverage");
 
-        RiskLimit riskLimit = new RiskLimit(maxLeverage);
+        RiskLimit riskLimit = new RiskLimit();
+        riskLimit.setMaxLeverage(maxLeverage);
         return riskLimit;
     }
 
@@ -202,12 +203,13 @@ public class ApiService {
         Map<String, Object> firstItem = list.get(0);
         String lastPrice = (String) firstItem.get("lastPrice");
 
-        Ticker ticker = new Ticker(lastPrice);
+        Ticker ticker = new Ticker();
+        ticker.setLastPrice(lastPrice);
         return ticker;
     }
 
     // [min order qty, qty step]
-    public InstrumentInfo instrumentInfo(String symbol) throws UnknownSymbolException {
+    public Instrument instrumentInfo(String symbol) throws UnknownSymbolException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -225,8 +227,10 @@ public class ApiService {
         String minOrderQty = (String) lotSizeFilter.get("minOrderQty");
         String qtyStep = (String) lotSizeFilter.get("qtyStep");
 
-        InstrumentInfo instrumentInfo = new InstrumentInfo(minOrderQty, qtyStep);
-        return instrumentInfo;
+        Instrument instrument = new Instrument();
+        instrument.setMinOrderQty(minOrderQty);
+        instrument.setQtyStep(qtyStep);
+        return instrument;
     }
 
     // get positions by symbol
@@ -245,14 +249,18 @@ public class ApiService {
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
 
         List<Position> positions = new LinkedList<>();
-        String positionSymbol;
-        String positionSide;
-        String positionSize;
+        Position position;
         for (Map<String, Object> item : list) {
-            positionSymbol = (String) item.get("symbol");
-            positionSide = (String) item.get("side");
-            positionSize = (String) item.get("size");
-            positions.add(new Position(positionSymbol, positionSide, positionSize));
+            position = new Position();
+            position.setSymbol((String) item.get("symbol"));
+            position.setSide((String) item.get("side"));
+            position.setSize((String) item.get("size"));
+            position.setAvgPrice((String) item.get("avgPrice"));
+            position.setLeverage((String) item.get("leverage"));
+            position.setLiqPrice((String) item.get("liqPrice"));
+            position.setStopLoss((String) item.get("stopLoss"));
+            position.setTakeProfit((String) item.get("takeProfit"));
+            positions.add(position);
         }
         return positions;
     }

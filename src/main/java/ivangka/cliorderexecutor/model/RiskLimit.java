@@ -4,12 +4,12 @@ public class RiskLimit {
 
     private String maxLeverage;
 
-    public RiskLimit(String riskLimit) {
-        this.maxLeverage = riskLimit;
-    }
-
     public String getMaxLeverage() {
         return maxLeverage;
+    }
+
+    public void setMaxLeverage(String maxLeverage) {
+        this.maxLeverage = maxLeverage;
     }
 
 }

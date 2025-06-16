@@ -4,7 +4,7 @@ import ivangka.cliorderexecutor.exception.InvalidCommandException;
 import ivangka.cliorderexecutor.exception.OrderNotFoundException;
 import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
-import ivangka.cliorderexecutor.model.InstrumentInfo;
+import ivangka.cliorderexecutor.model.Instrument;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.model.RiskLimit;
 import ivangka.cliorderexecutor.model.Ticker;
@@ -32,8 +32,8 @@ public class OrderService {
             throws UnknownSymbolException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
-        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrumentInfo.getQtyStep());
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
@@ -47,8 +47,8 @@ public class OrderService {
             throws UnknownSymbolException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
-        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrumentInfo.getQtyStep());
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
@@ -61,8 +61,8 @@ public class OrderService {
     public String placeLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
             throws UnknownSymbolException, InvalidCommandException {
 
-        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, instrumentInfo.getQtyStep());
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -75,8 +75,8 @@ public class OrderService {
     public String placeLimitOrder(String symbol, String stopLoss, String risk, String price)
             throws UnknownSymbolException, InvalidCommandException {
 
-        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, instrumentInfo.getQtyStep());
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -106,9 +106,9 @@ public class OrderService {
         }
 
         // get min order size and step of the symbol
-        InstrumentInfo instrumentInfo = apiService.instrumentInfo(symbol);
-        BigDecimal minOrderSizeBD = new BigDecimal(instrumentInfo.getMinOrderQty());
-        BigDecimal stepBD = new BigDecimal(instrumentInfo.getQtyStep());
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
+        BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
 
         for (Position position : positions) {
             String side = position.getSide().equals("Buy") ? "Sell" : "Buy";
@@ -146,6 +146,15 @@ public class OrderService {
             leverage = riskLimit.getMaxLeverage();
         }
         return apiService.setLeverage(symbol, leverage);
+    }
+
+    // get position info
+    public List<Position> positions(String symbol) throws UnknownSymbolException, OrderNotFoundException {
+        List<Position> positions = apiService.positions(symbol);
+        if (positions.get(0).getSize().equals("0")) {
+            throw new OrderNotFoundException("The order not found");
+        }
+        return positions;
     }
 
     // get order size

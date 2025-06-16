@@ -4,12 +4,14 @@ import ivangka.cliorderexecutor.exception.InvalidCommandException;
 import ivangka.cliorderexecutor.exception.OrderNotFoundException;
 import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
 import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Controller
@@ -178,6 +180,18 @@ public class TerminalController {
                     } else {
                         System.out.println(ansi().fgBrightRed().a(
                                 "  Leverage wasn't set (retCode: " + retCode + ")").reset());
+                    }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
+            // get position info
+            case "!gpi": // !gpi [symbol]
+                if (commandParts.length == 2) {
+                    List<Position> positions = orderService.positions(commandParts[1].toUpperCase());
+                    for (Position position : positions) {
+                        System.out.println(position);
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");

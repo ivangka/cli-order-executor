@@ -148,7 +148,7 @@ Parameters:
 - `symbol` — trading pair (optional)
 
 ```
-!c [symbol]     — canceles the whole orders for the symbol
+!c [symbol]     — cancels the whole orders for the symbol
 !c              — cancels all orders across all pairs
 ```
 

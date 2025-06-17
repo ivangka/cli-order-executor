@@ -42,7 +42,8 @@ public class TerminalController {
     }
 
     private void executeCommand(String[] commandParts)
-            throws InvalidCommandException, BadRetCodeException, OrderNotFoundException, TooSmallOrderSizeException {
+            throws InvalidCommandException, BadRetCodeException, OrderNotFoundException, TooSmallOrderSizeException,
+            InterruptedException {
         if (commandParts.length == 0 || commandParts[0].isEmpty()) {
             return;
         }

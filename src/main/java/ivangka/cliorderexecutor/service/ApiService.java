@@ -148,7 +148,7 @@ public class ApiService {
     }
 
     // close position by symbol
-    public void closePositions(String symbol, String side, String size) throws BadRetCodeException {
+    public void closePosition(String symbol, String side, String size) throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,

@@ -84,7 +84,7 @@ public class OrderService {
 
     // close positions
     public void closePositions(String symbol, String percent)
-            throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException {
+            throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException, InterruptedException {
         List<Position> positions;
         if (symbol.equals("-all")) {
             positions = apiService.positions();
@@ -124,7 +124,8 @@ public class OrderService {
                 throw new TooSmallOrderSizeException("Position size to close is too small");
             }
 
-            apiService.closePositions(position.getSymbol(), side, roundedSizeBD.toString());
+            apiService.closePosition(position.getSymbol(), side, roundedSizeBD.toString());
+            Thread.sleep(150);
         }
     }
 

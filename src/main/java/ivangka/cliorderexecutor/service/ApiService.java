@@ -7,7 +7,7 @@ import com.bybit.api.client.domain.trade.request.TradeOrderRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
-import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.exception.BadRetCodeException;
 import ivangka.cliorderexecutor.model.Instrument;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.model.RiskLimit;
@@ -165,7 +165,7 @@ public class ApiService {
     }
 
     // [max leverage]
-    public RiskLimit riskLimit(String symbol) throws UnknownSymbolException {
+    public RiskLimit riskLimit(String symbol) throws BadRetCodeException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -174,7 +174,7 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol wasn't found");
+            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -187,7 +187,7 @@ public class ApiService {
     }
 
     // [last price]
-    public Ticker ticker(String symbol) throws UnknownSymbolException {
+    public Ticker ticker(String symbol) throws BadRetCodeException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -196,7 +196,7 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol wasn't found");
+            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -209,7 +209,7 @@ public class ApiService {
     }
 
     // [min order qty, qty step]
-    public Instrument instrumentInfo(String symbol) throws UnknownSymbolException {
+    public Instrument instrumentInfo(String symbol) throws BadRetCodeException {
         var request = MarketDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -218,7 +218,7 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol wasn't found");
+            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -234,7 +234,7 @@ public class ApiService {
     }
 
     // get positions by symbol
-    public List<Position> positions(String symbol) throws UnknownSymbolException {
+    public List<Position> positions(String symbol) throws BadRetCodeException {
         var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -243,7 +243,7 @@ public class ApiService {
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new UnknownSymbolException("The symbol wasn't found");
+            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");

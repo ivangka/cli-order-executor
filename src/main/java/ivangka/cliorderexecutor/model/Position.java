@@ -77,20 +77,20 @@ public class Position {
 
     @Override
     public String toString() {
-        String displaySymbol = symbol.length() > 13 ? symbol.substring(0, 11) + ".." : symbol;
-        String displayLiqPrice = liqPrice.length() > 13 ? liqPrice.substring(0, 11) + ".." : liqPrice;
-        String displayAvgPrice = avgPrice.length() > 13 ? avgPrice.substring(0, 11) + ".." : avgPrice;
+        String displaySymbol = symbol.length() > 16 ? symbol.substring(0, 14) + ".." : symbol;
+        String displayLiqPrice = liqPrice.length() > 16 ? liqPrice.substring(0, 14) + ".." : liqPrice;
+        String displayAvgPrice = avgPrice.length() > 16 ? avgPrice.substring(0, 14) + ".." : avgPrice;
         return ""
-                + "  +-------------+----------------+" + System.lineSeparator()
-                + String.format("  + %-11s + %14s +%n", "symbol", displaySymbol)
-                + String.format("  + %-11s + %14s +%n", "side", side)
-                + String.format("  + %-11s + %14s +%n", "size", size)
-                + String.format("  + %-11s + %14s +%n", "avgPrice", displayAvgPrice)
-                + String.format("  + %-11s + %14s +%n", "leverage", leverage)
-                + String.format("  + %-11s + %14s +%n", "liqPrice", displayLiqPrice)
-                + String.format("  + %-11s + %14s +%n", "stopLoss", stopLoss)
-                + String.format("  + %-11s + %14s +%n", "takeProfit", takeProfit)
-                + "  +-------------+----------------+";
+                + "  +-------------+-------------------+" + System.lineSeparator()
+                + String.format("  + %-11s + %17s +%n", "symbol", displaySymbol)
+                + String.format("  + %-11s + %17s +%n", "side", side)
+                + String.format("  + %-11s + %17s +%n", "size", size)
+                + String.format("  + %-11s + %17s +%n", "avgPrice", displayAvgPrice)
+                + String.format("  + %-11s + %17s +%n", "leverage", leverage)
+                + String.format("  + %-11s + %17s +%n", "liqPrice", displayLiqPrice)
+                + String.format("  + %-11s + %17s +%n", "stopLoss", stopLoss)
+                + String.format("  + %-11s + %17s +%n", "takeProfit", takeProfit)
+                + "  +-------------+-------------------+";
     }
 
 }

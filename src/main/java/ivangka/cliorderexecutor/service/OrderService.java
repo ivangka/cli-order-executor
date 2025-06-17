@@ -1,9 +1,6 @@
 package ivangka.cliorderexecutor.service;
 
-import ivangka.cliorderexecutor.exception.InvalidCommandException;
-import ivangka.cliorderexecutor.exception.OrderNotFoundException;
-import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
-import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.exception.*;
 import ivangka.cliorderexecutor.model.Instrument;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.model.RiskLimit;
@@ -29,7 +26,7 @@ public class OrderService {
 
     // open a market order
     public String openMarketOrder(String symbol, String stopLoss, String takeProfit, String risk)
-            throws UnknownSymbolException, InvalidCommandException {
+            throws BadRetCodeException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
         Instrument instrument = apiService.instrumentInfo(symbol);
@@ -44,7 +41,7 @@ public class OrderService {
 
     // open a market order without tp
     public String openMarketOrder(String symbol, String stopLoss, String risk)
-            throws UnknownSymbolException, InvalidCommandException {
+            throws BadRetCodeException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
         Instrument instrument = apiService.instrumentInfo(symbol);
@@ -59,7 +56,7 @@ public class OrderService {
 
     // place a limit order
     public String placeLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
-            throws UnknownSymbolException, InvalidCommandException {
+            throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
         String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
@@ -73,7 +70,7 @@ public class OrderService {
 
     // place limit order without tp
     public String placeLimitOrder(String symbol, String stopLoss, String risk, String price)
-            throws UnknownSymbolException, InvalidCommandException {
+            throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
         String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
@@ -87,7 +84,7 @@ public class OrderService {
 
     // close position for specified pair
     public String closePositions(String symbol, String percent)
-            throws UnknownSymbolException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
+            throws BadRetCodeException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
         List<Position> positions = apiService.positions(symbol);
         if (positions.get(0).getSize().equals("0")) {
             throw new OrderNotFoundException("The order not found");
@@ -140,7 +137,7 @@ public class OrderService {
     }
 
     // set the leverage for the trading pair
-    public String setLeverage(String symbol, String leverage) throws UnknownSymbolException {
+    public String setLeverage(String symbol, String leverage) throws BadRetCodeException {
         if (leverage.equals("Max")) {
             RiskLimit riskLimit = apiService.riskLimit(symbol);
             leverage = riskLimit.getMaxLeverage();
@@ -149,7 +146,7 @@ public class OrderService {
     }
 
     // get position info
-    public List<Position> positions(String symbol) throws UnknownSymbolException, OrderNotFoundException {
+    public List<Position> positions(String symbol) throws BadRetCodeException, OrderNotFoundException {
         List<Position> positions = apiService.positions(symbol);
         if (positions.get(0).getSize().equals("0")) {
             throw new OrderNotFoundException("The order not found");

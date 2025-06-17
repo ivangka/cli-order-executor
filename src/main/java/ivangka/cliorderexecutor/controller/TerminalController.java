@@ -1,9 +1,6 @@
 package ivangka.cliorderexecutor.controller;
 
-import ivangka.cliorderexecutor.exception.InvalidCommandException;
-import ivangka.cliorderexecutor.exception.OrderNotFoundException;
-import ivangka.cliorderexecutor.exception.TooSmallOrderSizeException;
-import ivangka.cliorderexecutor.exception.UnknownSymbolException;
+import ivangka.cliorderexecutor.exception.*;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,7 @@ public class TerminalController {
 
             try {
                 executeCommand(commandParts);
-            } catch (InvalidCommandException | UnknownSymbolException | OrderNotFoundException |
+            } catch (InvalidCommandException | BadRetCodeException | OrderNotFoundException |
                      TooSmallOrderSizeException e) {
                 System.out.println(ansi().fgBrightRed().a("  " + e.getMessage()).reset());
             }
@@ -42,7 +39,7 @@ public class TerminalController {
     }
 
     private void executeCommand(String[] commandParts)
-            throws InvalidCommandException, UnknownSymbolException, OrderNotFoundException, TooSmallOrderSizeException {
+            throws InvalidCommandException, BadRetCodeException, OrderNotFoundException, TooSmallOrderSizeException {
         if (commandParts.length == 0 || commandParts[0].isEmpty()) {
             return;
         }
@@ -62,8 +59,7 @@ public class TerminalController {
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed()
-                                .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
 
                 // market order without tp
@@ -76,8 +72,7 @@ public class TerminalController {
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed()
-                                .a("  The order hasn't been opened (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
 
                 // limit order
@@ -92,8 +87,7 @@ public class TerminalController {
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed()
-                                .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
 
                 // limit order without tp
@@ -107,8 +101,7 @@ public class TerminalController {
                     if (retCode.equals("0")) {
                         System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed()
-                                .a("  The order hasn't been placed (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
 
                 } else {
@@ -134,8 +127,7 @@ public class TerminalController {
                         System.out.println(ansi().fgBrightGreen()
                                 .a("  The position successfully closed").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed().a(
-                                "  The position wasn't closed (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -152,8 +144,7 @@ public class TerminalController {
                         System.out.println(ansi().fgBrightGreen()
                                 .a("  Limit orders successfully cancelled").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed().a(
-                                "  Limit orders aren't cancelled (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -178,8 +169,7 @@ public class TerminalController {
                         System.out.println(ansi().fgBrightGreen()
                                 .a("  Leverage successfully set").reset());
                     } else {
-                        System.out.println(ansi().fgBrightRed().a(
-                                "  Leverage wasn't set (retCode: " + retCode + ")").reset());
+                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -190,8 +180,12 @@ public class TerminalController {
             case "!gpi": // !gpi [symbol]
                 if (commandParts.length == 2) {
                     List<Position> positions = orderService.positions(commandParts[1].toUpperCase());
-                    for (Position position : positions) {
-                        System.out.println(position);
+                    for (int i = 0; i < positions.size(); i++) {
+                        String positionStr = positions.get(i).toString();
+                        if (i > 0) {
+                            positionStr = positionStr.substring(positionStr.indexOf('\n') + 1);
+                        }
+                        System.out.println(positionStr);
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");

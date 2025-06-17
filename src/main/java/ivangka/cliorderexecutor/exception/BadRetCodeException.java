@@ -14,6 +14,7 @@ public class BadRetCodeException extends Exception {
                 "there are 4 env: mainnet, testnet, mainnet-demo, testnet-demo");
         RETCODES.put("10005", "Permission denied, please check your API key permissions");
         RETCODES.put("10007", "User authentication failed");
+        RETCODES.put("10010", "Unmatched IP, please check your API key's bound IP addresses");
         RETCODES.put("110003", "Order price exceeds the allowable range");
         RETCODES.put("110004", "Wallet balance is insufficient");
         RETCODES.put("110012", "Insufficient available balance");

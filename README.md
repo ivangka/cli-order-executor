@@ -89,7 +89,7 @@ This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop los
 !x [symbol] [percent]
 ```
 
-Closes a specified percentage of an open position(s) for the given trading pair. If no percentage is specified, closes the entire position (100%). If no symbol is specified, all positions will be closed.
+Closes an open position(s) for the given trading pair or for all pairs.
 
 Parameters:
 
@@ -158,7 +158,7 @@ This command cancels all active orders for `TRUMPUSDT`.
 !lev [symbol] [leverage]
 ```
 
-Sets the specified leverage for the trading pair. If no leverage is provided, the maximum allowed leverage will be set. This applies to both existing positions and any new orders for this symbol.
+Sets leverage for the trading pair. This applies to both existing positions and any new orders for this symbol.
 
 Parameters:
 
@@ -168,7 +168,7 @@ Parameters:
 All variations
 
 ```
-!lev [symbol] [leverage]     — sets leverage for the symbol
+!lev [symbol] [leverage]     — sets spesified leverage for the symbol
 !lev [symbol]                — sets maximum leverage for the symbol
 ```
 
@@ -194,7 +194,7 @@ This command sets the leverage to maximum for the all `BTCUSDT` positions and ne
 !gpi [symbol]
 ```
 
-Displays information about the current position(s) for the specified trading pair.
+Displays information about the current positions.
 
 Parameters:
 

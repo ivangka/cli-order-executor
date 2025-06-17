@@ -47,14 +47,21 @@ public class TerminalController {
             return;
         }
 
-        String retCode;
+        // formatting symbol
+        if (commandParts.length > 1) {
+            String symbol = commandParts[1].toUpperCase();
+            commandParts[1] = symbol.endsWith("USDT") ? symbol
+                    : symbol.endsWith("USDC") ? symbol.substring(0, symbol.length() - 4) + "PERP"
+                    : symbol + "USDT";
+        }
+
         switch (commandParts[0]) {
             // place an order
             case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
                 // market order
                 if (commandParts.length == 5) {
                     orderService.openMarketOrder(
-                            commandParts[1].toUpperCase(),
+                            commandParts[1],
                             commandParts[2],
                             commandParts[3],
                             commandParts[4]
@@ -64,7 +71,7 @@ public class TerminalController {
                 // market order without tp
                 } else if (commandParts.length == 4) {
                     orderService.openMarketOrder(
-                            commandParts[1].toUpperCase(),
+                            commandParts[1],
                             commandParts[2],
                             commandParts[3]
                     );
@@ -73,7 +80,7 @@ public class TerminalController {
                 // limit order
                 } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
                     orderService.placeLimitOrder(
-                            commandParts[1].toUpperCase(),
+                            commandParts[1],
                             commandParts[2],
                             commandParts[3],
                             commandParts[4],
@@ -84,7 +91,7 @@ public class TerminalController {
                 // limit order without tp
                 } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
                     orderService.placeLimitOrder(
-                            commandParts[1].toUpperCase(),
+                            commandParts[1],
                             commandParts[2],
                             commandParts[3],
                             commandParts[5]
@@ -101,12 +108,12 @@ public class TerminalController {
                 if (commandParts.length == 3 || commandParts.length == 2 || commandParts.length == 1) {
                     if (commandParts.length == 3) { // percent
                         orderService.closePositions(
-                                commandParts[1].toUpperCase(),
+                                commandParts[1],
                                 commandParts[2]
                         );
                     } else if (commandParts.length == 2) { // 100%
                         orderService.closePositions(
-                                commandParts[1].toUpperCase(),
+                                commandParts[1],
                                "100"
                         );
                     } else { // close all
@@ -122,7 +129,7 @@ public class TerminalController {
             case "!c":
                 if (commandParts.length == 2) {
                     orderService.cancelOrders(
-                            commandParts[1].toUpperCase()
+                            commandParts[1]
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Limit orders successfully cancelled").reset());
                 } else {
@@ -135,12 +142,12 @@ public class TerminalController {
                 if (commandParts.length == 3 || commandParts.length == 2) {
                     if (commandParts.length == 3) { // lev
                         orderService.setLeverage(
-                                commandParts[1].toUpperCase(),
+                                commandParts[1],
                                 commandParts[2]
                         );
                     } else { // max lev
                         orderService.setLeverage(
-                                commandParts[1].toUpperCase(),
+                                commandParts[1],
                                 "-max"
                         );
                     }
@@ -155,7 +162,7 @@ public class TerminalController {
                 if (commandParts.length == 2 || commandParts.length == 1) {
                     List<Position> positions;
                     if (commandParts.length == 2) { // positions by symbol
-                        positions = orderService.positions(commandParts[1].toUpperCase());
+                        positions = orderService.positions(commandParts[1]);
                     } else {
                         positions = orderService.positions("-all");
                     }

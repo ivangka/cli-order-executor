@@ -110,23 +110,27 @@ All variations:
 
 **Example 1 (partial close):**
 
+```
 !x ethusdt 50
+```
 
 This command closes 50% of the current `ETHUSDT` position(s).
 
 **Example 2 (full close):**
 
+```
 !x solusdt
+```
 
 This command closes 100% of the current `SOLUSDT` position(s).
 
 **Example 3 (full close for all positions):**
 
+```
+!x
+```
+
 This command closes 100% of all positions across all pairs.
-
-!x solusdt
-
-This command closes 100% of the current `SOLUSDT` position(s).
 
 ### Cancel orders `!c`
 

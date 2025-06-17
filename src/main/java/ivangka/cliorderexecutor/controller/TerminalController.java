@@ -34,6 +34,9 @@ public class TerminalController {
             } catch (InvalidCommandException | BadRetCodeException | OrderNotFoundException |
                      TooSmallOrderSizeException e) {
                 System.out.println(ansi().fgBrightRed().a("  " + e.getMessage()).reset());
+            } catch (Exception e) {
+                System.out.println(ansi().fgBrightRed().a("  Unexpected exception: "
+                        + e.getClass().getSimpleName()).reset());
             }
         }
     }

@@ -2,8 +2,8 @@
 
 A console tool for managing perpetual futures orders on Bybit via API.
 
-> [!NOTE]
->
+> **Usage Notes**
+> 
 > - For full functionality, set your Bybit account to **Cross‑Margin** with **One‑Way Mode** enabled.
 > - Both **USDT** and **USDC** perpetual contracts are supported.
 > - When trading USDT‑based pairs, you can omit the “USDT” suffix.  

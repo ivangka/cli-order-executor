@@ -84,17 +84,13 @@ public class OrderService {
 
     // close positions
     public void closePositions(String symbol, String percent)
-            throws BadRetCodeException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
+            throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException {
         List<Position> positions;
         if (symbol.equals("-all")) {
             positions = apiService.positions();
         } else {
             positions = apiService.positions(symbol);
         }
-        if (positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The orders not found");
-        }
-
         // checking user's percent
         BigDecimal percentBD;
         try {
@@ -154,7 +150,7 @@ public class OrderService {
         } else {
             positions = apiService.positions(symbol);
         }
-        if (positions.get(0).getSize().equals("0")) {
+        if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
             throw new OrderNotFoundException("The orders not found");
         }
         return positions;

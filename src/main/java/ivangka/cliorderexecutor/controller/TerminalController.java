@@ -112,7 +112,7 @@ public class TerminalController {
                     } else { // close all
                         orderService.closePositions("-all", "100");
                     }
-                    System.out.println(ansi().fgBrightGreen().a("  The position successfully closed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  The positions successfully closed").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }

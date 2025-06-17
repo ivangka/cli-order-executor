@@ -8,7 +8,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [Commands](#commands)
   * [Open order](#open-order-o)
   * [Close position](#close-position-x)
-  * [Cancel limit orders](#cancel-limit-orders-c)
+  * [Cancel orders](#cancel-orders-c)
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gpi)
   * [Exit program](#exit-program-ex)
@@ -24,13 +24,13 @@ This program uses an approach that requires setting a stop-loss for each trade a
 2. The distance between entry and stop-loss prices
 3. Bybit's trading fees
 
-With this approach, **leverage does not affect your risk** - your risk is fixed by the stop-loss distance and position size calculation. Leverage only affects the number of concurrent positions - the higher the leverage, the more positions you can open within your available margin.
+With this approach, **leverage does not affect your risk** — your risk is fixed by the stop-loss distance and position size calculation. Leverage only affects the number of concurrent positions — the higher the leverage, the more positions you can open within your available margin.
 
 ## Commands
 
     !o          open order
     !x          close position
-    !c          cancel limit orders
+    !c          cancel orders
     !lev        set leverage
     !gpi        get position info
     !ex         exit program
@@ -119,13 +119,17 @@ This command closes 50% of the current `ETHUSDT` position(s).
 
 This command closes 100% of the current `SOLUSDT` position(s).
 
-### Cancel limit orders `!c`
+### Cancel orders `!c`
 
 ```
 !c [symbol]
 ```
 
-Cancels all active limit orders for the specified trading pair.
+Cancels all active orders (not positions) for the specified trading pair.
+
+> [!IMPORTANT]
+>
+> Be careful — if you have an open position for this pair, this command will also cancel any associated take-profit and stop-loss orders.
 
 Parameters:
 
@@ -137,7 +141,7 @@ Parameters:
 !c trumpusdt
 ```
 
-This command cancels all active limit orders for `TRUMPUSDT`.
+This command cancels all active orders for `TRUMPUSDT`.
 
 ### Set leverage `!lev`
 

@@ -36,7 +36,8 @@ public class ApiService {
     }
 
     // create market order
-    public String createMarketOrder(String symbol, String side, String orderSize, String stopLoss, String takeProfit) {
+    public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss, String takeProfit)
+            throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -49,14 +50,22 @@ public class ApiService {
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // create market order without tp
-    public String createMarketOrder(String symbol, String side, String orderSize, String stopLoss) {
+    public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss)
+            throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -68,15 +77,22 @@ public class ApiService {
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // create limit order
-    public String createLimitOrder(String symbol, String side, String orderSize, String price,
-                                   String stopLoss, String takeProfit) {
+    public void createLimitOrder(String symbol, String side, String orderSize, String price,
+                                   String stopLoss, String takeProfit) throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -90,14 +106,22 @@ public class ApiService {
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // create limit order without tp
-    public String createLimitOrder(String symbol, String side, String orderSize, String price, String stopLoss) {
+    public void createLimitOrder(String symbol, String side, String orderSize, String price, String stopLoss)
+            throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -110,14 +134,21 @@ public class ApiService {
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // close position by symbol
-    public String closePositions(String symbol, String side, String size) {
+    public void closePositions(String symbol, String side, String size) throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -128,28 +159,42 @@ public class ApiService {
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // cancel all limit orders for specified pair
-    public String cancelOrders(String symbol) {
+    public void cancelOrders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
                 .build();
         Object response = bybitApiTradeRestClient.cancelAllOrder(request);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // set the leverage for the trading pair
-    public String setLeverage(String symbol, String leverage) {
+    public void setLeverage(String symbol, String leverage) throws BadRetCodeException {
         var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -158,10 +203,17 @@ public class ApiService {
                 .build();
         Object response = bybitApiPositionRestClient.setPositionLeverage(request);
 
-        // get and return retCode from the response
+        // checking retCode from the response
         Map<?, ?> responseMap = (Map<?, ?>) response;
-        Object retCode = responseMap.get("retCode");
-        return retCode.toString();
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
     }
 
     // [max leverage]
@@ -173,8 +225,14 @@ public class ApiService {
         Object response = bybitApiMarketRestClient.getRiskLimit(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -195,8 +253,14 @@ public class ApiService {
         Object response = bybitApiMarketRestClient.getMarketTickers(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -217,8 +281,14 @@ public class ApiService {
         Object response = bybitApiMarketRestClient.getInstrumentsInfo(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
@@ -242,8 +312,14 @@ public class ApiService {
         Object response = bybitApiPositionRestClient.getPositionInfo(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
-        if (!responseMap.get("retCode").toString().equals("0")) {
-            throw new BadRetCodeException("Error (retCode: " + responseMap.get("retCode").toString() + ")");
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");

@@ -25,7 +25,7 @@ public class OrderService {
     }
 
     // open a market order
-    public String openMarketOrder(String symbol, String stopLoss, String takeProfit, String risk)
+    public void openMarketOrder(String symbol, String stopLoss, String takeProfit, String risk)
             throws BadRetCodeException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
@@ -36,11 +36,11 @@ public class OrderService {
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
-        return apiService.createMarketOrder(symbol, side, orderSize, stopLoss, takeProfit);
+        apiService.createMarketOrder(symbol, side, orderSize, stopLoss, takeProfit);
     }
 
     // open a market order without tp
-    public String openMarketOrder(String symbol, String stopLoss, String risk)
+    public void openMarketOrder(String symbol, String stopLoss, String risk)
             throws BadRetCodeException, InvalidCommandException {
 
         Ticker ticker = apiService.ticker(symbol);
@@ -51,11 +51,11 @@ public class OrderService {
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
-        return apiService.createMarketOrder(symbol, side, orderSize, stopLoss);
+        apiService.createMarketOrder(symbol, side, orderSize, stopLoss);
     }
 
     // place a limit order
-    public String placeLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
+    public void placeLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price)
             throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
@@ -65,11 +65,11 @@ public class OrderService {
         BigDecimal priceBD = new BigDecimal(price);
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
-        return apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss, takeProfit);
+        apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss, takeProfit);
     }
 
     // place limit order without tp
-    public String placeLimitOrder(String symbol, String stopLoss, String risk, String price)
+    public void placeLimitOrder(String symbol, String stopLoss, String risk, String price)
             throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
@@ -79,11 +79,11 @@ public class OrderService {
         BigDecimal priceBD = new BigDecimal(price);
         String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
 
-        return apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
+        apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
     }
 
     // close position for specified pair
-    public String closePositions(String symbol, String percent)
+    public void closePositions(String symbol, String percent)
             throws BadRetCodeException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
         List<Position> positions = apiService.positions(symbol);
         if (positions.get(0).getSize().equals("0")) {
@@ -123,26 +123,22 @@ public class OrderService {
                 throw new TooSmallOrderSizeException("Position size to close is too small");
             }
 
-            String retCode = apiService.closePositions(position.getSymbol(), side, roundedSizeBD.toString());
-            if (!retCode.equals("0")) {
-                return retCode;
-            }
+            apiService.closePositions(position.getSymbol(), side, roundedSizeBD.toString());
         }
-        return "0";
     }
 
     // cancel all limit orders for specified pair
-    public String cancelOrders(String symbol) {
-        return apiService.cancelOrders(symbol);
+    public void cancelOrders(String symbol) throws BadRetCodeException {
+        apiService.cancelOrders(symbol);
     }
 
     // set the leverage for the trading pair
-    public String setLeverage(String symbol, String leverage) throws BadRetCodeException {
+    public void setLeverage(String symbol, String leverage) throws BadRetCodeException {
         if (leverage.equals("Max")) {
             RiskLimit riskLimit = apiService.riskLimit(symbol);
             leverage = riskLimit.getMaxLeverage();
         }
-        return apiService.setLeverage(symbol, leverage);
+        apiService.setLeverage(symbol, leverage);
     }
 
     // get position info

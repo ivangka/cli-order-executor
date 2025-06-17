@@ -50,59 +50,43 @@ public class TerminalController {
             case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
                 // market order
                 if (commandParts.length == 5) {
-                    retCode = orderService.openMarketOrder(
+                    orderService.openMarketOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3],
                             commandParts[4]
                     );
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
 
                 // market order without tp
                 } else if (commandParts.length == 4) {
-                    retCode = orderService.openMarketOrder(
+                    orderService.openMarketOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3]
                     );
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
 
                 // limit order
                 } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
-                    retCode = orderService.placeLimitOrder(
+                    orderService.placeLimitOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3],
                             commandParts[4],
                             commandParts[6]
                     );
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
 
                 // limit order without tp
                 } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
-                    retCode = orderService.placeLimitOrder(
+                    orderService.placeLimitOrder(
                             commandParts[1].toUpperCase(),
                             commandParts[2],
                             commandParts[3],
                             commandParts[5]
                     );
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
 
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
@@ -113,22 +97,17 @@ public class TerminalController {
             case "!x": // !x [symbol] [percent]
                 if (commandParts.length == 3 || commandParts.length == 2) {
                     if (commandParts.length == 3) {
-                        retCode = orderService.closePositions(
+                        orderService.closePositions(
                                 commandParts[1].toUpperCase(),
                                 commandParts[2]
                         );
                     } else {
-                        retCode = orderService.closePositions(
+                        orderService.closePositions(
                                 commandParts[1].toUpperCase(),
                                "100"
                         );
                     }
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen()
-                                .a("  The position successfully closed").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  The position successfully closed").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }
@@ -137,15 +116,10 @@ public class TerminalController {
             // cancel all limit orders for specified pair
             case "!c":
                 if (commandParts.length == 2) {
-                    retCode = orderService.cancelOrders(
+                    orderService.cancelOrders(
                             commandParts[1].toUpperCase()
                     );
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen()
-                                .a("  Limit orders successfully cancelled").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Limit orders successfully cancelled").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }
@@ -155,22 +129,17 @@ public class TerminalController {
             case "!lev": // !lev [symbol] [leverage]
                 if (commandParts.length == 3 || commandParts.length == 2) {
                     if (commandParts.length == 3) {
-                        retCode = orderService.setLeverage(
+                        orderService.setLeverage(
                                 commandParts[1].toUpperCase(),
                                 commandParts[2]
                         );
                     } else {
-                        retCode = orderService.setLeverage(
+                        orderService.setLeverage(
                                 commandParts[1].toUpperCase(),
                                 "Max"
                         );
                     }
-                    if (retCode.equals("0")) {
-                        System.out.println(ansi().fgBrightGreen()
-                                .a("  Leverage successfully set").reset());
-                    } else {
-                        throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-                    }
+                    System.out.println(ansi().fgBrightGreen().a("  Leverage successfully set").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }

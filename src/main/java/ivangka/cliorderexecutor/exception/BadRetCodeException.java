@@ -1,7 +1,28 @@
 package ivangka.cliorderexecutor.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BadRetCodeException extends Exception {
+
+    public static final Map<String, String> RETCODES = new HashMap<>();
+    static {
+        RETCODES.put("10000", "Server Timeout");
+        RETCODES.put("10001", "Request parameter error");
+        RETCODES.put("10002", "The request time exceeds the time window range");
+        RETCODES.put("10003", "API key is invalid. Check whether the key and domain are matched, " +
+                "there are 4 env: mainnet, testnet, mainnet-demo, testnet-demo");
+        RETCODES.put("10005", "Permission denied, please check your API key permissions");
+        RETCODES.put("10007", "User authentication failed");
+        RETCODES.put("110003", "Order price exceeds the allowable range");
+        RETCODES.put("110004", "Wallet balance is insufficient");
+        RETCODES.put("110012", "Insufficient available balance");
+        RETCODES.put("110018", "User ID is illegal");
+        RETCODES.put("110043", "Set leverage has not been modified");
+    }
+
     public BadRetCodeException(String message) {
         super(message);
     }
+
 }

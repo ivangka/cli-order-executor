@@ -137,7 +137,7 @@ This command closes 100% of the current `SOLUSDT` position.
 !c [symbol]
 ```
 
-Cancels all active orders (not positions).
+Cancels all active orders (not positions) for specified trading pair or for all pairs.
 
 > [!IMPORTANT]
 >
@@ -176,7 +176,7 @@ Parameters:
 All variations
 
 ```
-!lev [symbol] [leverage]     — sets spesified leverage for the symbol
+!lev [symbol] [leverage]     — sets specified leverage for the symbol
 !lev [symbol]                — sets maximum leverage for the symbol
 ```
 

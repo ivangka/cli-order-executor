@@ -124,14 +124,6 @@ This command closes 50% of the current `ETHUSDT` position(s).
 
 This command closes 100% of the current `SOLUSDT` position(s).
 
-**Example 3 (full close for all positions):**
-
-```
-!x
-```
-
-This command closes 100% of all positions across all pairs.
-
 ### Cancel orders `!c`
 
 ```
@@ -211,21 +203,13 @@ All variations
 !gpi              — shows all positions
 ```
 
-**Example 1 (specific pair):**
+**Example:**
 
 ```
 !gpi sandusdt
 ```
 
 This command displays position(s) details for `SANDUSDT`.
-
-**Example 2 (all positions):**
-
-```
-!gpi
-```
-
-This command displays positions for all trading pairs.
 
 ### Exit program `!ex`
 

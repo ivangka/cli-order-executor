@@ -147,7 +147,7 @@ public class ApiService {
         }
     }
 
-    // close position by symbol
+    // close position(s) by symbol
     public void closePositions(String symbol, String side, String size) throws BadRetCodeException {
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
@@ -172,7 +172,7 @@ public class ApiService {
         }
     }
 
-    // cancel all limit orders for specified pair
+    // cancel all orders for specified pair
     public void cancelOrders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
@@ -323,10 +323,61 @@ public class ApiService {
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-
         List<Position> positions = new LinkedList<>();
+        positions = fillPositions(positions, list);
+        return positions;
+    }
+
+    // get all positions
+    public List<Position> positions() throws BadRetCodeException {
+        // USDT
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDT")
+                .build();
+        Object response = bybitApiPositionRestClient.getPositionInfo(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        List<Position> positions = new LinkedList<>();
+        positions = fillPositions(positions, list);
+
+        // USDC (PERP)
+        request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDC")
+                .build();
+        response = bybitApiPositionRestClient.getPositionInfo(request);
+
+        responseMap = (Map<String, Object>) response;
+        retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        result = (Map<String, Object>) responseMap.get("result");
+        list = (List<Map<String, Object>>) result.get("list");
+        positions = fillPositions(positions, list);
+        return positions;
+    }
+
+    private List<Position> fillPositions(List<Position> positions, List<Map<String, Object>> listResponse) {
         Position position;
-        for (Map<String, Object> item : list) {
+        for (Map<String, Object> item : listResponse) {
             position = new Position();
             position.setSymbol((String) item.get("symbol"));
             position.setSide((String) item.get("side"));

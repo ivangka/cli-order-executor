@@ -59,12 +59,12 @@ All variations:
 
 ```
 Market:
-!o [symbol] [sl] [tp] [risk]
-!o [symbol] [sl] [risk]
+!o [symbol] [sl] [tp] [risk]                — market order with take-profit and stop-loss
+!o [symbol] [sl] [risk]                     — market order with stop-loss only
 
 Limit:
-!o [symbol] [sl] [tp] [risk] -l [price]
-!o [symbol] [sl] [risk] -l [price]
+!o [symbol] [sl] [tp] [risk] -l [price]     — limit order with take-profit and stop-loss
+!o [symbol] [sl] [risk] -l [price]          — limit order with stop-loss only
 ```
 
 **Example 1 (market order):**
@@ -89,11 +89,11 @@ This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop los
 !x [symbol] [percent]
 ```
 
-Closes a specified percentage of an open position(s) for the given trading pair. If no percentage is specified, closes the entire order (100%).
+Closes a specified percentage of an open position(s) for the given trading pair. If no percentage is specified, closes the entire position (100%). If no symbol is specified, all positions will be closed.
 
 Parameters:
 
-- `symbol` — trading pair
+- `symbol` — trading pair (optional)
 - `percent` — percentage of position to close (optional)
 
 Constraints:
@@ -103,8 +103,9 @@ Constraints:
 All variations:
 
 ```
-!x [symbol] [percent]
-!x [symbol]
+!x [symbol] [percent]     — closes a percentage of the position(s) for the symbol
+!x [symbol]               — closes the whole position(s) for the symbol
+!x                        — closes all positions across all pairs
 ```
 
 **Example 1 (partial close):**
@@ -114,6 +115,14 @@ All variations:
 This command closes 50% of the current `ETHUSDT` position(s).
 
 **Example 2 (full close):**
+
+!x solusdt
+
+This command closes 100% of the current `SOLUSDT` position(s).
+
+**Example 3 (full close for all positions):**
+
+This command closes 100% of all positions across all pairs.
 
 !x solusdt
 
@@ -159,8 +168,8 @@ Parameters:
 All variations
 
 ```
-!lev [symbol] [leverage]
-!lev [symbol]
+!lev [symbol] [leverage]     — sets leverage for the symbol
+!lev [symbol]                — sets maximum leverage for the symbol
 ```
 
 **Example 1:**
@@ -189,15 +198,30 @@ Displays information about the current position(s) for the specified trading pai
 
 Parameters:
 
-- `symbol` — trading pair
+- `symbol` — trading pair (optional)
 
-**Example:**
+All variations
+
+```
+!gpi [symbol]     — shows position(s) info for the symbol
+!gpi              — shows all positions
+```
+
+**Example 1 (specific pair):**
 
 ```
 !gpi sandusdt
 ```
 
 This command displays position(s) details for `SANDUSDT`.
+
+**Example 2 (all positions):**
+
+```
+!gpi
+```
+
+This command displays positions for all trading pairs.
 
 ### Exit program `!ex`
 

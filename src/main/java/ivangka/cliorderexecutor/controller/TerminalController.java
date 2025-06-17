@@ -96,19 +96,21 @@ public class TerminalController {
                 }
                 break;
 
-            // close position for specified pair
+            // close positions
             case "!x": // !x [symbol] [percent]
-                if (commandParts.length == 3 || commandParts.length == 2) {
-                    if (commandParts.length == 3) {
+                if (commandParts.length == 3 || commandParts.length == 2 || commandParts.length == 1) {
+                    if (commandParts.length == 3) { // percent
                         orderService.closePositions(
                                 commandParts[1].toUpperCase(),
                                 commandParts[2]
                         );
-                    } else {
+                    } else if (commandParts.length == 2) { // 100%
                         orderService.closePositions(
                                 commandParts[1].toUpperCase(),
                                "100"
                         );
+                    } else { // close all
+                        orderService.closePositions("-all", "100");
                     }
                     System.out.println(ansi().fgBrightGreen().a("  The position successfully closed").reset());
                 } else {
@@ -131,15 +133,15 @@ public class TerminalController {
             // set the leverage for specified pair
             case "!lev": // !lev [symbol] [leverage]
                 if (commandParts.length == 3 || commandParts.length == 2) {
-                    if (commandParts.length == 3) {
+                    if (commandParts.length == 3) { // lev
                         orderService.setLeverage(
                                 commandParts[1].toUpperCase(),
                                 commandParts[2]
                         );
-                    } else {
+                    } else { // max lev
                         orderService.setLeverage(
                                 commandParts[1].toUpperCase(),
-                                "Max"
+                                "-max"
                         );
                     }
                     System.out.println(ansi().fgBrightGreen().a("  Leverage successfully set").reset());
@@ -150,11 +152,16 @@ public class TerminalController {
 
             // get position info
             case "!gpi": // !gpi [symbol]
-                if (commandParts.length == 2) {
-                    List<Position> positions = orderService.positions(commandParts[1].toUpperCase());
+                if (commandParts.length == 2 || commandParts.length == 1) {
+                    List<Position> positions;
+                    if (commandParts.length == 2) { // positions by symbol
+                        positions = orderService.positions(commandParts[1].toUpperCase());
+                    } else {
+                        positions = orderService.positions("-all");
+                    }
                     for (int i = 0; i < positions.size(); i++) {
                         String positionStr = positions.get(i).toString();
-                        if (i > 0) {
+                        if (i > 0) { // all positions
                             positionStr = positionStr.substring(positionStr.indexOf('\n') + 1);
                         }
                         System.out.println(positionStr);

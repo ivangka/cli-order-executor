@@ -82,12 +82,17 @@ public class OrderService {
         apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
     }
 
-    // close position for specified pair
+    // close positions
     public void closePositions(String symbol, String percent)
             throws BadRetCodeException, InvalidCommandException, OrderNotFoundException, TooSmallOrderSizeException {
-        List<Position> positions = apiService.positions(symbol);
+        List<Position> positions;
+        if (symbol.equals("-all")) {
+            positions = apiService.positions();
+        } else {
+            positions = apiService.positions(symbol);
+        }
         if (positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The order not found");
+            throw new OrderNotFoundException("The orders not found");
         }
 
         // checking user's percent
@@ -102,13 +107,13 @@ public class OrderService {
             throw new InvalidCommandException("Value of percent is incorrect");
         }
 
-        // get min order size and step of the symbol
-        Instrument instrument = apiService.instrumentInfo(symbol);
-        BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
-        BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
-
         for (Position position : positions) {
             String side = position.getSide().equals("Buy") ? "Sell" : "Buy";
+
+            // get min order size and step of the symbol
+            Instrument instrument = apiService.instrumentInfo(position.getSymbol());
+            BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
+            BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
 
             // calculating final size
             BigDecimal orderSizeBD = new BigDecimal(position.getSize());
@@ -134,18 +139,23 @@ public class OrderService {
 
     // set the leverage for the trading pair
     public void setLeverage(String symbol, String leverage) throws BadRetCodeException {
-        if (leverage.equals("Max")) {
+        if (leverage.equals("-max")) {
             RiskLimit riskLimit = apiService.riskLimit(symbol);
             leverage = riskLimit.getMaxLeverage();
         }
         apiService.setLeverage(symbol, leverage);
     }
 
-    // get position info
+    // get positions info
     public List<Position> positions(String symbol) throws BadRetCodeException, OrderNotFoundException {
-        List<Position> positions = apiService.positions(symbol);
+        List<Position> positions;
+        if (symbol.equals("-all")) {
+            positions = apiService.positions();
+        } else {
+            positions = apiService.positions(symbol);
+        }
         if (positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The order not found");
+            throw new OrderNotFoundException("The orders not found");
         }
         return positions;
     }

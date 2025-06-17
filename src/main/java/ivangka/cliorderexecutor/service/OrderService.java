@@ -130,7 +130,11 @@ public class OrderService {
 
     // cancel all limit orders for specified pair
     public void cancelOrders(String symbol) throws BadRetCodeException {
-        apiService.cancelOrders(symbol);
+        if (symbol.equals("-all")) {
+            apiService.cancelOrders();
+        } else {
+            apiService.cancelOrders(symbol);
+        }
     }
 
     // set the leverage for the trading pair

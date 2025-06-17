@@ -193,6 +193,47 @@ public class ApiService {
         }
     }
 
+    // cancel all orders
+    public void cancelOrders() throws BadRetCodeException {
+        // USDT
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDT")
+                .build();
+        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+
+        // USDC (PERP)
+        request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDC")
+                .build();
+        response = bybitApiTradeRestClient.cancelAllOrder(request);
+
+        // checking retCode from the response
+        responseMap = (Map<?, ?>) response;
+        retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
     // set the leverage for the trading pair
     public void setLeverage(String symbol, String leverage) throws BadRetCodeException {
         var request = PositionDataRequest.builder()

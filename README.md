@@ -137,15 +137,20 @@ This command closes 100% of the current `SOLUSDT` position.
 !c [symbol]
 ```
 
-Cancels all active orders (not positions) for the specified trading pair.
+Cancels all active orders (not positions).
 
 > [!IMPORTANT]
 >
-> Be careful — if you have an open position for this pair, this command will also cancel any associated take-profit and stop-loss orders.
+> Be careful — if you have an open position, this command will also cancel any associated take-profit and stop-loss orders.
 
 Parameters:
 
-- `symbol` — trading pair
+- `symbol` — trading pair (optional)
+
+```
+!c [symbol]     — canceles the whole orders for the symbol
+!c              — cancels all orders across all pairs
+```
 
 **Example:**
 

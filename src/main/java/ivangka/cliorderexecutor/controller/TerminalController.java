@@ -125,13 +125,18 @@ public class TerminalController {
                 }
                 break;
 
-            // cancel all limit orders for specified pair
-            case "!c":
-                if (commandParts.length == 2) {
+            // cancel orders
+            case "!c": // !c [symbol]
+                if (commandParts.length == 2) { // by symbol
                     orderService.cancelOrders(
                             commandParts[1]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Limit orders successfully cancelled").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Orders successfully cancelled").reset());
+                } else if (commandParts.length == 1) { // all orders
+                    orderService.cancelOrders(
+                            "-all"
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Orders successfully cancelled").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }

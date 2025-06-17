@@ -4,7 +4,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 
 > **Usage Notes**
 > 
-> - For full functionality, set your Bybit account to **Cross‑Margin** with **One‑Way Mode** enabled.
+> - For the correct operation of the program enable **One‑Way Mode**.
 > - Both **USDT** and **USDC** perpetual contracts are supported.
 > - When trading USDT‑based pairs, you can omit the “USDT” suffix.  
     *For example, entering `BTC` will automatically be interpreted as `BTCUSDT`.*
@@ -96,7 +96,7 @@ This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop los
 !x [symbol] [percent]
 ```
 
-Closes an open position(s) for the given trading pair or for all pairs.
+Closes an open position for the given trading pair or for all pairs.
 
 Parameters:
 
@@ -110,8 +110,8 @@ Constraints:
 All variations:
 
 ```
-!x [symbol] [percent]     — closes a percentage of the position(s) for the symbol
-!x [symbol]               — closes the whole position(s) for the symbol
+!x [symbol] [percent]     — closes a percentage of the position for the symbol
+!x [symbol]               — closes the whole position for the symbol
 !x                        — closes all positions across all pairs
 ```
 
@@ -121,7 +121,7 @@ All variations:
 !x ethusdt 50
 ```
 
-This command closes 50% of the current `ETHUSDT` position(s).
+This command closes 50% of the current `ETHUSDT` position.
 
 **Example 2 (full close):**
 
@@ -129,7 +129,7 @@ This command closes 50% of the current `ETHUSDT` position(s).
 !x solusdt
 ```
 
-This command closes 100% of the current `SOLUSDT` position(s).
+This command closes 100% of the current `SOLUSDT` position.
 
 ### Cancel orders `!c`
 
@@ -206,7 +206,7 @@ Parameters:
 All variations
 
 ```
-!gpi [symbol]     — shows position(s) info for the symbol
+!gpi [symbol]     — shows position info for the symbol
 !gpi              — shows all positions
 ```
 
@@ -216,7 +216,7 @@ All variations
 !gpi sandusdt
 ```
 
-This command displays position(s) details for `SANDUSDT`.
+This command displays position details for `SANDUSDT`.
 
 ### Exit program `!ex`
 

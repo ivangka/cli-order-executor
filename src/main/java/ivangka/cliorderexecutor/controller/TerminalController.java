@@ -237,12 +237,8 @@ public class TerminalController {
 
             // get instructions link
             case "!help":
-                System.out.println(
-                        ansi()
-                        .a(Ansi.Attribute.ITALIC)
-                        .a("  Usage guide and examples: ")
-                        .reset() +
-                        "https://github.com/ivangka/cli-order-executor"
+                System.out.println("  Usage guide and examples: "
+                        + ansi().fgBrightBlue().a("https://github.com/ivangka/cli-order-executor").reset()
                 );
                 break;
 

@@ -118,26 +118,26 @@ Parameters:
 All variations:
 
 ```
-!x [symbol] [percent]     — closes a percentage of the position for the symbol
 !x [symbol]               — closes the whole position for the symbol
+!x [symbol] [percent]     — closes a percentage of the position for the symbol
 !x                        — closes all positions across all pairs
 ```
 
-**Example 1 (partial close):**
-
-```
-!x ethusdt 50
-```
-
-This command closes 50% of the current `ETHUSDT` position.
-
-**Example 2 (full close):**
+**Example 1 (full close):**
 
 ```
 !x solusdt
 ```
 
 This command closes 100% of the current `SOLUSDT` position.
+
+**Example 2 (partial close):**
+
+```
+!x ethusdt 50
+```
+
+This command closes 50% of the current `ETHUSDT` position.
 
 ### Cancel orders `!c`
 

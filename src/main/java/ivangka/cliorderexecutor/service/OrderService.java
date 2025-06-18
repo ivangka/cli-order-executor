@@ -1,10 +1,7 @@
 package ivangka.cliorderexecutor.service;
 
 import ivangka.cliorderexecutor.exception.*;
-import ivangka.cliorderexecutor.model.Instrument;
-import ivangka.cliorderexecutor.model.Position;
-import ivangka.cliorderexecutor.model.RiskLimit;
-import ivangka.cliorderexecutor.model.Ticker;
+import ivangka.cliorderexecutor.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -156,9 +153,23 @@ public class OrderService {
             positions = apiService.positions(symbol);
         }
         if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The orders not found");
+            throw new OrderNotFoundException("The positions not found");
         }
         return positions;
+    }
+
+    // get open orders
+    public List<Order> orders(String symbol) throws BadRetCodeException, OrderNotFoundException {
+        List<Order> orders;
+        if (symbol.equals("-all")) {
+            orders = apiService.orders();
+        } else {
+            orders = apiService.orders(symbol);
+        }
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("The orders not found");
+        }
+        return orders;
     }
 
     // get order size

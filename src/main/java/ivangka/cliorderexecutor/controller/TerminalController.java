@@ -1,6 +1,7 @@
 package ivangka.cliorderexecutor.controller;
 
 import ivangka.cliorderexecutor.exception.*;
+import ivangka.cliorderexecutor.model.Order;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,17 +168,40 @@ public class TerminalController {
             case "!gpi": // !gpi [symbol]
                 if (commandParts.length == 2 || commandParts.length == 1) {
                     List<Position> positions;
-                    if (commandParts.length == 2) { // positions by symbol
+                    if (commandParts.length == 2) { // position by symbol
                         positions = orderService.positions(commandParts[1]);
-                    } else {
+                    } else { // all positions
                         positions = orderService.positions("-all");
                     }
+                    // print positions
                     for (int i = 0; i < positions.size(); i++) {
                         String positionStr = positions.get(i).toString();
-                        if (i > 0) { // all positions
+                        if (i > 0) {
                             positionStr = positionStr.substring(positionStr.indexOf('\n') + 1);
                         }
                         System.out.println(positionStr);
+                    }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
+            // get open orders
+            case "!goo": // !goo [symbol]
+                if (commandParts.length == 2 || commandParts.length == 1) {
+                    List<Order> orders;
+                    if (commandParts.length == 2) { // orders by symbol
+                        orders = orderService.orders(commandParts[1]);
+                    } else { // all orders
+                        orders = orderService.orders("-all");
+                    }
+                    // print orders
+                    for (int i = 0; i < orders.size(); i++) {
+                        String orderStr = orders.get(i).toString();
+                        if (i > 0) {
+                            orderStr = orderStr.substring(orderStr.indexOf('\n') + 1);
+                        }
+                        System.out.println(orderStr);
                     }
                 } else {
                     throw new InvalidCommandException("Incorrect command format");

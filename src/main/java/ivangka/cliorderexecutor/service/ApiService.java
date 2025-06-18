@@ -8,10 +8,7 @@ import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
 import ivangka.cliorderexecutor.exception.BadRetCodeException;
-import ivangka.cliorderexecutor.model.Instrument;
-import ivangka.cliorderexecutor.model.Position;
-import ivangka.cliorderexecutor.model.RiskLimit;
-import ivangka.cliorderexecutor.model.Ticker;
+import ivangka.cliorderexecutor.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -416,6 +413,78 @@ public class ApiService {
         return positions;
     }
 
+    // get orders by symbol
+    public List<Order> orders(String symbol) throws BadRetCodeException {
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .build();
+        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        List<Order> orders = new LinkedList<>();
+        orders = fillOrders(orders, list);
+        return orders;
+    }
+
+    // get all orders
+    public List<Order> orders() throws BadRetCodeException {
+        // USDT
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDT")
+                .build();
+        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        List<Order> orders = new LinkedList<>();
+        orders = fillOrders(orders, list);
+
+        // USDC (PERP)
+        request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDC")
+                .build();
+        response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        responseMap = (Map<String, Object>) response;
+        retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        result = (Map<String, Object>) responseMap.get("result");
+        list = (List<Map<String, Object>>) result.get("list");
+        orders = fillOrders(orders, list);
+        return orders;
+    }
+
     private List<Position> fillPositions(List<Position> positions, List<Map<String, Object>> listResponse) {
         Position position;
         for (Map<String, Object> item : listResponse) {
@@ -431,6 +500,22 @@ public class ApiService {
             positions.add(position);
         }
         return positions;
+    }
+
+    private List<Order> fillOrders(List<Order> orders, List<Map<String, Object>> listResponse) {
+        Order order;
+        for (Map<String, Object> item : listResponse) {
+            order = new Order();
+            order.setSymbol((String) item.get("symbol"));
+            order.setPrice((String) item.get("price"));
+            order.setQuantity((String) item.get("qty"));
+            order.setSide((String) item.get("side"));
+            order.setOrderType((String) item.get("orderType"));
+            order.setStopLoss((String) item.get("stopLoss"));
+            order.setTakeProfit((String) item.get("takeProfit"));
+            orders.add(order);
+        }
+        return orders;
     }
 
 }

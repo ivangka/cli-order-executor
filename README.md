@@ -175,13 +175,6 @@ Parameters:
 - symbol — trading pair
 - price — stop-loss price ("0" to remove the stop-loss)
 
-All variations:
-
-```
-!sl [symbol] [price]     — sets or updates stop-loss for the symbol  
-!sl [symbol] 0           — removes the stop-loss for the symbol
-```
-
 **Example 1:**
 
 ```
@@ -210,13 +203,6 @@ Parameters:
 
 - symbol — trading pair
 - price — take-profit price ("0" to remove the take-profit)
-
-All variations:
-
-```
-!tp [symbol] [price]     — sets or updates take-profit for the symbol  
-!tp [symbol] 0           — removes the take-profit for the symbol
-```
 
 **Example 1:**
 

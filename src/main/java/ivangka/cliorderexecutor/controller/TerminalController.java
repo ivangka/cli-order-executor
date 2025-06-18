@@ -4,6 +4,7 @@ import ivangka.cliorderexecutor.exception.*;
 import ivangka.cliorderexecutor.model.Order;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
+import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -232,6 +233,17 @@ public class TerminalController {
                 } else {
                     throw new InvalidCommandException("Incorrect command format");
                 }
+                break;
+
+            // get instructions link
+            case "!help":
+                System.out.println(
+                        ansi()
+                        .a(Ansi.Attribute.ITALIC)
+                        .a("  Usage guide and examples: ")
+                        .reset() +
+                        "https://github.com/ivangka/cli-order-executor"
+                );
                 break;
 
             // stop the program

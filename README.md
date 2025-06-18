@@ -21,6 +21,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gpi)
   * [Get open orders](#get-open-orders-goo)
+  * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-ex)
 * [How to Use?](#how-to-use)
 * [Error 10002](#error-10002)
@@ -41,11 +42,16 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !o          open order
     !x          close position
     !c          cancel orders
+
     !sl         manage stop-loss
     !tp         manage take-profit
+
     !lev        set leverage
+
     !gpi        get position info
     !goo        get open orders
+
+    !help       get instructions link
     !ex         exit program
 
 ### Open order `!o`
@@ -309,6 +315,10 @@ All variations
 ```
 
 This command displays open orders for `BTCUSDT`.
+
+### Get instructions link `!help`
+
+Displays a link to the usage guide and examples.
 
 ### Exit program `!ex`
 

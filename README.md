@@ -231,7 +231,7 @@ This command displays position details for `SANDUSDT`.
 !goo [symbol]
 ```
 
-Displays open orders, including take-profit and stop-loss of current positions.
+Displays open limit orders info.
 
 Parameters:
 
@@ -241,7 +241,7 @@ All variations
 
 ```
 !goo [symbol]     — shows open orders for the symbol
-!goo              — shows all open orders
+!goo              — shows all open limit orders
 ```
 
 **Example:**
@@ -250,7 +250,7 @@ All variations
 !goo sandusdt
 ```
 
-This command displays all open orders for `SANDUSDT`.
+This command displays open orders for `SANDUSDT`.
 
 ### Exit program `!ex`
 

@@ -240,8 +240,8 @@ Parameters:
 All variations
 
 ```
-!goo [symbol]     — shows orders for the symbol
-!goo              — shows all orders
+!goo [symbol]     — shows open orders for the symbol
+!goo              — shows all open orders
 ```
 
 **Example:**

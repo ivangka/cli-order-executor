@@ -7,7 +7,6 @@ public class BadRetCodeException extends Exception {
 
     public static final Map<String, String> RETCODES = new HashMap<>();
     static {
-        RETCODES.put("10000", "Server Timeout");
         RETCODES.put("10001", "Request parameter error");
         RETCODES.put("10002", "The request time exceeds the time window range");
         RETCODES.put("10003", "API key is invalid. Check whether the key and domain are matched, " +

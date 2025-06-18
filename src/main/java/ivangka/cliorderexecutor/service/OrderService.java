@@ -135,6 +135,16 @@ public class OrderService {
         }
     }
 
+    // manage stop-loss
+    public void manageStopLoss(String symbol, String price) throws BadRetCodeException {
+        apiService.manageStopLoss(symbol, price);
+    }
+
+    // manage take-profit
+    public void manageTakeProfit(String symbol, String price) throws BadRetCodeException {
+        apiService.manageTakeProfit(symbol, price);
+    }
+
     // set the leverage for the trading pair
     public void setLeverage(String symbol, String leverage) throws BadRetCodeException {
         if (leverage.equals("-max")) {

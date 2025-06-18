@@ -19,6 +19,8 @@ public class BadRetCodeException extends Exception {
         RETCODES.put("110012", "Insufficient available balance");
         RETCODES.put("110018", "User ID is illegal");
         RETCODES.put("110043", "Set leverage has not been modified");
+        RETCODES.put("34040", "Not modified. Indicates you already set this TP/SL value or you didn't pass" +
+                "a required parameter");
     }
 
     public BadRetCodeException(String message) {

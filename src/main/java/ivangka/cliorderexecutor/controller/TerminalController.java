@@ -144,6 +144,32 @@ public class TerminalController {
                 }
                 break;
 
+            // manage stop-loss
+            case "!sl": // !sl [symbol] [price]
+                if (commandParts.length == 3) {
+                    orderService.manageStopLoss(
+                            commandParts[1],
+                            commandParts[2]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Stop-loss successfully changed").reset());
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
+            // manage take-profit
+            case "!tp": // !tp [symbol] [price]
+                if (commandParts.length == 3) {
+                    orderService.manageTakeProfit(
+                            commandParts[1],
+                            commandParts[2]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Take-profit successfully changed").reset());
+                } else {
+                    throw new InvalidCommandException("Incorrect command format");
+                }
+                break;
+
             // set the leverage for specified pair
             case "!lev": // !lev [symbol] [leverage]
                 if (commandParts.length == 3 || commandParts.length == 2) {

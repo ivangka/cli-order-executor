@@ -2,7 +2,9 @@ package ivangka.cliorderexecutor.service;
 
 import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
+import com.bybit.api.client.domain.position.TpslMode;
 import com.bybit.api.client.domain.position.request.PositionDataRequest;
+import com.bybit.api.client.domain.trade.PositionIdx;
 import com.bybit.api.client.domain.trade.request.TradeOrderRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
@@ -221,6 +223,54 @@ public class ApiService {
         // checking retCode from the response
         responseMap = (Map<?, ?>) response;
         retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // manage stop-loss
+    public void manageStopLoss(String symbol, String price) throws BadRetCodeException {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .tpslMode(TpslMode.FULL)
+                .positionIdx(PositionIdx.ONE_WAY_MODE)
+                .stopLoss(price)
+                .build();
+        Object response = bybitApiPositionRestClient.setTradingStop(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // manage take-profit
+    public void manageTakeProfit(String symbol, String price) throws BadRetCodeException {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .tpslMode(TpslMode.FULL)
+                .positionIdx(PositionIdx.ONE_WAY_MODE)
+                .takeProfit(price)
+                .build();
+        Object response = bybitApiPositionRestClient.setTradingStop(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
         if (!retCode.equals("0")) {
             String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
             if (retCodeMessage != null) {

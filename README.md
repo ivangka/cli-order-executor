@@ -16,6 +16,8 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Open order](#open-order-o)
   * [Close position](#close-position-x)
   * [Cancel orders](#cancel-orders-c)
+  * [Manage stop-loss](#manage-stop-loss-sl)
+  * [Manage take-profit](#manage-take-profit-tp)
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gpi)
   * [Get open orders](#get-open-orders-goo)
@@ -39,6 +41,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !o          open order
     !x          close position
     !c          cancel orders
+    !sl         manage stop-loss
+    !tp         manage take-profit
     !lev        set leverage
     !gpi        get position info
     !goo        get open orders
@@ -105,10 +109,6 @@ Parameters:
 - `symbol` — trading pair (optional)
 - `percent` — percentage of position to close (optional)
 
-Constraints:
-
-- `0 < percent <= 100`
-
 All variations:
 
 ```
@@ -161,6 +161,78 @@ Parameters:
 ```
 
 This command cancels all active orders for `TRUMPUSDT`.
+
+### Manage stop-loss `!sl`
+
+```
+!sl [symbol] [price]
+```
+
+Updates, sets, or removes the stop-loss order for an existing position.
+
+Parameters:
+
+- symbol — trading pair
+- price — stop-loss price ("0" to remove the stop-loss)
+
+All variations:
+
+```
+!sl [symbol] [price]     — sets or updates stop-loss for the symbol  
+!sl [symbol] 0           — removes the stop-loss for the symbol
+```
+
+**Example 1:**
+
+```
+!sl polusdt 0.1641
+```
+
+Moves the stop-loss for `POLUSDT` to 0.1641. If no stop-loss was set before, this sets a new one.
+
+**Example 2:**
+
+```
+!sl ethusdt 0
+```
+
+Removes the stop-loss for the current `ETHUSDT` position.
+
+### Manage take-profit `!tp`
+
+```
+!tp [symbol] [price]
+```
+
+Updates, sets, or removes the take-profit order for an existing position.
+
+Parameters:
+
+- symbol — trading pair
+- price — take-profit price ("0" to remove the take-profit)
+
+All variations:
+
+```
+!tp [symbol] [price]     — sets or updates take-profit for the symbol  
+!tp [symbol] 0           — removes the take-profit for the symbol
+```
+
+**Example 1:**
+
+```
+!tp btcusdt 98000
+```
+
+Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, this sets a new one.
+
+**Example 2:**
+
+```
+!tp bnbusdt 0
+```
+
+Removes the take-profit for the current `BNBUSDT` position.
 
 ### Set leverage `!lev`
 
@@ -247,10 +319,10 @@ All variations
 **Example:**
 
 ```
-!goo sandusdt
+!goo btcusdt
 ```
 
-This command displays open orders for `SANDUSDT`.
+This command displays open orders for `BTCUSDT`.
 
 ### Exit program `!ex`
 

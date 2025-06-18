@@ -158,7 +158,7 @@ public class OrderService {
         return positions;
     }
 
-    // get open orders
+    // get open limit orders
     public List<Order> orders(String symbol) throws BadRetCodeException, OrderNotFoundException {
         List<Order> orders;
         if (symbol.equals("-all")) {

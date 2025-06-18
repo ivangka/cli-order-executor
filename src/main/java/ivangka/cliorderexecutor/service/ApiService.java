@@ -485,6 +485,7 @@ public class ApiService {
         return orders;
     }
 
+    // fill positions
     private List<Position> fillPositions(List<Position> positions, List<Map<String, Object>> listResponse) {
         Position position;
         for (Map<String, Object> item : listResponse) {
@@ -502,6 +503,7 @@ public class ApiService {
         return positions;
     }
 
+    // fill limit orders
     private List<Order> fillOrders(List<Order> orders, List<Map<String, Object>> listResponse) {
         Order order;
         for (Map<String, Object> item : listResponse) {

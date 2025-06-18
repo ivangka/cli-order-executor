@@ -4,7 +4,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 
 > **Usage Notes**
 > 
-> - For the program to work correctly, set **One-way mode** in your Bybit account.
+> - For all functions of the program to work correctly, set **One-Way Mode** in your Bybit account.
 > - Both **USDT** and **USDC** perpetual contracts are supported.
 > - When trading USDT‑based pairs, you can omit the “USDT” suffix.  
 >   *For example, entering `BTC` will automatically be interpreted as `BTCUSDT`.*

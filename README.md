@@ -39,20 +39,20 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
 ## Commands
 
-    !o          open order
-    !x          close position
-    !c          cancel orders
+    !o         open order
+    !x         close position
+    !c         cancel orders
 
-    !sl         manage stop-loss
-    !tp         manage take-profit
+    !sl        manage stop-loss
+    !tp        manage take-profit
 
-    !lev        set leverage
+    !lev       set leverage
 
-    !gpi        get position info
-    !goo        get open orders
+    !gpi       get position info
+    !goo       get open orders
 
-    !help       get instructions link
-    !ex         exit program
+    !help      get instructions link
+    !ex        exit program
 
 ### Open order `!o`
 

@@ -151,16 +151,12 @@ This command closes 50% of the current `ETHUSDT` position.
 
 Cancels all active orders (not positions) for specified trading pair or for all pairs.
 
-> [!IMPORTANT]
->
-> Be careful — if you have an open position, this command will also cancel any associated take-profit and stop-loss orders.
-
 Parameters:
 
 - `symbol` — trading pair (optional)
 
 ```
-!c [symbol]     — cancels the whole orders for the symbol
+!c [symbol]     — cancels all orders for the symbol
 !c              — cancels all orders across all pairs
 ```
 

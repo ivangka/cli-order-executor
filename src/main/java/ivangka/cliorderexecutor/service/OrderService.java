@@ -126,7 +126,7 @@ public class OrderService {
         }
     }
 
-    // cancel all limit orders for specified pair
+    // cancel orders
     public void cancelOrders(String symbol) throws BadRetCodeException {
         if (symbol.equals("-all")) {
             apiService.cancelOrders();

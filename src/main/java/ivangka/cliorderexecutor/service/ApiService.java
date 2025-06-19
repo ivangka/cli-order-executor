@@ -4,6 +4,7 @@ import com.bybit.api.client.domain.CategoryType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.domain.position.TpslMode;
 import com.bybit.api.client.domain.position.request.PositionDataRequest;
+import com.bybit.api.client.domain.trade.OrderFilter;
 import com.bybit.api.client.domain.trade.PositionIdx;
 import com.bybit.api.client.domain.trade.request.TradeOrderRequest;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
@@ -171,11 +172,12 @@ public class ApiService {
         }
     }
 
-    // cancel all orders for specified pair
+    // cancel orders for specified pair
     public void cancelOrders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         Object response = bybitApiTradeRestClient.cancelAllOrder(request);
 
@@ -198,6 +200,7 @@ public class ApiService {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDT")
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         Object response = bybitApiTradeRestClient.cancelAllOrder(request);
 
@@ -217,6 +220,7 @@ public class ApiService {
         request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDC")
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         response = bybitApiTradeRestClient.cancelAllOrder(request);
 

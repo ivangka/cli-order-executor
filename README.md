@@ -66,6 +66,10 @@ Opens a perpetual futures order with exact order sizing based on a specified ris
 > 
 > Slippage is not considered in the order size calculation.
 
+> **Limit Orders**
+> 
+> If you place a limit long order with a price higher than the current market price, it will be executed immediately as a market order. Similarly, if you place a limit short order with a price lower than the current market price, it will also be filled immediately as a market order.
+
 Parameters:
 
 - `symbol` — trading pair

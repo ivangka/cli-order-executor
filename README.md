@@ -2,8 +2,6 @@
 
 A console tool for managing perpetual futures orders on Bybit via API.
 
-> [!INFO]
-> 
 > **Usage Notes**
 > 
 > - For all functions of the program to work correctly, set **One-Way Mode** in your Bybit account.

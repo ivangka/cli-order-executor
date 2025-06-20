@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 public class RiskCalculatorService {
 
     // market order commission in %
-    @Value("${order.commission}")
+    @Value("${order.market.commission}")
     private BigDecimal orderCommissionPercent;
 
     // get order size in base coin

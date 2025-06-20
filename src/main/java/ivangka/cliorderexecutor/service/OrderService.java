@@ -27,7 +27,7 @@ public class OrderService {
 
         Ticker ticker = apiService.ticker(symbol);
         Instrument instrument = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep());
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep(), "Market");
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
@@ -42,7 +42,7 @@ public class OrderService {
 
         Ticker ticker = apiService.ticker(symbol);
         Instrument instrument = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep());
+        String orderSize = orderSize(risk, ticker.getLastPrice(), stopLoss, instrument.getQtyStep(), "Market");
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
@@ -56,7 +56,7 @@ public class OrderService {
             throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep(), "Limit");
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -70,7 +70,7 @@ public class OrderService {
             throws BadRetCodeException, InvalidCommandException {
 
         Instrument instrument = apiService.instrumentInfo(symbol);
-        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep());
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep(), "Limit");
 
         BigDecimal stopLossBD = new BigDecimal(stopLoss);
         BigDecimal priceBD = new BigDecimal(price);
@@ -188,7 +188,8 @@ public class OrderService {
     }
 
     // get order size
-    private String orderSize(String risk, String price, String stopLoss, String step) throws InvalidCommandException {
+    private String orderSize(String risk, String price, String stopLoss, String step, String orderType)
+            throws InvalidCommandException {
         BigDecimal riskBD, priceBD, stopLossBD, stepBD;
         try {
             riskBD = new BigDecimal(risk);
@@ -198,7 +199,7 @@ public class OrderService {
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("Incorrect command format, try again");
         }
-        return riskCalculatorService.calculateOrderSize(riskBD, priceBD, stopLossBD, stepBD);
+        return riskCalculatorService.calculateOrderSize(riskBD, priceBD, stopLossBD, stepBD, orderType);
     }
 
 }

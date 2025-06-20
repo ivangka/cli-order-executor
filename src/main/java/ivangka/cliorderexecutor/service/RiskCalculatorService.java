@@ -12,11 +12,11 @@ import java.math.RoundingMode;
 public class RiskCalculatorService {
 
     // taker fee in % (market order)
-    @Value("${fee.taker.commission}")
+    @Value("${fee.taker}")
     private BigDecimal feeTakerPercent;
 
     // maker order fee in % (limit order)
-    @Value("${fee.maker.commission}")
+    @Value("${fee.maker}")
     private BigDecimal feeMakerPercent;
 
     // get order size in base coin

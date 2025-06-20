@@ -539,12 +539,37 @@ public class ApiService {
         return orders;
     }
 
+    // send test request
+    public void testRequest() throws BadRetCodeException {
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol("BTCUSDT")
+                .build();
+        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
     // fill positions
     private List<Position> fillPositions(List<Position> positions, List<Map<String, Object>> listResponse) {
         Position position;
         for (Map<String, Object> item : listResponse) {
             position = new Position();
-            position.setSymbol((String) item.get("symbol"));
+
+            String symbol = (String) item.get("symbol");
+            if (symbol != null && symbol.endsWith("PERP")) {
+                symbol = symbol.substring(0, symbol.length() - 4) + "USDC";
+            }
+            position.setSymbol(symbol);
             position.setSide((String) item.get("side"));
             position.setSize((String) item.get("size"));
             position.setAvgPrice((String) item.get("avgPrice"));
@@ -565,7 +590,12 @@ public class ApiService {
                 continue;
             }
             order = new Order();
-            order.setSymbol((String) item.get("symbol"));
+
+            String symbol = (String) item.get("symbol");
+            if (symbol != null && symbol.endsWith("PERP")) {
+                symbol = symbol.substring(0, symbol.length() - 4) + "USDC";
+            }
+            order.setSymbol(symbol);
             order.setPrice((String) item.get("price"));
             order.setQuantity((String) item.get("qty"));
             order.setSide((String) item.get("side"));

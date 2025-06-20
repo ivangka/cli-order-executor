@@ -93,7 +93,7 @@ public class OrderService {
         try {
             percentBD = new BigDecimal(percent);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Incorrect command format");
+            throw new InvalidCommandException("Incorrect command format, try again");
         }
         // 0 < percent <= 100
         if (percentBD.compareTo(BigDecimal.ZERO) <= 0 || percentBD.compareTo(new BigDecimal("100")) > 0) {
@@ -182,6 +182,11 @@ public class OrderService {
         return orders;
     }
 
+    // test API connection
+    public void testRequest() throws BadRetCodeException {
+        apiService.testRequest();
+    }
+
     // get order size
     private String orderSize(String risk, String price, String stopLoss, String step) throws InvalidCommandException {
         BigDecimal riskBD, priceBD, stopLossBD, stepBD;
@@ -191,7 +196,7 @@ public class OrderService {
             stopLossBD = new BigDecimal(stopLoss);
             stepBD = new BigDecimal(step);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Incorrect command format");
+            throw new InvalidCommandException("Incorrect command format, try again");
         }
         return riskCalculatorService.calculateOrderSize(riskBD, priceBD, stopLossBD, stepBD);
     }

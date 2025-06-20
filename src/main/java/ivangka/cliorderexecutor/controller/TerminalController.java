@@ -102,7 +102,7 @@ public class TerminalController {
                     System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
 
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -124,7 +124,7 @@ public class TerminalController {
                     }
                     System.out.println(ansi().fgBrightGreen().a("  The positions successfully closed").reset());
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -141,7 +141,7 @@ public class TerminalController {
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Orders successfully cancelled").reset());
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -154,7 +154,7 @@ public class TerminalController {
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Stop-loss successfully changed").reset());
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -167,7 +167,7 @@ public class TerminalController {
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Take-profit successfully changed").reset());
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -187,7 +187,7 @@ public class TerminalController {
                     }
                     System.out.println(ansi().fgBrightGreen().a("  Leverage successfully set").reset());
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -209,7 +209,7 @@ public class TerminalController {
                         System.out.println(positionStr);
                     }
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
@@ -231,23 +231,42 @@ public class TerminalController {
                         System.out.println(orderStr);
                     }
                 } else {
-                    throw new InvalidCommandException("Incorrect command format");
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
+                break;
+
+            // test API connection
+            case "!check":
+                if (commandParts.length == 1) {
+                    orderService.testRequest();
+                    System.out.println(ansi().fgBrightGreen()
+                            .a("  Connection OK, API credentials are valid").reset());
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
                 }
                 break;
 
             // get instructions link
             case "!help":
-                System.out.println("  Usage guide and examples: https://github.com/ivangka/cli-order-executor");
+                if (commandParts.length == 1) {
+                    System.out.println("  Usage guide and examples: https://github.com/ivangka/cli-order-executor");
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
                 break;
 
             // stop the program
-            case "!ex":
-                System.exit(0);
+            case "!exit":
+                if (commandParts.length == 1) {
+                    System.exit(0);
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
                 break;
 
             // invalid command
             default:
-                throw new InvalidCommandException("Unknown command");
+                throw new InvalidCommandException("Unknown command, try again");
         }
     }
 

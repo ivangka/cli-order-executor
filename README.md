@@ -21,7 +21,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gpi)
   * [Get open orders](#get-open-orders-goo)
-  * [Test API request](#test-api-request-check)
+  * [Send test API request](#send-test-api-request-check)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
 * [How to Use?](#how-to-use)
@@ -52,7 +52,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !gpi        get position info
     !goo        get open orders
 
-    !check      test API request
+    !check      send test API request
     !help       get instructions link
     !exit       exit program
 
@@ -318,7 +318,7 @@ All variations
 
 This command displays open orders for `BTCUSDC`.
 
-### Test API request `!check`
+### Send test API request `!check`
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
 

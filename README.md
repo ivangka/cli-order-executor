@@ -103,10 +103,10 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 **Example 2 (limit order):**
 
 ```
-!o suiusdt 2.44 3.12 200 -l 2.7
+!o suiusdc 2.44 3.12 200 -l 2.7
 ```
 
-This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+This command places a limit order (Long) on `SUIUSDC` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
 ### Close position `!x`
 
@@ -215,10 +215,10 @@ Parameters:
 **Example 1:**
 
 ```
-!tp btcusdt 98000
+!tp btcusdc 98000
 ```
 
-Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, this sets a new one.
+Moves the take-profit for `BTCUSDC` to 98000. If no take-profit was set before, this sets a new one.
 
 **Example 2:**
 
@@ -313,10 +313,10 @@ All variations
 **Example:**
 
 ```
-!goo btcusdt
+!goo btcusdc
 ```
 
-This command displays open orders for `BTCUSDT`.
+This command displays open orders for `BTCUSDC`.
 
 ### Test API connection `!check`
 

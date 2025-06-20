@@ -182,7 +182,7 @@ public class OrderService {
         return orders;
     }
 
-    // test API connection
+    // test API request
     public void testRequest() throws BadRetCodeException {
         apiService.testRequest();
     }

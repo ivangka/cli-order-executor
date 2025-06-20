@@ -235,7 +235,7 @@ public class TerminalController {
                 }
                 break;
 
-            // test API connection
+            // test API request
             case "!check":
                 if (commandParts.length == 1) {
                     orderService.testRequest();

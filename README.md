@@ -70,7 +70,7 @@ Opens a perpetual futures order with exact order sizing based on a specified ris
 
 > **Limit Orders**
 > 
-> If you place a limit long order with a price higher than the current market price, it will be executed immediately as a market order. Similarly, if you place a limit short order with a price lower than the current market price, it will also be filled immediately as a market order.
+> If you place a limit order with a price worse than the current market price, it will be executed immediately as a market order.
 
 Parameters:
 
@@ -103,10 +103,10 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 **Example 2 (limit order):**
 
 ```
-!o suiusdc 2.44 3.12 200 -l 2.7
+!o suiusdt 2.44 3.12 200 -l 2.7
 ```
 
-This command places a limit order (Long) on `SUIUSDC` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
+This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
 ### Close position `!x`
 
@@ -215,10 +215,10 @@ Parameters:
 **Example 1:**
 
 ```
-!tp btcusdc 98000
+!tp btcusdt 98000
 ```
 
-Moves the take-profit for `BTCUSDC` to 98000. If no take-profit was set before, this sets a new one.
+Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, this sets a new one.
 
 **Example 2:**
 
@@ -313,10 +313,10 @@ All variations
 **Example:**
 
 ```
-!goo btcusdc
+!goo btcusdt
 ```
 
-This command displays open orders for `BTCUSDC`.
+This command displays open orders for `BTCUSDT`.
 
 ### Send test API request `!check`
 

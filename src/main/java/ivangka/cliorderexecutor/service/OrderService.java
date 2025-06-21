@@ -163,7 +163,7 @@ public class OrderService {
             positions = apiService.positions(symbol);
         }
         if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The positions were not found");
+            throw new OrderNotFoundException("Positions were not found");
         }
         return positions;
     }
@@ -177,7 +177,7 @@ public class OrderService {
             orders = apiService.orders(symbol);
         }
         if (orders.isEmpty()) {
-            throw new OrderNotFoundException("The orders were not found");
+            throw new OrderNotFoundException("Orders were not found");
         }
         return orders;
     }

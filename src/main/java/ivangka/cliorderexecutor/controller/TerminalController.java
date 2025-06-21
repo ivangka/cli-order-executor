@@ -69,7 +69,7 @@ public class TerminalController {
                             commandParts[3],
                             commandParts[4]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
 
                 // market order without tp
                 } else if (commandParts.length == 4) {
@@ -78,7 +78,7 @@ public class TerminalController {
                             commandParts[2],
                             commandParts[3]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Market order has been opened").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
 
                 // limit order
                 } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
@@ -89,7 +89,7 @@ public class TerminalController {
                             commandParts[4],
                             commandParts[6]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
 
                 // limit order without tp
                 } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
@@ -99,7 +99,7 @@ public class TerminalController {
                             commandParts[3],
                             commandParts[5]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Limit order has been placed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
 
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
@@ -122,7 +122,7 @@ public class TerminalController {
                     } else { // close all
                         orderService.closePositions("-all", "100");
                     }
-                    System.out.println(ansi().fgBrightGreen().a("  The positions successfully closed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Positions closed successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -134,12 +134,12 @@ public class TerminalController {
                     orderService.cancelOrders(
                             commandParts[1]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders successfully cancelled").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
                 } else if (commandParts.length == 1) { // all orders
                     orderService.cancelOrders(
                             "-all"
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders successfully cancelled").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -152,7 +152,7 @@ public class TerminalController {
                             commandParts[1],
                             commandParts[2]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-loss successfully changed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Stop-loss updated successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -165,7 +165,7 @@ public class TerminalController {
                             commandParts[1],
                             commandParts[2]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Take-profit successfully changed").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Take-profit updated successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -185,7 +185,7 @@ public class TerminalController {
                                 "-max"
                         );
                     }
-                    System.out.println(ansi().fgBrightGreen().a("  Leverage successfully set").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Leverage set successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }

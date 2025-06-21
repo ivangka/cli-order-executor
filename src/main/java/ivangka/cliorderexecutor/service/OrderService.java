@@ -97,7 +97,7 @@ public class OrderService {
         }
         // 0 < percent <= 100
         if (percentBD.compareTo(BigDecimal.ZERO) <= 0 || percentBD.compareTo(new BigDecimal("100")) > 0) {
-            throw new InvalidCommandException("Value of percent is incorrect");
+            throw new InvalidCommandException("Percent value is incorrect");
         }
 
         for (Position position : positions) {
@@ -163,7 +163,7 @@ public class OrderService {
             positions = apiService.positions(symbol);
         }
         if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
-            throw new OrderNotFoundException("The positions not found");
+            throw new OrderNotFoundException("The positions were not found");
         }
         return positions;
     }
@@ -177,7 +177,7 @@ public class OrderService {
             orders = apiService.orders(symbol);
         }
         if (orders.isEmpty()) {
-            throw new OrderNotFoundException("The orders not found");
+            throw new OrderNotFoundException("The orders were not found");
         }
         return orders;
     }

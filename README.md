@@ -151,15 +151,15 @@ This command closes 50% of the current `ETHUSDT` position.
 !c [symbol]
 ```
 
-Cancels all active orders (not positions) for specified trading pair or for all pairs.
+Cancels all open orders (not positions) for specified trading pair or for all pairs.
 
 Parameters:
 
 - `symbol` — trading pair (optional)
 
 ```
-!c [symbol]     — cancels all orders for the symbol
-!c              — cancels all orders across all pairs
+!c [symbol]     — cancels all open orders for the symbol
+!c              — cancels all open orders across all pairs
 ```
 
 **Example:**
@@ -168,7 +168,7 @@ Parameters:
 !c trumpusdt
 ```
 
-This command cancels all active orders for `TRUMPUSDT`.
+This command cancels all open orders for `TRUMPUSDT`.
 
 ### Manage stop-loss `!sl`
 
@@ -297,7 +297,7 @@ This command displays position details for `SANDUSDT`.
 !goo [symbol]
 ```
 
-Displays open limit orders info.
+Displays open orders info.
 
 Parameters:
 
@@ -307,7 +307,7 @@ All variations
 
 ```
 !goo [symbol]     — shows open orders for the symbol
-!goo              — shows all open limit orders
+!goo              — shows all open orders
 ```
 
 **Example:**

@@ -213,7 +213,7 @@ public class TerminalController {
                 }
                 break;
 
-            // get open limit orders
+            // get open orders
             case "!goo": // !goo [symbol]
                 if (commandParts.length == 2 || commandParts.length == 1) {
                     List<Order> orders;

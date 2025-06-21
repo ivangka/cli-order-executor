@@ -467,11 +467,12 @@ public class ApiService {
         return positions;
     }
 
-    // get open limit orders by symbol
+    // get open orders by symbol
     public List<Order> orders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         Object response = bybitApiTradeRestClient.getOpenOrders(request);
 
@@ -492,12 +493,13 @@ public class ApiService {
         return orders;
     }
 
-    // get all limit orders
+    // get all open orders
     public List<Order> orders() throws BadRetCodeException {
         // USDT
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDT")
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         Object response = bybitApiTradeRestClient.getOpenOrders(request);
 
@@ -520,6 +522,7 @@ public class ApiService {
         request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDC")
+                .orderFilter(OrderFilter.ORDER)
                 .build();
         response = bybitApiTradeRestClient.getOpenOrders(request);
 
@@ -582,13 +585,10 @@ public class ApiService {
         return positions;
     }
 
-    // fill limit orders
+    // fill orders
     private List<Order> fillOrders(List<Order> orders, List<Map<String, Object>> listResponse) {
         Order order;
         for (Map<String, Object> item : listResponse) {
-            if (item.get("orderType").equals("Market")) {
-                continue;
-            }
             order = new Order();
 
             String symbol = (String) item.get("symbol");

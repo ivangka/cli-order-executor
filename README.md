@@ -145,7 +145,7 @@ This command closes 100% of the current `SOLUSDT` position.
 
 This command closes 50% of the current `ETHUSDT` position.
 
-### Cancel orders `!c`
+## Cancel orders `!c`
 
 ```
 !c [symbol]
@@ -170,7 +170,7 @@ Parameters:
 
 This command cancels all open orders for `TRUMPUSDT`.
 
-### Manage stop-loss `!sl`
+## Manage stop-loss `!sl`
 
 ```
 !sl [symbol] [price]
@@ -199,7 +199,7 @@ Moves the stop-loss for `POLUSDT` to 0.1641. If no stop-loss was set before, thi
 
 Removes the stop-loss for the current `ETHUSDT` position.
 
-### Manage take-profit `!tp`
+## Manage take-profit `!tp`
 
 ```
 !tp [symbol] [price]
@@ -228,7 +228,7 @@ Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, 
 
 Removes the take-profit for the current `BNBUSDT` position.
 
-### Set leverage `!lev`
+## Set leverage `!lev`
 
 ```
 !lev [symbol] [leverage]
@@ -264,7 +264,7 @@ This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new or
 
 This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
-### Get position info `!gpi`
+## Get position info `!gpi`
 
 ```
 !gpi [symbol]
@@ -291,7 +291,7 @@ All variations
 
 This command displays position details for `SANDUSDT`.
 
-### Get open orders `!goo`
+## Get open orders `!goo`
 
 ```
 !goo [symbol]
@@ -318,19 +318,19 @@ All variations
 
 This command displays open orders for `BTCUSDT`.
 
-### Send test API request `!check`
+## Send test API request `!check`
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
 
-### Get instructions link `!help`
+## Get instructions link `!help`
 
 Displays a link to the usage guide and examples.
 
-### Exit program `!exit`
+## Exit program `!exit`
 
 Stops the program.
 
-## How to Use?
+# How to Use?
 
 Follow these steps to get started.
 
@@ -368,13 +368,13 @@ Here we go.
 > You only need to complete steps 1-5 once.
 > 
 
-## Error 10002
+# Error 10002
 
 If you get "Error Code 10002", it means your PC's clock is out of sync with the server's time.   
 To fix this, you just need to synchronize the time in your PC settings.
 
 *[See the full list of error codes.](https://bybit-exchange.github.io/docs/v5/error)*
 
-## License
+# License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

@@ -236,7 +236,7 @@ public class TerminalController {
                 break;
 
             // test API request
-            case "!check":
+            case "!ping":
                 if (commandParts.length == 1) {
                     orderService.testRequest();
                     System.out.println(ansi().fgBrightGreen()

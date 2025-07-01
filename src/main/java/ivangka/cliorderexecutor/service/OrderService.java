@@ -84,9 +84,9 @@ public class OrderService {
             throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException, InterruptedException {
         List<Position> positions;
         if (symbol.equals("-all")) {
-            positions = apiService.positions();
+            positions = apiService.positions(); // 2 req (Position)
         } else {
-            positions = apiService.positions(symbol);
+            positions = apiService.positions(symbol); // 1 req (Position)
         }
         // checking user's percent
         BigDecimal percentBD;
@@ -103,8 +103,15 @@ public class OrderService {
         for (Position position : positions) {
             String side = position.getSide().equals("Buy") ? "Sell" : "Buy";
 
+            // if percent == 100 (full position)
+            if (percentBD.compareTo(new BigDecimal("100")) == 0) {
+                apiService.closePosition(position.getSymbol(), side, position.getSize()); // 1 req (Trade)
+                Thread.sleep(150);
+                continue;
+            }
+
             // get min order size and step of the symbol
-            Instrument instrument = apiService.instrumentInfo(position.getSymbol());
+            Instrument instrument = apiService.instrumentInfo(position.getSymbol()); // 1 req (Market)
             BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
             BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
 
@@ -121,7 +128,7 @@ public class OrderService {
                 throw new TooSmallOrderSizeException("Position size to close is too small");
             }
 
-            apiService.closePosition(position.getSymbol(), side, roundedSizeBD.toString());
+            apiService.closePosition(position.getSymbol(), side, roundedSizeBD.toPlainString()); // 1 req (Trade)
             Thread.sleep(150);
         }
     }

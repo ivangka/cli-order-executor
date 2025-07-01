@@ -28,7 +28,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [Error 10002](#error-10002)
 * [License](#license)
 
-## Risk Management
+# Risk Management
 
 This program uses an approach that requires setting a stop-loss for each trade and automatically calculates the total position size based on:
 
@@ -38,7 +38,7 @@ This program uses an approach that requires setting a stop-loss for each trade a
 
 With this approach, **leverage does not affect your risk** — your risk is fixed by the stop-loss distance and position size calculation. Leverage only affects the number of concurrent positions — the higher the leverage, the more positions you can open within your available margin.
 
-## Commands
+# Commands
 
     !o          open order
     !x          close position
@@ -56,7 +56,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !help       get instructions link
     !exit       exit program
 
-### Open order `!o`
+## Open order `!o`
 
 ```
 !o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
@@ -108,7 +108,7 @@ This command opens a market order (Short) on `ETHUSDT` with a stop loss at 2610.
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop loss at 2.44, take profit at 3.12, risking $200.
 
-### Close position `!x`
+## Close position `!x`
 
 ```
 !x [symbol] [percent]

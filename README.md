@@ -19,8 +19,8 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Manage stop-loss](#manage-stop-loss-sl)
   * [Manage take-profit](#manage-take-profit-tp)
   * [Set leverage](#set-leverage-lev)
-  * [Get position info](#get-position-info-gpi)
-  * [Get open orders](#get-open-orders-goo)
+  * [Get position info](#get-position-info-gp)
+  * [Get open orders](#get-open-orders-go)
   * [Send test API request](#send-test-api-request-ping)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
@@ -49,8 +49,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
     !lev        set leverage
 
-    !gpi        get position info
-    !goo        get open orders
+    !gp         get position info
+    !go         get open orders
 
     !ping       send test API request
     !help       get instructions link
@@ -264,10 +264,10 @@ This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new or
 
 This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
-### Get position info `!gpi`
+### Get position info `!gp`
 
 ```
-!gpi [symbol]
+!gp [symbol]
 ```
 
 Displays information about the current positions.
@@ -279,22 +279,22 @@ Parameters:
 All variations
 
 ```
-!gpi [symbol]     — shows position info for the symbol
-!gpi              — shows all positions
+!gp [symbol]     — shows position info for the symbol
+!gp              — shows all positions
 ```
 
 **Example:**
 
 ```
-!gpi sandusdt
+!gp sandusdt
 ```
 
 This command displays position details for `SANDUSDT`.
 
-### Get open orders `!goo`
+### Get open orders `!go`
 
 ```
-!goo [symbol]
+!go [symbol]
 ```
 
 Displays open orders info.
@@ -306,14 +306,14 @@ Parameters:
 All variations
 
 ```
-!goo [symbol]     — shows open orders for the symbol
-!goo              — shows all open orders
+!go [symbol]     — shows open orders for the symbol
+!go              — shows all open orders
 ```
 
 **Example:**
 
 ```
-!goo btcusdt
+!go btcusdt
 ```
 
 This command displays open orders for `BTCUSDT`.

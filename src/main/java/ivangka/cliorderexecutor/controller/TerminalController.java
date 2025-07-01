@@ -192,7 +192,7 @@ public class TerminalController {
                 break;
 
             // get position info
-            case "!gpi": // !gpi [symbol]
+            case "!gp": // !gp [symbol]
                 if (commandParts.length == 2 || commandParts.length == 1) {
                     List<Position> positions;
                     if (commandParts.length == 2) { // position by symbol
@@ -214,7 +214,7 @@ public class TerminalController {
                 break;
 
             // get open orders
-            case "!goo": // !goo [symbol]
+            case "!go": // !go [symbol]
                 if (commandParts.length == 2 || commandParts.length == 1) {
                     List<Order> orders;
                     if (commandParts.length == 2) { // orders by symbol

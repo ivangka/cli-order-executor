@@ -1,29 +1,28 @@
-package ivangka.cliorderexecutor.controller;
+package ivangka.cliorderexecutor.cli;
 
 import ivangka.cliorderexecutor.exception.*;
 import ivangka.cliorderexecutor.model.Order;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
-import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
 import java.util.List;
 import java.util.Scanner;
 
-@Controller
-public class TerminalController {
+@Component
+public class CliHandler {
 
     private final OrderService orderService;
 
     @Autowired
-    public TerminalController(OrderService orderService) {
+    public CliHandler(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    public void controller() {
+    public void start() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {

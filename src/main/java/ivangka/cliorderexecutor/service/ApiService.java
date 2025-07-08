@@ -544,11 +544,11 @@ public class ApiService {
 
     // send test request
     public void testRequest() throws BadRetCodeException {
-        var request = TradeOrderRequest.builder()
+        var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol("BTCUSDT")
                 .build();
-        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+        Object response = bybitApiPositionRestClient.getPositionInfo(request);
 
         Map<String, Object> responseMap = (Map<String, Object>) response;
         String retCode = responseMap.get("retCode").toString();

@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import ivangka.cliorderexecutor.cli.CliHandler;
 
 @Component
-public class TerminalRunner implements CommandLineRunner {
+public class CliHandlerRunner implements CommandLineRunner {
 
     private final CliHandler cliHandler;
 
     @Autowired
-    public TerminalRunner(CliHandler cliHandler) {
+    public CliHandlerRunner(CliHandler cliHandler) {
         this.cliHandler = cliHandler;
     }
 

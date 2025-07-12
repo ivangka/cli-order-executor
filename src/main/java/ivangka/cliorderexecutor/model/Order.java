@@ -70,15 +70,15 @@ public class Order {
     public String toString() {
         String displaySymbol = symbol.length() > 16 ? symbol.substring(0, 14) + ".." : symbol;
         return ""
-                + "+-------------+-------------------+" + System.lineSeparator()
-                + String.format("+ %-11s + %17s +%n", "symbol", displaySymbol)
-                + String.format("+ %-11s + %17s +%n", "price", price)
-                + String.format("+ %-11s + %17s +%n", "quantity", quantity)
-                + String.format("+ %-11s + %17s +%n", "side", side)
-                + String.format("+ %-11s + %17s +%n", "orderType", orderType)
-                + String.format("+ %-11s + %17s +%n", "stopLoss", stopLoss)
-                + String.format("+ %-11s + %17s +%n", "takeProfit", takeProfit)
-                + "+-------------+-------------------+";
+                + "  +-------------+-------------------+" + System.lineSeparator()
+                + String.format("  + %-11s + %17s +%n", "symbol", displaySymbol)
+                + String.format("  + %-11s + %17s +%n", "price", price)
+                + String.format("  + %-11s + %17s +%n", "quantity", quantity)
+                + String.format("  + %-11s + %17s +%n", "side", side)
+                + String.format("  + %-11s + %17s +%n", "orderType", orderType)
+                + String.format("  + %-11s + %17s +%n", "stopLoss", stopLoss)
+                + String.format("  + %-11s + %17s +%n", "takeProfit", takeProfit)
+                + "  +-------------+-------------------+";
     }
 
 }

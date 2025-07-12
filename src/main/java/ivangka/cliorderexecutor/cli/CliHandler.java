@@ -24,6 +24,7 @@ public class CliHandler {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("\n :: CLI Order Executor ::\n");
 
         while (true) {
             System.out.print("> ");
@@ -34,9 +35,9 @@ public class CliHandler {
                 executeCommand(commandParts);
             } catch (InvalidCommandException | BadRetCodeException | OrderNotFoundException |
                      TooSmallOrderSizeException e) {
-                System.out.println(ansi().fgBrightRed().a("  " + e.getMessage()).reset());
+                System.out.println(ansi().fgBrightRed().a(e.getMessage()).reset());
             } catch (Exception e) {
-                System.out.println(ansi().fgBrightRed().a("  Unexpected exception: "
+                System.out.println(ansi().fgBrightRed().a("Unexpected exception: "
                         + e.getClass().getSimpleName()).reset());
             }
         }
@@ -68,7 +69,7 @@ public class CliHandler {
                             commandParts[3],
                             commandParts[4]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Market order opened successfully").reset());
 
                 // market order without tp
                 } else if (commandParts.length == 4) {
@@ -77,7 +78,7 @@ public class CliHandler {
                             commandParts[2],
                             commandParts[3]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Market order opened successfully").reset());
 
                 // limit order
                 } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
@@ -88,7 +89,7 @@ public class CliHandler {
                             commandParts[4],
                             commandParts[6]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Limit order placed successfully").reset());
 
                 // limit order without tp
                 } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
@@ -98,7 +99,7 @@ public class CliHandler {
                             commandParts[3],
                             commandParts[5]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Limit order placed successfully").reset());
 
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
@@ -121,7 +122,7 @@ public class CliHandler {
                     } else { // close all
                         orderService.closePositions("-all", "100");
                     }
-                    System.out.println(ansi().fgBrightGreen().a("  Positions closed successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Positions closed successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -133,12 +134,12 @@ public class CliHandler {
                     orderService.cancelOrders(
                             commandParts[1]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Orders cancelled successfully").reset());
                 } else if (commandParts.length == 1) { // all orders
                     orderService.cancelOrders(
                             "-all"
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Orders cancelled successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -151,7 +152,7 @@ public class CliHandler {
                             commandParts[1],
                             commandParts[2]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-loss updated successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Stop-loss updated successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -164,7 +165,7 @@ public class CliHandler {
                             commandParts[1],
                             commandParts[2]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Take-profit updated successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Take-profit updated successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -184,7 +185,7 @@ public class CliHandler {
                                 "-max"
                         );
                     }
-                    System.out.println(ansi().fgBrightGreen().a("  Leverage set successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("Leverage set successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -239,7 +240,7 @@ public class CliHandler {
                 if (commandParts.length == 1) {
                     orderService.testRequest();
                     System.out.println(ansi().fgBrightGreen()
-                            .a("  Connection OK, API credentials are valid").reset());
+                            .a("Connection OK, API credentials are valid").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -248,7 +249,7 @@ public class CliHandler {
             // get instructions link
             case "!help":
                 if (commandParts.length == 1) {
-                    System.out.println("  Usage guide and examples: https://github.com/ivangka/cli-order-executor");
+                    System.out.println("Usage guide and examples: https://github.com/ivangka/cli-order-executor");
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }

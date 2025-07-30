@@ -205,20 +205,11 @@ public class OrderService {
     }
 
     // cancel orders
-    public void cancelOrders(String symbol) throws BadRetCodeException {
+    public void cancelLimitOrders(String symbol) throws BadRetCodeException {
         if (symbol.equals("-all")) {
-            apiService.cancelOrders();
+            apiService.cancelLimitOrders();
         } else {
-            apiService.cancelOrders(symbol);
-        }
-    }
-
-    // cancel stop-orders
-    public void cancelStopOrders(String symbol) throws BadRetCodeException {
-        if (symbol.equals("-all")) {
-            apiService.cancelStopOrders();
-        } else {
-            apiService.cancelStopOrders(symbol);
+            apiService.cancelLimitOrders(symbol);
         }
     }
 
@@ -255,18 +246,18 @@ public class OrderService {
         return positions;
     }
 
-    // get open orders
-    public List<Order> orders(String symbol) throws BadRetCodeException, OrderNotFoundException {
-        List<Order> orders;
+    // get placed limit orders
+    public List<LimitOrder> limitOrders(String symbol) throws BadRetCodeException, OrderNotFoundException {
+        List<LimitOrder> limitOrders;
         if (symbol.equals("-all")) {
-            orders = apiService.orders();
+            limitOrders = apiService.limitOrders();
         } else {
-            orders = apiService.orders(symbol);
+            limitOrders = apiService.limitOrders(symbol);
         }
-        if (orders.isEmpty()) {
-            throw new OrderNotFoundException("Orders were not found");
+        if (limitOrders.isEmpty()) {
+            throw new OrderNotFoundException("Limit orders were not found");
         }
-        return orders;
+        return limitOrders;
     }
 
     // test API request

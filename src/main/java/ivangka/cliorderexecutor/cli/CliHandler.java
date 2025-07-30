@@ -1,7 +1,7 @@
 package ivangka.cliorderexecutor.cli;
 
 import ivangka.cliorderexecutor.exception.*;
-import ivangka.cliorderexecutor.model.Order;
+import ivangka.cliorderexecutor.model.LimitOrder;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,35 +172,18 @@ public class CliHandler {
                 }
                 break;
 
-            // cancel orders
+            // cancel limit orders
             case "!c": // !c [symbol]
                 if (commandParts.length == 2) { // by symbol
-                    orderService.cancelOrders(
+                    orderService.cancelLimitOrders(
                             commandParts[1]
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
-                } else if (commandParts.length == 1) { // all orders
-                    orderService.cancelOrders(
+                    System.out.println(ansi().fgBrightGreen().a("  Limit orders cancelled successfully").reset());
+                } else if (commandParts.length == 1) { // all limit orders
+                    orderService.cancelLimitOrders(
                             "-all"
                     );
-                    System.out.println(ansi().fgBrightGreen().a("  Orders cancelled successfully").reset());
-                } else {
-                    throw new InvalidCommandException("Incorrect command format, try again");
-                }
-                break;
-
-            // cancel stop-orders
-            case "!cs": // !cs [symbol]
-                if (commandParts.length == 2) { // by symbol
-                    orderService.cancelStopOrders(
-                            commandParts[1]
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-orders cancelled successfully").reset());
-                } else if (commandParts.length == 1) { // all orders
-                    orderService.cancelStopOrders(
-                            "-all"
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-orders cancelled successfully").reset());
+                    System.out.println(ansi().fgBrightGreen().a("  Limit orders cancelled successfully").reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -274,18 +257,18 @@ public class CliHandler {
                 }
                 break;
 
-            // get open orders
-            case "!go": // !go [symbol]
+            // get placed limit orders
+            case "!gl": // !gl [symbol]
                 if (commandParts.length == 2 || commandParts.length == 1) {
-                    List<Order> orders;
-                    if (commandParts.length == 2) { // orders by symbol
-                        orders = orderService.orders(commandParts[1]);
-                    } else { // all orders
-                        orders = orderService.orders("-all");
+                    List<LimitOrder> limitOrders;
+                    if (commandParts.length == 2) { // limit orders by symbol
+                        limitOrders = orderService.limitOrders(commandParts[1]);
+                    } else { // all limit orders
+                        limitOrders = orderService.limitOrders("-all");
                     }
-                    // print orders
-                    for (int i = 0; i < orders.size(); i++) {
-                        String orderStr = orders.get(i).toString();
+                    // print limit orders
+                    for (int i = 0; i < limitOrders.size(); i++) {
+                        String orderStr = limitOrders.get(i).toString();
                         if (i > 0) {
                             orderStr = orderStr.substring(orderStr.indexOf('\n') + 1);
                         }

@@ -1,6 +1,6 @@
 package ivangka.cliorderexecutor.model;
 
-public class Order {
+public class LimitOrder {
 
     private String symbol;
     private String price;

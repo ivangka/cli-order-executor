@@ -16,13 +16,12 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [Commands](#commands)
   * [Open order](#open-order-o)
   * [Close position](#close-position-x)
-  * [Cancel orders](#cancel-orders-c)
-  * [Cancel stop-orders](#cancel-stop-orders-cs)
+  * [Cancel limit orders](#cancel-limit-orders-c)
   * [Manage stop-loss](#manage-stop-loss-sl)
   * [Manage take-profit](#manage-take-profit-tp)
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gp)
-  * [Get open orders](#get-open-orders-go)
+  * [Get limit orders](#get-limit-orders-gl)
   * [Send test API request](#send-test-api-request-ping)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
@@ -50,16 +49,15 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
     !o          open order
     !x          close position
-    !c          cancel orders
-    !cs         cancel stop-orders
+    !c          cancel limit orders
 
     !sl         manage stop-loss
     !tp         manage take-profit
 
     !lev        set leverage
 
-    !gp         get position info
-    !go         get open orders
+    !gp         get positions info
+    !gl         get limit orders info
 
     !ping       send test API request
     !help       get instructions link
@@ -171,21 +169,21 @@ This command closes 100% of the current `SOLUSDT` position.
 
 This command closes 50% of the current `ETHUSDT` position.
 
-### Cancel orders `!c`
+### Cancel limit orders `!c`
 
 ```
 !c [symbol]
 ```
 
-Cancels all open orders (not positions) for specified trading pair or for all pairs.
+Cancels all limit orders for specified trading pair or for all pairs.
 
 Parameters:
 
 - `symbol` — trading pair (optional)
 
 ```
-!c [symbol]     — cancels all open orders for the symbol
-!c              — cancels all open orders across all pairs
+!c [symbol]     — cancels all limit orders for the symbol
+!c              — cancels all limit orders across all pairs
 ```
 
 **Example:**
@@ -194,32 +192,7 @@ Parameters:
 !c trumpusdt
 ```
 
-This command cancels all open orders for `TRUMPUSDT`.
-
-### Cancel stop-orders `!cs`
-
-```
-!cs [symbol]
-```
-
-Cancels all open stop-orders for specified trading pair or for all pairs.
-
-Parameters:
-
-- `symbol` — trading pair (optional)
-
-```
-!cs [symbol]     — cancels all open stop-orders for the symbol
-!cs              — cancels all open stop-orders across all pairs
-```
-
-**Example:**
-
-```angular2html
-!cs polusdt
-```
-
-This command cancels all open stop-orders for `POLUSDT`.
+This command cancels all limit orders for `TRUMPUSDT`.
 
 ### Manage stop-loss `!sl`
 
@@ -342,13 +315,13 @@ All variations
 
 This command displays position details for `SANDUSDT`.
 
-### Get open orders `!go`
+### Get limit orders `!gl`
 
 ```
-!go [symbol]
+!gl [symbol]
 ```
 
-Displays open orders info.
+Displays information about active limit orders.
 
 Parameters:
 
@@ -357,17 +330,17 @@ Parameters:
 All variations
 
 ```
-!go [symbol]     — shows open orders for the symbol
-!go              — shows all open orders
+!gl [symbol]     — shows limit orders for the symbol
+!gl              — shows all limit orders
 ```
 
 **Example:**
 
 ```
-!go btcusdt
+!gl btcusdt
 ```
 
-This command displays open orders for `BTCUSDT`.
+This command displays limit orders for `BTCUSDT`.
 
 ### Send test API request `!ping`
 

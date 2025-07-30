@@ -1,7 +1,6 @@
 package ivangka.cliorderexecutor.service;
 
 import com.bybit.api.client.domain.CategoryType;
-import com.bybit.api.client.domain.TriggerBy;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
 import com.bybit.api.client.domain.position.TpslMode;
 import com.bybit.api.client.domain.position.request.PositionDataRequest;
@@ -298,8 +297,8 @@ public class ApiService {
         }
     }
 
-    // cancel orders for specified pair
-    public void cancelOrders(String symbol) throws BadRetCodeException {
+    // cancel limit orders for specified pair
+    public void cancelLimitOrders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -320,8 +319,8 @@ public class ApiService {
         }
     }
 
-    // cancel all orders
-    public void cancelOrders() throws BadRetCodeException {
+    // cancel all limit orders
+    public void cancelLimitOrders() throws BadRetCodeException {
         // USDT
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
@@ -347,71 +346,6 @@ public class ApiService {
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDC")
                 .orderFilter(OrderFilter.ORDER)
-                .build();
-        response = bybitApiTradeRestClient.cancelAllOrder(request);
-
-        // checking retCode from the response
-        responseMap = (Map<?, ?>) response;
-        retCode = responseMap.get("retCode").toString();
-        if (!retCode.equals("0")) {
-            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
-            if (retCodeMessage != null) {
-                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
-            } else {
-                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-            }
-        }
-    }
-
-    // cancel stop-orders for specified pair
-    public void cancelStopOrders(String symbol) throws BadRetCodeException {
-        var request = TradeOrderRequest.builder()
-                .category(CategoryType.LINEAR)
-                .symbol(symbol)
-                .orderFilter(OrderFilter.STOP_ORDER)
-                .build();
-        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
-
-        // checking retCode from the response
-        Map<?, ?> responseMap = (Map<?, ?>) response;
-        String retCode = responseMap.get("retCode").toString();
-        if (!retCode.equals("0")) {
-            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
-            if (retCodeMessage != null) {
-                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
-            } else {
-                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-            }
-        }
-    }
-
-    // cancel all stop-orders
-    public void cancelStopOrders() throws BadRetCodeException {
-        // USDT
-        var request = TradeOrderRequest.builder()
-                .category(CategoryType.LINEAR)
-                .settleCoin("USDT")
-                .orderFilter(OrderFilter.STOP_ORDER)
-                .build();
-        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
-
-        // checking retCode from the response
-        Map<?, ?> responseMap = (Map<?, ?>) response;
-        String retCode = responseMap.get("retCode").toString();
-        if (!retCode.equals("0")) {
-            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
-            if (retCodeMessage != null) {
-                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
-            } else {
-                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
-            }
-        }
-
-        // USDC (PERP)
-        request = TradeOrderRequest.builder()
-                .category(CategoryType.LINEAR)
-                .settleCoin("USDC")
-                .orderFilter(OrderFilter.STOP_ORDER)
                 .build();
         response = bybitApiTradeRestClient.cancelAllOrder(request);
 
@@ -658,8 +592,8 @@ public class ApiService {
         return positions;
     }
 
-    // get open orders by symbol
-    public List<Order> orders(String symbol) throws BadRetCodeException {
+    // get placed limit orders by symbol
+    public List<LimitOrder> limitOrders(String symbol) throws BadRetCodeException {
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
                 .symbol(symbol)
@@ -679,13 +613,13 @@ public class ApiService {
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-        List<Order> orders = new LinkedList<>();
-        orders = fillOrders(orders, list);
-        return orders;
+        List<LimitOrder> limitOrders = new LinkedList<>();
+        limitOrders = fillLimitOrders(limitOrders, list);
+        return limitOrders;
     }
 
-    // get all open orders
-    public List<Order> orders() throws BadRetCodeException {
+    // get all placed limit orders
+    public List<LimitOrder> limitOrders() throws BadRetCodeException {
         // USDT
         var request = TradeOrderRequest.builder()
                 .category(CategoryType.LINEAR)
@@ -706,8 +640,8 @@ public class ApiService {
         }
         Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
         List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
-        List<Order> orders = new LinkedList<>();
-        orders = fillOrders(orders, list);
+        List<LimitOrder> limitOrders = new LinkedList<>();
+        limitOrders = fillLimitOrders(limitOrders, list);
 
         // USDC (PERP)
         request = TradeOrderRequest.builder()
@@ -729,8 +663,8 @@ public class ApiService {
         }
         result = (Map<String, Object>) responseMap.get("result");
         list = (List<Map<String, Object>>) result.get("list");
-        orders = fillOrders(orders, list);
-        return orders;
+        limitOrders = fillLimitOrders(limitOrders, list);
+        return limitOrders;
     }
 
     // send test request
@@ -776,11 +710,11 @@ public class ApiService {
         return positions;
     }
 
-    // fill orders
-    private List<Order> fillOrders(List<Order> orders, List<Map<String, Object>> listResponse) {
-        Order order;
+    // fill limit orders
+    private List<LimitOrder> fillLimitOrders(List<LimitOrder> limitOrders, List<Map<String, Object>> listResponse) {
+        LimitOrder order;
         for (Map<String, Object> item : listResponse) {
-            order = new Order();
+            order = new LimitOrder();
 
             String symbol = (String) item.get("symbol");
             if (symbol != null && symbol.endsWith("PERP")) {
@@ -793,9 +727,9 @@ public class ApiService {
             order.setOrderType((String) item.get("orderType"));
             order.setStopLoss((String) item.get("stopLoss"));
             order.setTakeProfit((String) item.get("takeProfit"));
-            orders.add(order);
+            limitOrders.add(order);
         }
-        return orders;
+        return limitOrders;
     }
 
 }

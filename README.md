@@ -11,6 +11,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 
 **Table of contents:**
 
+* [Disclaimer](#disclaimer)
 * [Risk Management](#risk-management)
 * [Commands](#commands)
   * [Open order](#open-order-o)
@@ -27,6 +28,12 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [How to Use?](#how-to-use)
 * [Error 10002](#error-10002)
 * [License](#license)
+
+## Disclaimer
+
+This software is provided "as is", without any warranties. Use it at your own risk. The author is not responsible for any losses resulting from the use of this software, including but not limited to monetary losses, trading logic errors, API failures, or any unforeseen consequences.
+
+Make sure you fully understand how this software works and how futures markets operate before using it. It is strongly recommended to test it in a safe environment (such as a sandbox account or with demo funds).
 
 ## Risk Management
 

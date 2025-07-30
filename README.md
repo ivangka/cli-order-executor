@@ -56,8 +56,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
     !lev        set leverage
 
-    !gp         get positions info
-    !gl         get limit orders info
+    !gp         get position info
+    !gl         get limit orders
 
     !ping       send test API request
     !help       get instructions link

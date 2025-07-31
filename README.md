@@ -126,7 +126,15 @@ This command opens a market order (Short) on `ETHUSDT` with a stop-loss at 2610.
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
 
-**Example 3 (stop-limit order):**
+**Example 3 (stop-market order):**
+
+```
+!o polusdt 0.1913 400 -t 0.2
+```
+
+This command places a stop-market order (Long) on `POLUSDT` with trigger price at 0.2, stop-loss at 0.1913, risking $400.
+
+**Example 4 (stop-limit order):**
 
 ```
 !o btcusdt 108200 112550 1500 -l 109000 -t 109100

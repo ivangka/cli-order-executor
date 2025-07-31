@@ -31,7 +31,9 @@ A console tool for managing perpetual futures orders on Bybit via API.
 
 ## Disclaimer
 
-This software is provided "as is", without any warranties. Use it at your own risk. The author is not responsible for any losses resulting from the use of this software, including but not limited to monetary losses, trading logic errors, API failures, or any unforeseen consequences.
+This software is provided "as is", without any warranties. Use it at your own risk. The author is not responsible for any losses resulting from the use of this software, including but not limited to monetary losses, trading logic errors, API failures, violations of exchange terms of service (e.g., account bans or suspensions), or any other unforeseen consequences.
+
+This software is not intended to provide financial or investment advice. Any trading or investment decisions you make using this software are your own responsibility. Consult a qualified financial advisor if needed.
 
 Make sure you fully understand how this software works and how futures markets operate before using it. It is strongly recommended to test it in a safe environment (such as a sandbox account or with demo funds).
 

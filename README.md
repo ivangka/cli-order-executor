@@ -90,12 +90,12 @@ All variations:
 
 ```
 Market:
-!o [symbol] [sl] [tp] [risk]                             — market order with SL and TP
-!o [symbol] [sl] [risk]                                  — market order with SL only
+!o [symbol] [sl] [tp] [risk]                — market order with stop-loss and take-profit
+!o [symbol] [sl] [risk]                     — market order with with stop-loss only
 
 Limit:
-!o [symbol] [sl] [tp] [risk] -l [price]                  — limit order with SL and TP
-!o [symbol] [sl] [risk] -l [price]                       — limit order with SL only
+!o [symbol] [sl] [tp] [risk] -l [price]     — limit order with stop-loss and take-profit
+!o [symbol] [sl] [risk] -l [price]          — limit order with stop-loss only
 ```
 
 **Example 1 (market order):**
@@ -104,7 +104,7 @@ Limit:
 !o ethusdt 2610.1 2550.14 50
 ```
 
-This command opens a market order (Short) on `ETHUSDT` with a stop-loss at 2610.1, take-profit at 2550.14, risking $50.
+This command opens a market sell order on `ETHUSDT` with a stop-loss at 2610.1, take-profit at 2550.14, risking $50.
 
 **Example 2 (limit order):**
 
@@ -112,7 +112,45 @@ This command opens a market order (Short) on `ETHUSDT` with a stop-loss at 2610.
 !o suiusdt 2.44 3.12 200 -l 2.7
 ```
 
-This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
+This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
+
+### Open order by quantity `!o`
+
+```
+!o [symbol] -buy/sell [quantity] -l [price]
+```
+
+This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders, or to manually close part of a position at market price.
+
+Parameters:
+
+- `symbol` — trading pair
+- `-buy/sell [quantity]` — quantity of contracts (base coin)
+- `-l [price]` — limit order price (optional)
+
+All variations:
+
+```
+Market:
+!o [symbol] -buy/sell [quantity]                — market order
+!o [symbol] -buy/sell [quantity] -l [price]     — limit order
+```
+
+**Example 1 (market order):**
+
+```
+!o btc -buy 0.4
+```
+
+This command opens a market buy order for 0.4 BTC on `BTCUSDT`.
+
+**Example 2 (limit order):**
+
+```
+!o ada -sell 200 -l 0.8121
+```
+
+This command places a limit sell order for 200 ADA on `ADAUSDT` with a price 0.8121.
 
 ### Close position `!x`
 

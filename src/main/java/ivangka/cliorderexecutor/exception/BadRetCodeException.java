@@ -16,6 +16,7 @@ public class BadRetCodeException extends Exception {
         RETCODES.put("10010", "Unmatched IP, please check your API key's bound IP addresses");
         RETCODES.put("110003", "Order price exceeds the allowable range");
         RETCODES.put("110004", "Wallet balance is insufficient");
+        RETCODES.put("110007", "Available balance is insufficient");
         RETCODES.put("110012", "Insufficient available balance");
         RETCODES.put("110018", "User ID is illegal");
         RETCODES.put("110043", "Set leverage has not been modified");

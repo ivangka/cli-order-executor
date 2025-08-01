@@ -15,7 +15,6 @@ import ivangka.cliorderexecutor.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +38,7 @@ public class ApiService {
     // create market order
     public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss, String takeProfit)
             throws BadRetCodeException {
+
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -67,6 +67,7 @@ public class ApiService {
     // create market order without tp
     public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss)
             throws BadRetCodeException {
+
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -94,6 +95,7 @@ public class ApiService {
     // create limit order
     public void createLimitOrder(String symbol, String side, String orderSize, String price,
                                    String stopLoss, String takeProfit) throws BadRetCodeException {
+
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -123,6 +125,7 @@ public class ApiService {
     // create limit order without tp
     public void createLimitOrder(String symbol, String side, String orderSize, String price, String stopLoss)
             throws BadRetCodeException {
+
         Map<String, Object> orderParams = Map.of(
                 "category", CategoryType.LINEAR,
                 "symbol", symbol,
@@ -132,6 +135,59 @@ public class ApiService {
                 "qty", orderSize,
                 "price", price,
                 "stopLoss", stopLoss
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // create market order by quantity
+    public void createMarketOrderByQuantity(String symbol, String side, String orderSize) throws BadRetCodeException {
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "isLeverage", "1",
+                "side", side,
+                "orderType", "Market",
+                "qty", orderSize
+        );
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // create limit order by quantity
+    public void createLimitOrderByQuantity(String symbol, String side, String orderSize, String price)
+            throws BadRetCodeException {
+
+        Map<String, Object> orderParams = Map.of(
+                "category", CategoryType.LINEAR,
+                "symbol", symbol,
+                "isLeverage", "1",
+                "side", side,
+                "orderType", "Limit",
+                "qty", orderSize,
+                "price", price
         );
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 

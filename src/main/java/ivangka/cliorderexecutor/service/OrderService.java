@@ -79,9 +79,38 @@ public class OrderService {
         apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
     }
 
+    // open a market order by quantity
+    public void openMarketOrderByQuantity(String symbol, String side, String orderSize)
+            throws BadRetCodeException, InvalidCommandException {
+
+        if (side.equals("-buy")) {
+            side = "Buy";
+        } else if (side.equals("-sell")) {
+            side = "Sell";
+        } else {
+            throw new InvalidCommandException("Incorrect command format, try again");
+        }
+        apiService.createMarketOrderByQuantity(symbol, side, orderSize);
+    }
+
+    // place a limit order by quantity
+    public void placeLimitOrderByQuantity(String symbol, String side, String orderSize, String price)
+            throws BadRetCodeException, InvalidCommandException {
+
+        if (side.equals("-buy")) {
+            side = "Buy";
+        } else if (side.equals("-sell")) {
+            side = "Sell";
+        } else {
+            throw new InvalidCommandException("Incorrect command format, try again");
+        }
+        apiService.createLimitOrderByQuantity(symbol, side, orderSize, price);
+    }
+
     // close positions
     public void closePositions(String symbol, String percent)
             throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException, InterruptedException {
+
         List<Position> positions;
         if (symbol.equals("-all")) {
             positions = apiService.positions(); // 2 req (Position)
@@ -197,6 +226,7 @@ public class OrderService {
     // get order size
     private String orderSize(String risk, String price, String stopLoss, String step, String orderType)
             throws InvalidCommandException {
+
         BigDecimal riskBD, priceBD, stopLossBD, stepBD;
         try {
             riskBD = new BigDecimal(risk);

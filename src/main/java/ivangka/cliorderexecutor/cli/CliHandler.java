@@ -60,9 +60,9 @@ public class CliHandler {
 
         switch (commandParts[0]) {
             // place an order
-            case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price] -t [trigger]
+            case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
                 // market order
-                if (commandParts.length == 5) {
+                if (commandParts.length == 5 && !commandParts[2].contains("-")) {
                     orderService.openMarketOrder(
                             commandParts[1],
                             commandParts[2],
@@ -72,7 +72,7 @@ public class CliHandler {
                     System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
 
                 // market order without tp
-                } else if (commandParts.length == 4) {
+                } else if (commandParts.length == 4 && !commandParts[2].contains("-")) {
                     orderService.openMarketOrder(
                             commandParts[1],
                             commandParts[2],
@@ -81,7 +81,8 @@ public class CliHandler {
                     System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
 
                 // limit order
-                } else if (commandParts.length == 7 && commandParts[5].equals("-l")) {
+                } else if (commandParts.length == 7 && !commandParts[2].contains("-")
+                        && commandParts[5].equals("-l")) {
                     orderService.placeLimitOrder(
                             commandParts[1],
                             commandParts[2],
@@ -92,8 +93,29 @@ public class CliHandler {
                     System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
 
                 // limit order without tp
-                } else if (commandParts.length == 6 && commandParts[4].equals("-l")){
+                } else if (commandParts.length == 6 && !commandParts[2].contains("-")
+                        && commandParts[4].equals("-l")){
                     orderService.placeLimitOrder(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[5]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
+
+                // !o [symbol] -buy/sell [quantity] -l [price]
+                // market order by quantity
+                } else if (commandParts.length == 4 && commandParts[2].contains("-")){
+                    orderService.openMarketOrderByQuantity(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Market order opened successfully").reset());
+
+                // limit order by quantity
+                } else if (commandParts.length == 6 && commandParts[2].contains("-")){
+                    orderService.placeLimitOrderByQuantity(
                             commandParts[1],
                             commandParts[2],
                             commandParts[3],

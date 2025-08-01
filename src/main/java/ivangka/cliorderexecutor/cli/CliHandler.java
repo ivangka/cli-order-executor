@@ -101,50 +101,6 @@ public class CliHandler {
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
 
-                // stop-market order
-                } else if (commandParts.length == 7 && commandParts[5].equals("-t")) {
-                    orderService.placeStopMarketOrder(
-                            commandParts[1],
-                            commandParts[2],
-                            commandParts[3],
-                            commandParts[4],
-                            commandParts[6]
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-market order placed successfully").reset());
-
-                // stop-market order without tp
-                } else if (commandParts.length == 6 && commandParts[4].equals("-t")){
-                    orderService.placeStopMarketOrder(
-                            commandParts[1],
-                            commandParts[2],
-                            commandParts[3],
-                            commandParts[5]
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-market order placed successfully").reset());
-
-                // stop-limit order
-                } else if (commandParts.length == 9 && commandParts[5].equals("-l") && commandParts[7].equals("-t")) {
-                    orderService.placeStopLimitOrder(
-                            commandParts[1],
-                            commandParts[2],
-                            commandParts[3],
-                            commandParts[4],
-                            commandParts[6],
-                            commandParts[8]
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-limit order placed successfully").reset());
-
-                // stop-limit order without tp
-                } else if (commandParts.length == 8 && commandParts[4].equals("-l") && commandParts[6].equals("-t")){
-                    orderService.placeStopLimitOrder(
-                            commandParts[1],
-                            commandParts[2],
-                            commandParts[3],
-                            commandParts[5],
-                            commandParts[7]
-                    );
-                    System.out.println(ansi().fgBrightGreen().a("  Stop-limit order placed successfully").reset());
-
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }

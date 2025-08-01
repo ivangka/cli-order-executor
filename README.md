@@ -68,7 +68,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 ### Open order `!o`
 
 ```
-!o [symbol] [stopLoss] [takeProfit] [risk] -l [price] -t [trigger]
+!o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
 ```
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
@@ -88,7 +88,6 @@ Parameters:
 - `takeProfit` — take profit price (optional)
 - `risk` — amount in USD to risk on the trade
 - `-l [price]` — limit order price (optional)
-- `-t [trigger]` — trigger price (optional)
 
 All variations:
 
@@ -100,14 +99,6 @@ Market:
 Limit:
 !o [symbol] [sl] [tp] [risk] -l [price]                  — limit order with SL and TP
 !o [symbol] [sl] [risk] -l [price]                       — limit order with SL only
-
-Stop-Market:
-!o [symbol] [sl] [tp] [risk] -t [trigger]                — stop-market order with SL and TP
-!o [symbol] [sl] [risk] -t [trigger]                     — stop-market order with SL only
-
-Stop-Limit:
-!o [symbol] [sl] [tp] [risk] -l [price] -t [trigger]     — stop-limit order with TP and SL
-!o [symbol] [sl] [risk] -l [price] -t [trigger]          — stop-limit order with SL only
 ```
 
 **Example 1 (market order):**
@@ -125,22 +116,6 @@ This command opens a market order (Short) on `ETHUSDT` with a stop-loss at 2610.
 ```
 
 This command places a limit order (Long) on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
-
-**Example 3 (stop-market order):**
-
-```
-!o polusdt 0.1913 400 -t 0.2
-```
-
-This command places a stop-market order (Long) on `POLUSDT` with trigger price at 0.2, stop-loss at 0.1913, risking $400.
-
-**Example 4 (stop-limit order):**
-
-```
-!o btcusdt 108200 112550 1500 -l 109000 -t 109100
-```
-
-This command places a stop-limit order (Long) on `BTCUSDT` with trigger price at 109100, limit order price 109000, stop-loss at 108200, take-profit 112550, risking $1500.
 
 ### Close position `!x`
 

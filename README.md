@@ -16,6 +16,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [Risk Management](#risk-management)
 * [Commands](#commands)
   * [Open order](#open-order-o)
+  * [Open order by quantity](#open-order-by-quantity-o)
   * [Close position](#close-position-x)
   * [Cancel limit orders](#cancel-limit-orders-c)
   * [Manage stop-loss](#manage-stop-loss-sl)

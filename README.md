@@ -70,7 +70,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 ### Open order `!o`
 
 ```
-!o [symbol] [stopLoss] [takeProfit] [risk] -l [price]
+!o [symbol] [sl] [tp] [risk] -l [price]
 ```
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
@@ -82,8 +82,8 @@ Opens a perpetual futures order with exact order sizing based on a specified ris
 Parameters:
 
 - `symbol` — trading pair
-- `stopLoss` — stop loss price
-- `takeProfit` — take profit price (optional)
+- `sl` — stop-loss price
+- `tp` — take-profit price (optional)
 - `risk` — amount in USD to risk on the trade
 - `-l [price]` — limit order price (optional)
 
@@ -118,7 +118,7 @@ This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss a
 ### Open order by quantity `!o`
 
 ```
-!o [symbol] -buy/sell [quantity] -l [price]
+!o [symbol] -buy/sell [qty] -l [price]
 ```
 
 This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders, or to manually close part of a position at market price.
@@ -126,15 +126,15 @@ This format of the command opens a perpetual futures order based on a specific q
 Parameters:
 
 - `symbol` — trading pair
-- `-buy/sell [quantity]` — quantity of contracts (base coin)
+- `-buy/sell [qty]` — side and quantity of contracts (base coin)
 - `-l [price]` — limit order price (optional)
 
 All variations:
 
 ```
 Market:
-!o [symbol] -buy/sell [quantity]                — market order
-!o [symbol] -buy/sell [quantity] -l [price]     — limit order
+!o [symbol] -buy/sell [qty]                — market order
+!o [symbol] -buy/sell [qty] -l [price]     — limit order
 ```
 
 **Example 1 (market order):**

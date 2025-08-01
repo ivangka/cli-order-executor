@@ -126,7 +126,7 @@ This format of the command opens a perpetual futures order based on a specific q
 Parameters:
 
 - `symbol` — trading pair
-- `-buy/sell [qty]` — side and quantity of contracts (base coin)
+- `-buy/sell [qty]` — side and quantity of contracts
 - `-l [price]` — limit order price (optional)
 
 All variations:

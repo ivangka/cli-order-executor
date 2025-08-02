@@ -41,7 +41,7 @@ Make sure you fully understand how this software works and how futures markets o
 
 ## Risk Management
 
-This program uses an approach that requires setting a stop-loss for each trade and automatically calculates the total position size based on:
+The primary approach used by this program requires setting a stop-loss for each trade and automatically calculates the total position size based on:
 
 1. Your specified risk amount (in USD)
 2. The distance between entry and stop-loss prices
@@ -121,7 +121,7 @@ This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss a
 !o [symbol] -buy/sell [qty] -l [price]
 ```
 
-This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders, or to manually close part of a position at market price.
+This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders.
 
 Parameters:
 

@@ -132,7 +132,6 @@ Parameters:
 All variations:
 
 ```
-Market:
 !o [symbol] -buy/sell [qty]                — market order
 !o [symbol] -buy/sell [qty] -l [price]     — limit order
 ```

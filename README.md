@@ -117,6 +117,8 @@ This command opens a market sell order on `ETHUSDT` with a stop-loss at 2610.1, 
 
 This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
 
+---
+
 ### Open order by quantity `!o`
 
 ```
@@ -155,6 +157,8 @@ This command opens a market buy order for 0.4 BTC on `BTCUSDT`.
 ```
 
 This command places a limit sell order for 200 ADA on `ADAUSDT` with a price 0.8121.
+
+---
 
 ### Close position `!x`
 

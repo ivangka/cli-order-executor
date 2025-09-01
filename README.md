@@ -71,6 +71,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
 ```
 !o [symbol]* [sl]* [tp] [risk]* -l [price]
+
 * — required parameter
 ```
 

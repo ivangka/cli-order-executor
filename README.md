@@ -392,15 +392,15 @@ This command displays limit orders for `BTCUSDT`.
 
 ### Send test API request `!ping`
 
----
-
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
+
+---
 
 ### Get instructions link `!help`
 
----
-
 Displays a link to the usage guide and examples.
+
+---
 
 ### Exit program `!exit`
 

@@ -131,9 +131,9 @@ This format of the command opens a perpetual futures order based on a specific q
 
 Parameters:
 
-- `symbol` — trading pair
-- `-buy/sell [qty]` — side and quantity of contracts
-- `-l [price]` — limit order price (optional)
+- `symbol*` — trading pair
+- `-buy/sell [qty]*` — side and quantity of contracts
+- `-l [price]` — limit order price
 
 All variations:
 
@@ -170,8 +170,8 @@ Closes an open position for the given trading pair or for all pairs.
 
 Parameters:
 
-- `symbol` — trading pair (optional)
-- `percent` — percentage of position to close (optional)
+- `symbol` — trading pair
+- `percent` — percentage of position to close
 
 All variations:
 
@@ -209,7 +209,7 @@ Cancels all limit orders for specified trading pair or for all pairs.
 
 Parameters:
 
-- `symbol` — trading pair (optional)
+- `symbol` — trading pair
 
 ```
 !c [symbol]     — cancels all limit orders for the symbol
@@ -238,8 +238,8 @@ Updates, sets, or removes the stop-loss order for an existing position.
 
 Parameters:
 
-- symbol — trading pair
-- price — stop-loss price ("0" to remove the stop-loss)
+- symbol* — trading pair
+- price* — stop-loss price ("0" to remove the stop-loss)
 
 **Example 1:**
 
@@ -271,8 +271,8 @@ Updates, sets, or removes the take-profit order for an existing position.
 
 Parameters:
 
-- symbol — trading pair
-- price — take-profit price ("0" to remove the take-profit)
+- symbol* — trading pair
+- price* — take-profit price ("0" to remove the take-profit)
 
 **Example 1:**
 
@@ -304,8 +304,8 @@ Sets leverage for the trading pair. This applies to both existing positions and 
 
 Parameters:
 
-- `symbol` — trading pair
-- `leverage` — leverage size (optional)
+- `symbol*` — trading pair
+- `leverage` — leverage size
 
 All variations
 
@@ -342,7 +342,7 @@ Displays information about the current positions.
 
 Parameters:
 
-- `symbol` — trading pair (optional)
+- `symbol` — trading pair
 
 All variations
 
@@ -371,7 +371,7 @@ Displays information about active limit orders.
 
 Parameters:
 
-- `symbol` — trading pair (optional)
+- `symbol` — trading pair
 
 All variations
 

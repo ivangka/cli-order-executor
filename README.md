@@ -197,6 +197,8 @@ This command closes 100% of the current `SOLUSDT` position.
 
 This command closes 50% of the current `ETHUSDT` position.
 
+---
+
 ### Cancel limit orders `!c`
 
 ```
@@ -221,6 +223,8 @@ Parameters:
 ```
 
 This command cancels all limit orders for `TRUMPUSDT`.
+
+---
 
 ### Manage stop-loss `!sl`
 
@@ -253,6 +257,8 @@ Moves the stop-loss for `POLUSDT` to 0.1641. If no stop-loss was set before, thi
 
 Removes the stop-loss for the current `ETHUSDT` position.
 
+---
+
 ### Manage take-profit `!tp`
 
 ```
@@ -283,6 +289,8 @@ Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, 
 ```
 
 Removes the take-profit for the current `BNBUSDT` position.
+
+---
 
 ### Set leverage `!lev`
 
@@ -322,6 +330,8 @@ This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new or
 
 This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
 
+---
+
 ### Get position info `!gp`
 
 ```
@@ -348,6 +358,8 @@ All variations
 ```
 
 This command displays position details for `SANDUSDT`.
+
+---
 
 ### Get limit orders `!gl`
 
@@ -376,11 +388,17 @@ All variations
 
 This command displays limit orders for `BTCUSDT`.
 
+---
+
 ### Send test API request `!ping`
+
+---
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
 
 ### Get instructions link `!help`
+
+---
 
 Displays a link to the usage guide and examples.
 

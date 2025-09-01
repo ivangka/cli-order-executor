@@ -71,6 +71,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
 ```
 !o [symbol]* [sl]* [tp] [risk]* -l [price]
+* — required parameter
 ```
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).

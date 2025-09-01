@@ -121,6 +121,8 @@ This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss a
 
 ```
 !o [symbol]* -buy/sell [qty]* -l [price]
+
+* — required parameter
 ```
 
 This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders.
@@ -220,6 +222,8 @@ This command cancels all limit orders for `TRUMPUSDT`.
 
 ```
 !sl [symbol]* [price]*
+
+* — required parameter
 ```
 
 Updates, sets, or removes the stop-loss order for an existing position.
@@ -249,6 +253,8 @@ Removes the stop-loss for the current `ETHUSDT` position.
 
 ```
 !tp [symbol]* [price]*
+
+* — required parameter
 ```
 
 Updates, sets, or removes the take-profit order for an existing position.
@@ -278,6 +284,8 @@ Removes the take-profit for the current `BNBUSDT` position.
 
 ```
 !lev [symbol]* [leverage]
+
+* — required parameter
 ```
 
 Sets leverage for the trading pair. This applies to both existing positions and any new orders for this symbol.

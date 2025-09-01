@@ -83,11 +83,11 @@ Opens a perpetual futures order with exact order sizing based on a specified ris
 
 Parameters:
 
-- `symbol` — trading pair
-- `sl` — stop-loss price
-- `tp` — take-profit price (optional)
-- `risk` — amount in USD to risk on the trade
-- `-l [price]` — limit order price (optional)
+- `symbol*` — trading pair
+- `sl*` — stop-loss price
+- `tp` — take-profit price
+- `risk*` — amount in USD to risk on the trade
+- `-l [price]` — limit order price
 
 All variations:
 

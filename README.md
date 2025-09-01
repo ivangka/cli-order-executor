@@ -70,7 +70,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 ### Open order `!o`
 
 ```
-!o [symbol] [sl] [tp] [risk] -l [price]
+!o [symbol]* [sl]* [tp] [risk]* -l [price]
 ```
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
@@ -118,7 +118,7 @@ This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss a
 ### Open order by quantity `!o`
 
 ```
-!o [symbol] -buy/sell [qty] -l [price]
+!o [symbol]* -buy/sell [qty]* -l [price]
 ```
 
 This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders.
@@ -217,7 +217,7 @@ This command cancels all limit orders for `TRUMPUSDT`.
 ### Manage stop-loss `!sl`
 
 ```
-!sl [symbol] [price]
+!sl [symbol]* [price]*
 ```
 
 Updates, sets, or removes the stop-loss order for an existing position.
@@ -246,7 +246,7 @@ Removes the stop-loss for the current `ETHUSDT` position.
 ### Manage take-profit `!tp`
 
 ```
-!tp [symbol] [price]
+!tp [symbol]* [price]*
 ```
 
 Updates, sets, or removes the take-profit order for an existing position.
@@ -275,7 +275,7 @@ Removes the take-profit for the current `BNBUSDT` position.
 ### Set leverage `!lev`
 
 ```
-!lev [symbol] [leverage]
+!lev [symbol]* [leverage]
 ```
 
 Sets leverage for the trading pair. This applies to both existing positions and any new orders for this symbol.

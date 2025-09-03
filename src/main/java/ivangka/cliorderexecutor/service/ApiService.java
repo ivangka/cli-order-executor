@@ -15,6 +15,7 @@ import ivangka.cliorderexecutor.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,16 +40,16 @@ public class ApiService {
     public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss, String takeProfit)
             throws BadRetCodeException {
 
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Market",
-                "qty", orderSize,
-                "stopLoss", stopLoss,
-                "takeProfit", takeProfit
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", orderSize);
+        orderParams.put("stopLoss", stopLoss);
+        orderParams.put("takeProfit", takeProfit);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -68,15 +69,15 @@ public class ApiService {
     public void createMarketOrder(String symbol, String side, String orderSize, String stopLoss)
             throws BadRetCodeException {
 
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Market",
-                "qty", orderSize,
-                "stopLoss", stopLoss
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", orderSize);
+        orderParams.put("stopLoss", stopLoss);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -96,17 +97,17 @@ public class ApiService {
     public void createLimitOrder(String symbol, String side, String orderSize, String price,
                                    String stopLoss, String takeProfit) throws BadRetCodeException {
 
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Limit",
-                "qty", orderSize,
-                "price", price,
-                "stopLoss", stopLoss,
-                "takeProfit", takeProfit
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Limit");
+        orderParams.put("qty", orderSize);
+        orderParams.put("price", price);
+        orderParams.put("stopLoss", stopLoss);
+        orderParams.put("takeProfit", takeProfit);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -126,16 +127,16 @@ public class ApiService {
     public void createLimitOrder(String symbol, String side, String orderSize, String price, String stopLoss)
             throws BadRetCodeException {
 
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Limit",
-                "qty", orderSize,
-                "price", price,
-                "stopLoss", stopLoss
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Limit");
+        orderParams.put("qty", orderSize);
+        orderParams.put("price", price);
+        orderParams.put("stopLoss", stopLoss);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -153,14 +154,14 @@ public class ApiService {
 
     // create market order by quantity
     public void createMarketOrderByQuantity(String symbol, String side, String orderSize) throws BadRetCodeException {
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Market",
-                "qty", orderSize
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", orderSize);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -180,15 +181,15 @@ public class ApiService {
     public void createLimitOrderByQuantity(String symbol, String side, String orderSize, String price)
             throws BadRetCodeException {
 
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "isLeverage", "1",
-                "side", side,
-                "orderType", "Limit",
-                "qty", orderSize,
-                "price", price
-        );
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Limit");
+        orderParams.put("qty", orderSize);
+        orderParams.put("price", price);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response
@@ -206,14 +207,15 @@ public class ApiService {
 
     // close position by symbol
     public void closePosition(String symbol, String side, String size) throws BadRetCodeException {
-        Map<String, Object> orderParams = Map.of(
-                "category", CategoryType.LINEAR,
-                "symbol", symbol,
-                "side", side,
-                "orderType", "Market",
-                "qty", size,
-                "reduceOnly", true
-        );
+
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", size);
+        orderParams.put("reduceOnly", true);
+
         Object response = bybitApiTradeRestClient.createOrder(orderParams);
 
         // checking retCode from the response

@@ -67,6 +67,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !help       get instructions link
     !exit       exit program
 
+---
+
 ### Open order `!o`
 
 ```
@@ -394,13 +396,19 @@ This command displays limit orders for `BTCUSDT`.
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
 
+---
+
 ### Get instructions link `!help`
 
 Displays a link to the usage guide and examples.
 
+---
+
 ### Exit program `!exit`
 
 Stops the program.
+
+---
 
 ## How to Use?
 

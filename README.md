@@ -73,8 +73,6 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
 ```
 !o [symbol]* [sl]* [tp] [risk]* -l [price]
-
-* — required parameter
 ```
 
 Opens a perpetual futures order with exact order sizing based on a specified risk amount, while factoring in trading fees. The leverage used will be the default setting for the given trading pair (symbol).
@@ -83,7 +81,7 @@ Opens a perpetual futures order with exact order sizing based on a specified ris
 > 
 > Slippage is not considered in the order size calculation.
 
-Parameters:
+Parameters (* — required):
 
 - `symbol*` — trading pair
 - `sl*` — stop-loss price
@@ -125,13 +123,11 @@ This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss a
 
 ```
 !o [symbol]* -buy/sell [qty]* -l [price]
-
-* — required parameter
 ```
 
 This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders.
 
-Parameters:
+Parameters (* — required):
 
 - `symbol*` — trading pair
 - `-buy/sell [qty]*` — side and quantity of contracts
@@ -232,13 +228,11 @@ This command cancels all limit orders for `TRUMPUSDT`.
 
 ```
 !sl [symbol]* [price]*
-
-* — required parameter
 ```
 
 Updates, sets, or removes the stop-loss order for an existing position.
 
-Parameters:
+Parameters (* — required):
 
 - symbol* — trading pair
 - price* — stop-loss price ("0" to remove the stop-loss)
@@ -265,13 +259,11 @@ Removes the stop-loss for the current `ETHUSDT` position.
 
 ```
 !tp [symbol]* [price]*
-
-* — required parameter
 ```
 
 Updates, sets, or removes the take-profit order for an existing position.
 
-Parameters:
+Parameters  (* — required):
 
 - symbol* — trading pair
 - price* — take-profit price ("0" to remove the take-profit)
@@ -298,13 +290,11 @@ Removes the take-profit for the current `BNBUSDT` position.
 
 ```
 !lev [symbol]* [leverage]
-
-* — required parameter
 ```
 
 Sets leverage for the trading pair. This applies to both existing positions and any new orders for this symbol.
 
-Parameters:
+Parameters  (* — required):
 
 - `symbol*` — trading pair
 - `leverage` — leverage size

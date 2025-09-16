@@ -15,7 +15,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 * [Disclaimer](#disclaimer)
 * [Risk Management](#risk-management)
 * [Commands](#commands)
-  * [Open order](#open-order-o)
+  * [Open order by risk](#open-order-by-risk-o)
   * [Open order by quantity](#open-order-by-quantity-o)
   * [Close position](#close-position-x)
   * [Cancel limit orders](#cancel-limit-orders-c)
@@ -69,7 +69,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
 ---
 
-### Open order `!o`
+### Open order by risk `!o`
 
 ```
 !o [symbol]* [sl]* [tp] [risk]* -l [price]

@@ -18,7 +18,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Open order by risk](#open-order-by-risk-o)
   * [Open order by quantity](#open-order-by-quantity-o)
   * [Close position](#close-position-x)
-  * [Cancel limit orders](#cancel-limit-orders-c)
+  * [Cancel limit orders](#cancel-limit-orders-cl)
   * [Cancel conditional orders](#cancel-conditional-orders-cs)
   * [Manage stop-loss](#manage-stop-loss-sl)
   * [Manage take-profit](#manage-take-profit-tp)
@@ -222,10 +222,10 @@ This command closes 50% of the current `ETHUSDT` position.
 
 ---
 
-### Cancel limit orders `!c`
+### Cancel limit orders `!cl`
 
 ```
-!c [symbol]
+!cl [symbol]
 ```
 
 Cancels all limit orders for specified trading pair or for all pairs.
@@ -235,14 +235,14 @@ Parameters:
 - `symbol` — trading pair
 
 ```
-!c [symbol]     — cancels all limit orders for the symbol
-!c              — cancels all limit orders across all pairs
+!cl [symbol]     — cancels all limit orders for the symbol
+!cl              — cancels all limit orders across all pairs
 ```
 
 **Example:**
 
 ```angular2html
-!c trumpusdt
+!cl trumpusdt
 ```
 
 This command cancels all limit orders for `TRUMPUSDT`.

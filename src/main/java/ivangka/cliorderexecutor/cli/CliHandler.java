@@ -1,6 +1,7 @@
 package ivangka.cliorderexecutor.cli;
 
 import ivangka.cliorderexecutor.exception.*;
+import ivangka.cliorderexecutor.model.ConditionalOrder;
 import ivangka.cliorderexecutor.model.LimitOrder;
 import ivangka.cliorderexecutor.model.Position;
 import ivangka.cliorderexecutor.service.OrderService;
@@ -60,7 +61,7 @@ public class CliHandler {
 
         switch (commandParts[0]) {
             // place an order
-            case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price]
+            case "!o": // !o [symbol] [sl] [tp] [risk $] -l [price] -t [trigger]
                 // market order
                 if (commandParts.length == 5 && !commandParts[2].contains("-")) {
                     orderService.openMarketOrder(
@@ -102,6 +103,55 @@ public class CliHandler {
                             commandParts[5]
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Limit order placed successfully").reset());
+
+                // conditional market order
+                } else if (commandParts.length == 7 && commandParts[5].equals("-t")) {
+                    orderService.placeConditionalMarketOrder(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[4],
+                            commandParts[6]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional market order placed successfully")
+                            .reset());
+
+                // conditional market order without tp
+                } else if (commandParts.length == 6 && commandParts[4].equals("-t")){
+                    orderService.placeConditionalMarketOrder(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[5]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional market order placed successfully")
+                            .reset());
+
+                // conditional limit order
+                } else if (commandParts.length == 9 && commandParts[5].equals("-l") && commandParts[7].equals("-t")) {
+                    orderService.placeConditionalLimitOrder(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[4],
+                            commandParts[6],
+                            commandParts[8]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional limit order placed successfully")
+                            .reset());
+
+                // conditional limit order without tp
+                } else if (commandParts.length == 8 && commandParts[4].equals("-l") && commandParts[6].equals("-t")){
+                    orderService.placeConditionalLimitOrder(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3],
+                            commandParts[5],
+                            commandParts[7]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional limit order placed successfully")
+                            .reset());
+
 
                 // !o [symbol] -buy/sell [quantity] -l [price]
                 // market order by quantity
@@ -151,7 +201,7 @@ public class CliHandler {
                 break;
 
             // cancel limit orders
-            case "!c": // !c [symbol]
+            case "!cl": // !cl [symbol]
                 if (commandParts.length == 2) { // by symbol
                     orderService.cancelLimitOrders(
                             commandParts[1]
@@ -162,6 +212,25 @@ public class CliHandler {
                             "-all"
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Limit orders cancelled successfully").reset());
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
+                break;
+
+            // cancel conditional orders
+            case "!cc": // !cc [symbol]
+                if (commandParts.length == 2) { // by symbol
+                    orderService.cancelStopOrders(
+                            commandParts[1]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional orders cancelled successfully")
+                            .reset());
+                } else if (commandParts.length == 1) { // all orders
+                    orderService.cancelStopOrders(
+                            "-all"
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Conditional orders cancelled successfully")
+                            .reset());
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }
@@ -247,6 +316,28 @@ public class CliHandler {
                     // print limit orders
                     for (int i = 0; i < limitOrders.size(); i++) {
                         String orderStr = limitOrders.get(i).toString();
+                        if (i > 0) {
+                            orderStr = orderStr.substring(orderStr.indexOf('\n') + 1);
+                        }
+                        System.out.println(orderStr);
+                    }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
+                break;
+
+            // get placed conditional orders
+            case "!gc": // !gc [symbol]
+                if (commandParts.length == 2 || commandParts.length == 1) {
+                    List<ConditionalOrder> conditionalOrders;
+                    if (commandParts.length == 2) { // conditional orders by symbol
+                        conditionalOrders = orderService.conditionalOrders(commandParts[1]);
+                    } else { // all conditional orders
+                        conditionalOrders = orderService.conditionalOrders("-all");
+                    }
+                    // print conditional orders
+                    for (int i = 0; i < conditionalOrders.size(); i++) {
+                        String orderStr = conditionalOrders.get(i).toString();
                         if (i > 0) {
                             orderStr = orderStr.substring(orderStr.indexOf('\n') + 1);
                         }

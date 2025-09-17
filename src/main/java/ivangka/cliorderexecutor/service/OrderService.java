@@ -79,6 +79,77 @@ public class OrderService {
         apiService.createLimitOrder(symbol, side, orderSize, price, stopLoss);
     }
 
+    // place a conditional market order
+    public void placeConditionalMarketOrder(String symbol, String stopLoss, String takeProfit, String risk,
+                                     String triggerPrice) throws BadRetCodeException, InvalidCommandException {
+
+        Ticker ticker = apiService.ticker(symbol);
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, triggerPrice, stopLoss, instrument.getQtyStep(), "Market");
+
+        BigDecimal stopLossBD = new BigDecimal(stopLoss);
+        BigDecimal triggerPriceBD = new BigDecimal(triggerPrice);
+        String side = stopLossBD.compareTo(triggerPriceBD) < 0 ? "Buy" : "Sell";
+        BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
+        int triggerDirection = priceBD.compareTo(triggerPriceBD) < 0 ? 1 : 2;
+
+        apiService.createConditionalMarketOrder(symbol, side, orderSize, stopLoss, takeProfit, triggerDirection, triggerPrice);
+    }
+
+    // place a conditional market order without tp
+    public void placeConditionalMarketOrder(String symbol, String stopLoss, String risk,
+                                     String triggerPrice) throws BadRetCodeException, InvalidCommandException {
+
+        Ticker ticker = apiService.ticker(symbol);
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, triggerPrice, stopLoss, instrument.getQtyStep(), "Market");
+
+        BigDecimal stopLossBD = new BigDecimal(stopLoss);
+        BigDecimal triggerPriceBD = new BigDecimal(triggerPrice);
+        String side = stopLossBD.compareTo(triggerPriceBD) < 0 ? "Buy" : "Sell";
+        BigDecimal priceBD = new BigDecimal(ticker.getLastPrice());
+        int triggerDirection = priceBD.compareTo(triggerPriceBD) < 0 ? 1 : 2;
+
+        apiService.createConditionalMarketOrder(symbol, side, orderSize, stopLoss, triggerDirection, triggerPrice);
+    }
+
+    // place a conditional limit order
+    public void placeConditionalLimitOrder(String symbol, String stopLoss, String takeProfit, String risk, String price,
+                                    String triggerPrice) throws BadRetCodeException, InvalidCommandException {
+
+        Ticker ticker = apiService.ticker(symbol);
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep(), "Limit");
+
+        BigDecimal stopLossBD = new BigDecimal(stopLoss);
+        BigDecimal priceBD = new BigDecimal(price);
+        BigDecimal triggerPriceBD = new BigDecimal(triggerPrice);
+        String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
+        BigDecimal currentPriceBD = new BigDecimal(ticker.getLastPrice());
+        int triggerDirection = currentPriceBD.compareTo(triggerPriceBD) < 0 ? 1 : 2;
+
+        apiService.createConditionalLimitOrder(symbol, side, orderSize, price, stopLoss, takeProfit, triggerDirection,
+                triggerPrice);
+    }
+
+    // place a conditional limit order without tp
+    public void placeConditionalLimitOrder(String symbol, String stopLoss, String risk, String price,
+                                    String triggerPrice) throws BadRetCodeException, InvalidCommandException {
+
+        Ticker ticker = apiService.ticker(symbol);
+        Instrument instrument = apiService.instrumentInfo(symbol);
+        String orderSize = orderSize(risk, price, stopLoss, instrument.getQtyStep(), "Limit");
+
+        BigDecimal stopLossBD = new BigDecimal(stopLoss);
+        BigDecimal priceBD = new BigDecimal(price);
+        BigDecimal triggerPriceBD = new BigDecimal(triggerPrice);
+        String side = stopLossBD.compareTo(priceBD) < 0 ? "Buy" : "Sell";
+        BigDecimal currentPriceBD = new BigDecimal(ticker.getLastPrice());
+        int triggerDirection = currentPriceBD.compareTo(triggerPriceBD) < 0 ? 1 : 2;
+
+        apiService.createConditionalLimitOrder(symbol, side, orderSize, price, stopLoss, triggerDirection, triggerPrice);
+    }
+
     // open a market order by quantity
     public void openMarketOrderByQuantity(String symbol, String side, String orderSize)
             throws BadRetCodeException, InvalidCommandException {
@@ -171,6 +242,15 @@ public class OrderService {
         }
     }
 
+    // cancel conditional orders
+    public void cancelStopOrders(String symbol) throws BadRetCodeException {
+        if (symbol.equals("-all")) {
+            apiService.cancelConditionalOrders();
+        } else {
+            apiService.cancelConditionalOrders(symbol);
+        }
+    }
+
     // manage stop-loss
     public void manageStopLoss(String symbol, String price) throws BadRetCodeException {
         apiService.manageStopLoss(symbol, price);
@@ -209,13 +289,27 @@ public class OrderService {
         List<LimitOrder> limitOrders;
         if (symbol.equals("-all")) {
             limitOrders = apiService.limitOrders();
-        } else {
+        } else { // by symbol
             limitOrders = apiService.limitOrders(symbol);
         }
         if (limitOrders.isEmpty()) {
             throw new OrderNotFoundException("Limit orders were not found");
         }
         return limitOrders;
+    }
+
+    // get placed conditional orders
+    public List<ConditionalOrder> conditionalOrders(String symbol) throws BadRetCodeException, OrderNotFoundException {
+        List<ConditionalOrder> conditionalOrders;
+        if (symbol.equals("-all")) {
+            conditionalOrders = apiService.conditionalOrders();
+        } else { // by symbol
+            conditionalOrders = apiService.conditionalOrders(symbol);
+        }
+        if (conditionalOrders.isEmpty()) {
+            throw new OrderNotFoundException("Conditional orders were not found");
+        }
+        return conditionalOrders;
     }
 
     // test API request

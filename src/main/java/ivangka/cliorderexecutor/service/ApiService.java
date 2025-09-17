@@ -152,6 +152,133 @@ public class ApiService {
         }
     }
 
+    // create conditional market order
+    public void createConditionalMarketOrder(String symbol, String side, String orderSize, String stopLoss,
+                                             String takeProfit, int triggerDirection, String triggerPrice)
+            throws BadRetCodeException {
+
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", orderSize);
+        orderParams.put("triggerDirection", triggerDirection);
+        orderParams.put("triggerPrice", triggerPrice);
+        orderParams.put("stopLoss", stopLoss);
+        orderParams.put("takeProfit", takeProfit);
+
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // create conditional market order without tp
+    public void createConditionalMarketOrder(String symbol, String side, String orderSize, String stopLoss,
+                                      int triggerDirection, String triggerPrice) throws BadRetCodeException {
+
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Market");
+        orderParams.put("qty", orderSize);
+        orderParams.put("triggerDirection", triggerDirection);
+        orderParams.put("triggerPrice", triggerPrice);
+        orderParams.put("stopLoss", stopLoss);
+
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // create conditional limit order
+    public void createConditionalLimitOrder(String symbol, String side, String orderSize, String price,
+                                     String stopLoss, String takeProfit, int triggerDirection, String triggerPrice)
+            throws BadRetCodeException {
+
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Limit");
+        orderParams.put("qty", orderSize);
+        orderParams.put("price", price);
+        orderParams.put("triggerDirection", triggerDirection);
+        orderParams.put("triggerPrice", triggerPrice);
+        orderParams.put("stopLoss", stopLoss);
+        orderParams.put("takeProfit", takeProfit);
+
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // create conditional limit order without tp
+    public void createConditionalLimitOrder(String symbol, String side, String orderSize, String price,
+                                     String stopLoss, int triggerDirection, String triggerPrice)
+            throws BadRetCodeException {
+
+        Map<String, Object> orderParams = new HashMap<>();
+        orderParams.put("category", CategoryType.LINEAR);
+        orderParams.put("symbol", symbol);
+        orderParams.put("isLeverage", "1");
+        orderParams.put("side", side);
+        orderParams.put("orderType", "Limit");
+        orderParams.put("qty", orderSize);
+        orderParams.put("price", price);
+        orderParams.put("triggerDirection", triggerDirection);
+        orderParams.put("triggerPrice", triggerPrice);
+        orderParams.put("stopLoss", stopLoss);
+
+        Object response = bybitApiTradeRestClient.createOrder(orderParams);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
     // create market order by quantity
     public void createMarketOrderByQuantity(String symbol, String side, String orderSize) throws BadRetCodeException {
         Map<String, Object> orderParams = new HashMap<>();
@@ -280,6 +407,71 @@ public class ApiService {
                 .category(CategoryType.LINEAR)
                 .settleCoin("USDC")
                 .orderFilter(OrderFilter.ORDER)
+                .build();
+        response = bybitApiTradeRestClient.cancelAllOrder(request);
+
+        // checking retCode from the response
+        responseMap = (Map<?, ?>) response;
+        retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // cancel conditional orders for specified pair
+    public void cancelConditionalOrders(String symbol) throws BadRetCodeException {
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .orderFilter(OrderFilter.STOP_ORDER)
+                .build();
+        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // cancel all conditional orders
+    public void cancelConditionalOrders() throws BadRetCodeException {
+        // USDT
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDT")
+                .orderFilter(OrderFilter.STOP_ORDER)
+                .build();
+        Object response = bybitApiTradeRestClient.cancelAllOrder(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+
+        // USDC (PERP)
+        request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDC")
+                .orderFilter(OrderFilter.STOP_ORDER)
                 .build();
         response = bybitApiTradeRestClient.cancelAllOrder(request);
 
@@ -601,6 +793,81 @@ public class ApiService {
         return limitOrders;
     }
 
+    // get placed conditional orders by symbol
+    public List<ConditionalOrder> conditionalOrders(String symbol) throws BadRetCodeException {
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .orderFilter(OrderFilter.STOP_ORDER)
+                .build();
+        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        List<ConditionalOrder> conditionalOrders = new LinkedList<>();
+        conditionalOrders = fillConditionalOrders(conditionalOrders, list);
+        return conditionalOrders;
+    }
+
+    // get all placed conditional orders
+    public List<ConditionalOrder> conditionalOrders() throws BadRetCodeException {
+        // USDT
+        var request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDT")
+                .orderFilter(OrderFilter.STOP_ORDER)
+                .build();
+        Object response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        List<ConditionalOrder> conditionalOrders = new LinkedList<>();
+        conditionalOrders = fillConditionalOrders(conditionalOrders, list);
+
+        // USDC (PERP)
+        request = TradeOrderRequest.builder()
+                .category(CategoryType.LINEAR)
+                .settleCoin("USDC")
+                .orderFilter(OrderFilter.STOP_ORDER)
+                .build();
+        response = bybitApiTradeRestClient.getOpenOrders(request);
+
+        responseMap = (Map<String, Object>) response;
+        retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        result = (Map<String, Object>) responseMap.get("result");
+        list = (List<Map<String, Object>>) result.get("list");
+        conditionalOrders = fillConditionalOrders(conditionalOrders, list);
+        return conditionalOrders;
+    }
+
     // send test request
     public void testRequest() throws BadRetCodeException {
         var request = PositionDataRequest.builder()
@@ -664,6 +931,31 @@ public class ApiService {
             limitOrders.add(order);
         }
         return limitOrders;
+    }
+
+    // fill conditional orders
+    private List<ConditionalOrder> fillConditionalOrders(List<ConditionalOrder> conditionalOrders, List<Map<String,
+            Object>> listResponse) {
+
+        ConditionalOrder order;
+        for (Map<String, Object> item : listResponse) {
+            order = new ConditionalOrder();
+
+            String symbol = (String) item.get("symbol");
+            if (symbol != null && symbol.endsWith("PERP")) {
+                symbol = symbol.substring(0, symbol.length() - 4) + "USDC";
+            }
+            order.setSymbol(symbol);
+            order.setTriggerPrice((String) item.get("triggerPrice"));
+            order.setPrice((String) item.get("price"));
+            order.setQuantity((String) item.get("qty"));
+            order.setSide((String) item.get("side"));
+            order.setOrderType((String) item.get("orderType"));
+            order.setStopLoss((String) item.get("stopLoss"));
+            order.setTakeProfit((String) item.get("takeProfit"));
+            conditionalOrders.add(order);
+        }
+        return conditionalOrders;
     }
 
 }

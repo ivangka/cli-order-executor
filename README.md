@@ -19,11 +19,13 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Open order by quantity](#open-order-by-quantity-o)
   * [Close position](#close-position-x)
   * [Cancel limit orders](#cancel-limit-orders-c)
+  * [Cancel conditional orders](#cancel-conditional-orders-cs)
   * [Manage stop-loss](#manage-stop-loss-sl)
   * [Manage take-profit](#manage-take-profit-tp)
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gp)
   * [Get limit orders](#get-limit-orders-gl)
+  * [Get conditional orders](#get-conditional-orders-gl)
   * [Send test API request](#send-test-api-request-ping)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
@@ -53,7 +55,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
     !o          open order
     !x          close position
-    !c          cancel limit orders
+    !cl         cancel limit orders
+    !cc         cancel conditional orders
 
     !sl         manage stop-loss
     !tp         manage take-profit
@@ -62,6 +65,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 
     !gp         get position info
     !gl         get limit orders
+    !gc         get conditional orders
 
     !ping       send test API request
     !help       get instructions link
@@ -72,7 +76,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 ### Open order by risk `!o`
 
 ```
-!o [symbol]* [sl]* [tp] [risk]* -l [price]
+!o [symbol]* [sl]* [tp] [risk]* -l [price] -t [trigger]
 
 * — required parameter
 ```
@@ -90,17 +94,26 @@ Parameters:
 - `tp` — take-profit price
 - `risk*` — amount in USD to risk on the trade
 - `-l [price]` — limit order price
+- `-t [trigger]` — trigger price
 
 All variations:
 
 ```
 Market:
-!o [symbol] [sl] [tp] [risk]                — market order with stop-loss and take-profit
-!o [symbol] [sl] [risk]                     — market order with with stop-loss only
+!o [symbol] [sl] [tp] [risk]                             — market order with SL and TP
+!o [symbol] [sl] [risk]                                  — market order with SL only
 
 Limit:
-!o [symbol] [sl] [tp] [risk] -l [price]     — limit order with stop-loss and take-profit
-!o [symbol] [sl] [risk] -l [price]          — limit order with stop-loss only
+!o [symbol] [sl] [tp] [risk] -l [price]                  — limit order with SL and TP
+!o [symbol] [sl] [risk] -l [price]                       — limit order with SL only
+
+Conditional Market:
+!o [symbol] [sl] [tp] [risk] -t [trigger]                — conditional market order with SL and TP
+!o [symbol] [sl] [risk] -t [trigger]                     — conditional market order with SL only
+
+Conditional Limit:
+!o [symbol] [sl] [tp] [risk] -l [price] -t [trigger]     — conditional limit order with TP and SL
+!o [symbol] [sl] [risk] -l [price] -t [trigger]          — conditional limit order with SL only
 ```
 
 **Example 1 (market order):**
@@ -118,6 +131,14 @@ This command opens a market sell order on `ETHUSDT` with a stop-loss at 2610.1, 
 ```
 
 This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
+
+**Example 3 (conditional limit order):**
+
+```
+!o btcusdt 108200 112550 1500 -l 109000 -t 109100
+```
+
+This command places a conditional limit order (Long) on `BTCUSDT` with trigger price at 109100, limit order price 109000, stop-loss at 108200, take-profit 112550, risking $1500.
 
 ---
 
@@ -225,6 +246,33 @@ Parameters:
 ```
 
 This command cancels all limit orders for `TRUMPUSDT`.
+
+---
+
+### Cancel conditional orders `!cs`
+
+```
+!cs [symbol]
+```
+
+Cancels all open conditional orders (including stop-loss and take-profit orders) for specified trading pair or for all pairs.
+
+Parameters:
+
+- `symbol` — trading pair (optional)
+
+```
+!cs [symbol]     — cancels all open conditional orders for the symbol
+!cs              — cancels all open conditional orders across all pairs
+```
+
+**Example:**
+
+```angular2html
+!cs ethusdt
+```
+
+This command cancels all open conditional orders for `ETHUSDT`.
 
 ---
 
@@ -389,6 +437,35 @@ All variations
 ```
 
 This command displays limit orders for `BTCUSDT`.
+
+---
+
+### Get conditional orders `!gl`
+
+```
+!gc [symbol]
+```
+
+Displays information about active conditional orders.
+
+Parameters:
+
+- `symbol` — trading pair
+
+All variations
+
+```
+!gl [symbol]     — shows conditional orders for the symbol
+!gl              — shows all conditional orders
+```
+
+**Example:**
+
+```
+!gl hbarusdt
+```
+
+This command displays conditional orders for `HBARUSDT`.
 
 ---
 

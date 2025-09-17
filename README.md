@@ -259,7 +259,7 @@ Cancels all open conditional orders (including stop-loss and take-profit orders)
 
 Parameters:
 
-- `symbol` — trading pair (optional)
+- `symbol` — trading pair
 
 ```
 !cc [symbol]     — cancels all open conditional orders for the symbol

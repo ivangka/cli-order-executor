@@ -119,18 +119,18 @@ Conditional Limit:
 **Example 1 (market order):**
 
 ```
-!o ethusdt 2610.1 2550.14 50
+!o ethusdt 2550 3100 50
 ```
 
-This command opens a market sell order on `ETHUSDT` with a stop-loss at 2610.1, take-profit at 2550.14, risking $50.
+This command opens a market buy order on `ETHUSDT` with a stop-loss at 2550, take-profit at 3100, risking $50.
 
 **Example 2 (limit order):**
 
 ```
-!o suiusdt 2.44 3.12 200 -l 2.7
+!o suiusdt 3.13 2.33 600 -l 2.8
 ```
 
-This command places a limit buy order on `SUIUSDT` with a price 2.7, stop-loss at 2.44, take-profit at 3.12, risking $200.
+This command places a limit sell order on `SUIUSDT` with a price 2.8, stop-loss at 3.13, take-profit at 2.33, risking $600.
 
 **Example 3 (conditional limit order):**
 
@@ -150,7 +150,7 @@ This command places a conditional limit order (Long) on `BTCUSDT` with trigger p
 * — required parameter
 ```
 
-This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing. This is useful when you want to directly specify the amount of contracts to buy or sell without calculating risk — for example, to set partial or full take-profit limit orders.
+This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing.
 
 Parameters:
 
@@ -168,7 +168,7 @@ All variations:
 **Example 1 (market order):**
 
 ```
-!o btc -buy 0.4
+!o btcusdt -buy 0.4
 ```
 
 This command opens a market buy order for 0.4 BTC on `BTCUSDT`.
@@ -176,7 +176,7 @@ This command opens a market buy order for 0.4 BTC on `BTCUSDT`.
 **Example 2 (limit order):**
 
 ```
-!o ada -sell 200 -l 0.8121
+!o adausdt -sell 200 -l 0.8121
 ```
 
 This command places a limit sell order for 200 ADA on `ADAUSDT` with a price 0.8121.

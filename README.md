@@ -19,7 +19,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Open order by quantity](#open-order-by-quantity-o)
   * [Close position](#close-position-x)
   * [Cancel limit orders](#cancel-limit-orders-cl)
-  * [Cancel conditional orders](#cancel-conditional-orders-cs)
+  * [Cancel conditional orders](#cancel-conditional-orders-cc)
   * [Manage stop-loss](#manage-stop-loss-sl)
   * [Manage take-profit](#manage-take-profit-tp)
   * [Set leverage](#set-leverage-lev)
@@ -249,10 +249,10 @@ This command cancels all limit orders for `TRUMPUSDT`.
 
 ---
 
-### Cancel conditional orders `!cs`
+### Cancel conditional orders `!cc`
 
 ```
-!cs [symbol]
+!cc [symbol]
 ```
 
 Cancels all open conditional orders (including stop-loss and take-profit orders) for specified trading pair or for all pairs.
@@ -262,14 +262,14 @@ Parameters:
 - `symbol` — trading pair (optional)
 
 ```
-!cs [symbol]     — cancels all open conditional orders for the symbol
-!cs              — cancels all open conditional orders across all pairs
+!cc [symbol]     — cancels all open conditional orders for the symbol
+!cc              — cancels all open conditional orders across all pairs
 ```
 
 **Example:**
 
 ```angular2html
-!cs ethusdt
+!cc ethusdt
 ```
 
 This command cancels all open conditional orders for `ETHUSDT`.

@@ -25,7 +25,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Set leverage](#set-leverage-lev)
   * [Get position info](#get-position-info-gp)
   * [Get limit orders](#get-limit-orders-gl)
-  * [Get conditional orders](#get-conditional-orders-gl)
+  * [Get conditional orders](#get-conditional-orders-gc)
   * [Send test API request](#send-test-api-request-ping)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
@@ -440,7 +440,7 @@ This command displays limit orders for `BTCUSDT`.
 
 ---
 
-### Get conditional orders `!gl`
+### Get conditional orders `!gc`
 
 ```
 !gc [symbol]
@@ -455,14 +455,14 @@ Parameters:
 All variations
 
 ```
-!gl [symbol]     — shows conditional orders for the symbol
-!gl              — shows all conditional orders
+!gc [symbol]     — shows conditional orders for the symbol
+!gc              — shows all conditional orders
 ```
 
 **Example:**
 
 ```
-!gl hbarusdt
+!gc hbarusdt
 ```
 
 This command displays conditional orders for `HBARUSDT`.

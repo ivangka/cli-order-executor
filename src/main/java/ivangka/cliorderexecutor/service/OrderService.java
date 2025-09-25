@@ -312,6 +312,11 @@ public class OrderService {
         return conditionalOrders;
     }
 
+    // get wallet balance
+    public WalletBalance getWalletBalance() throws BadRetCodeException {
+        return apiService.walletBalance();
+    }
+
     // test API request
     public void testRequest() throws BadRetCodeException {
         apiService.testRequest();

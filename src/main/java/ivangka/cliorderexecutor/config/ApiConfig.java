@@ -1,6 +1,7 @@
 package ivangka.cliorderexecutor.config;
 
 import com.bybit.api.client.config.BybitApiConfig;
+import com.bybit.api.client.restApi.BybitApiAccountRestClient;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
@@ -34,6 +35,12 @@ public class ApiConfig {
     public BybitApiPositionRestClient bybitApiPositionRestClient() {
         return BybitApiClientFactory.newInstance(apiKey, apiSecret, BybitApiConfig.MAINNET_DOMAIN)
                 .newPositionRestClient();
+    }
+
+    @Bean
+    public BybitApiAccountRestClient bybitApiAccountRestClient() {
+        return BybitApiClientFactory.newInstance(apiKey, apiSecret, BybitApiConfig.MAINNET_DOMAIN)
+                .newAccountRestClient();
     }
 
 }

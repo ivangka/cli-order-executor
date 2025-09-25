@@ -4,6 +4,7 @@ import ivangka.cliorderexecutor.exception.*;
 import ivangka.cliorderexecutor.model.ConditionalOrder;
 import ivangka.cliorderexecutor.model.LimitOrder;
 import ivangka.cliorderexecutor.model.Position;
+import ivangka.cliorderexecutor.model.WalletBalance;
 import ivangka.cliorderexecutor.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -343,6 +344,16 @@ public class CliHandler {
                         }
                         System.out.println(orderStr);
                     }
+                } else {
+                    throw new InvalidCommandException("Incorrect command format, try again");
+                }
+                break;
+
+            // get wallet balance
+            case "!bal":
+                if (commandParts.length == 1) {
+                    WalletBalance walletBalance = orderService.getWalletBalance();
+                    System.out.println(walletBalance);
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }

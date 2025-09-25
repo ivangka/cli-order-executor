@@ -1,12 +1,15 @@
 package ivangka.cliorderexecutor.service;
 
 import com.bybit.api.client.domain.CategoryType;
+import com.bybit.api.client.domain.account.AccountType;
 import com.bybit.api.client.domain.market.request.MarketDataRequest;
+import com.bybit.api.client.domain.account.request.AccountDataRequest;
 import com.bybit.api.client.domain.position.TpslMode;
 import com.bybit.api.client.domain.position.request.PositionDataRequest;
 import com.bybit.api.client.domain.trade.OrderFilter;
 import com.bybit.api.client.domain.trade.PositionIdx;
 import com.bybit.api.client.domain.trade.request.TradeOrderRequest;
+import com.bybit.api.client.restApi.BybitApiAccountRestClient;
 import com.bybit.api.client.restApi.BybitApiMarketRestClient;
 import com.bybit.api.client.restApi.BybitApiPositionRestClient;
 import com.bybit.api.client.restApi.BybitApiTradeRestClient;
@@ -26,14 +29,17 @@ public class ApiService {
     private final BybitApiMarketRestClient bybitApiMarketRestClient;
     private final BybitApiTradeRestClient bybitApiTradeRestClient;
     private final BybitApiPositionRestClient bybitApiPositionRestClient;
+    private final BybitApiAccountRestClient bybitApiAccountRestClient;
 
     @Autowired
     public ApiService(BybitApiMarketRestClient bybitApiMarketRestClient,
                       BybitApiTradeRestClient bybitApiTradeRestClient,
-                      BybitApiPositionRestClient bybitApiPositionRestClient) {
+                      BybitApiPositionRestClient bybitApiPositionRestClient,
+                      BybitApiAccountRestClient bybitApiAccountRestClient) {
         this.bybitApiMarketRestClient = bybitApiMarketRestClient;
         this.bybitApiTradeRestClient = bybitApiTradeRestClient;
         this.bybitApiPositionRestClient = bybitApiPositionRestClient;
+        this.bybitApiAccountRestClient = bybitApiAccountRestClient;
     }
 
     // create market order
@@ -644,6 +650,37 @@ public class ApiService {
         instrument.setMinOrderQty(minOrderQty);
         instrument.setQtyStep(qtyStep);
         return instrument;
+    }
+
+    // [totalWalletBalance, totalMarginBalance, totalAvailableBalance]
+    public WalletBalance walletBalance() throws BadRetCodeException {
+        var request = AccountDataRequest.builder()
+                .accountType(AccountType.UNIFIED)
+                .build();
+        Object response = bybitApiAccountRestClient.getWalletBalance(request);
+
+        Map<String, Object> responseMap = (Map<String, Object>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+        Map<String, Object> result = (Map<String, Object>) responseMap.get("result");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) result.get("list");
+        Map<String, Object> firstItem = list.get(0);
+        String walletBal = (String) firstItem.get("totalWalletBalance");
+        String marginBal = (String) firstItem.get("totalMarginBalance");
+        String availableBal = (String) firstItem.get("totalAvailableBalance");
+
+        WalletBalance walletBalance = new WalletBalance();
+        walletBalance.setWalletBal(walletBal);
+        walletBalance.setMarginBal(marginBal);
+        walletBalance.setAvailableBal(availableBal);
+        return walletBalance;
     }
 
     // get positions by symbol

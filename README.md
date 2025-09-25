@@ -26,6 +26,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Get position info](#get-position-info-gp)
   * [Get limit orders](#get-limit-orders-gl)
   * [Get conditional orders](#get-conditional-orders-gc)
+  * [Get wallet balance](#get-wallet-balance-bal)
   * [Send test API request](#send-test-api-request-ping)
   * [Get instructions link](#get-instructions-link-help)
   * [Exit program](#exit-program-exit)
@@ -54,6 +55,7 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
 ## Commands
 
     !o          open order
+
     !x          close position
     !cl         cancel limit orders
     !cc         cancel conditional orders
@@ -66,6 +68,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !gp         get position info
     !gl         get limit orders
     !gc         get conditional orders
+
+    !bal        get wallet balance
 
     !ping       send test API request
     !help       get instructions link
@@ -466,6 +470,18 @@ All variations
 ```
 
 This command displays conditional orders for `HBARUSDT`.
+
+---
+
+### Get wallet balance `!bal`
+
+Displays information about your **unified trading** account balance.
+
+It shows:
+
+- **Wallet Balance** — overall wallet balance (all assets in the account).
+- **Margin Balance** — balance including unrealized PnL and accrued fees.
+- **Available Balance** — balance available for opening new positions or placing orders.
 
 ---
 

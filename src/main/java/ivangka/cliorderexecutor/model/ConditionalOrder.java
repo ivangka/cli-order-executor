@@ -75,24 +75,29 @@ public class ConditionalOrder {
         this.takeProfit = takeProfit;
     }
 
+    private String abbreviateForDisplay(String s) {
+        if (s == null) return "";
+        return s.length() > 16 ? s.substring(0, 14) + ".." : s;
+    }
+
     @Override
     public String toString() {
-        String displaySymbol = symbol.length() > 16 ? symbol.substring(0, 14) + ".." : symbol;
+        String displaySymbol = abbreviateForDisplay(symbol);
         String priceStr = price;
         if (price.equals("0")) {
             priceStr = "";
         }
         return ""
-                + "  +-------------+-------------------+" + System.lineSeparator()
-                + String.format("  + %-11s + %17s +%n", "symbol", displaySymbol)
-                + String.format("  + %-11s + %17s +%n", "trigger", triggerPrice)
-                + String.format("  + %-11s + %17s +%n", "price", priceStr)
-                + String.format("  + %-11s + %17s +%n", "quantity", quantity)
-                + String.format("  + %-11s + %17s +%n", "side", side)
-                + String.format("  + %-11s + %17s +%n", "orderType", orderType)
-                + String.format("  + %-11s + %17s +%n", "stopLoss", stopLoss)
-                + String.format("  + %-11s + %17s +%n", "takeProfit", takeProfit)
-                + "  +-------------+-------------------+";
+                + "  +---------------+-------------------+" + System.lineSeparator()
+                + String.format("  + %-13s + %17s +%n", "symbol", displaySymbol)
+                + String.format("  + %-13s + %17s +%n", "trigger", triggerPrice)
+                + String.format("  + %-13s + %17s +%n", "price", priceStr)
+                + String.format("  + %-13s + %17s +%n", "quantity", quantity)
+                + String.format("  + %-13s + %17s +%n", "side", side)
+                + String.format("  + %-13s + %17s +%n", "orderType", orderType)
+                + String.format("  + %-13s + %17s +%n", "stopLoss", stopLoss)
+                + String.format("  + %-13s + %17s +%n", "takeProfit", takeProfit)
+                + "  +---------------+-------------------+";
     }
 
 }

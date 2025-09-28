@@ -21,7 +21,7 @@ public class BadRetCodeException extends Exception {
         RETCODES.put("110018", "User ID is illegal");
         RETCODES.put("110043", "Set leverage has not been modified");
         RETCODES.put("33004", "Your api key has expired");
-        RETCODES.put("34040", "Not modified. Indicates you already set this TP/SL value or you didn't pass" +
+        RETCODES.put("34040", "Not modified. Indicates you already set this TP/SL value or you didn't pass " +
                 "a required parameter");
     }
 

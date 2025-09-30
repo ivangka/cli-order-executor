@@ -347,7 +347,7 @@ Updates, sets, or removes a take-profit order for an existing position.
 Parameters:
 
 - `symbol*` — trading pair
-- `price*` — take-profit price (`0` to remove a full position TP order)
+- `price*` — take-profit price ("0" to remove a full position TP order)
 - `percent` — percentage of the existing position (for a partial position TP order)
 
 All variations:

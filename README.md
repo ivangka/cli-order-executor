@@ -432,8 +432,6 @@ This command sets the leverage to maximum for the all `BTCUSDT` positions and ne
 
 Displays information about the current positions.
 
-> [!INFO]
->
 > Shows only full TP/SL orders, not partial ones.
 
 Parameters:
@@ -465,8 +463,6 @@ This command displays position details for `SANDUSDT`.
 
 Displays information about active limit orders.
 
-> [!INFO]
->
 > Shows only full TP/SL orders, not partial ones.
 
 Parameters:
@@ -498,8 +494,6 @@ This command displays limit orders for `BTCUSDT`.
 
 Displays information about active conditional orders.
 
-> [!INFO]
->
 > Shows only full TP/SL orders, not partial ones.
 
 Parameters:
@@ -587,9 +581,7 @@ java -jar "<PATH>/target/cli-order-executor-0.0.1-SNAPSHOT.jar"
 
 Here we go.
 
->
 > You only need to complete steps 1-5 once.
-> 
 
 ## Error 10002
 

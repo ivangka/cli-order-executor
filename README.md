@@ -581,7 +581,6 @@ java -jar "<PATH>/target/cli-order-executor-0.0.1-SNAPSHOT.jar"
 
 Here we go.
 
->
 > You only need to complete steps 1-5 once.
 
 ## Error 10002

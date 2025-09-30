@@ -238,6 +238,8 @@ Parameters:
 
 - `symbol` — trading pair
 
+All variations:
+
 ```
 !cl [symbol]     — cancels all limit orders for the symbol
 !cl              — cancels all limit orders across all pairs
@@ -265,6 +267,8 @@ Parameters:
 
 - `symbol` — trading pair
 
+All variations:
+
 ```
 !cc [symbol]     — cancels all open conditional orders for the symbol
 !cc              — cancels all open conditional orders across all pairs
@@ -283,66 +287,100 @@ This command cancels all open conditional orders for `ETHUSDT`.
 ### Manage stop-loss `!sl`
 
 ```
-!sl [symbol]* [price]*
+!sl [symbol]* [price]* [percent]
 
 * — required parameter
 ```
 
-Updates, sets, or removes the stop-loss order for an existing position.
+Updates, sets, or removes a stop-loss order for an existing position.
 
 Parameters:
 
-- symbol* — trading pair
-- price* — stop-loss price ("0" to remove the stop-loss)
+- `symbol*` — trading pair
+- `price*` — stop-loss price ("0" to remove a full position SL order)
+- `percent` — percentage of the existing position (for a partial position SL order)
 
-**Example 1:**
+All variations:
+
+```
+!sl [symbol] [price]               — set or move a full position SL order
+!sl [symbol] 0                     — remove a full position SL order
+!sl [symbol] [price] [percent]     — set a partial position SL order
+```
+
+**Example 1 (full position SL order):**
 
 ```
 !sl polusdt 0.1641
 ```
 
-Moves the stop-loss for `POLUSDT` to 0.1641. If no stop-loss was set before, this sets a new one.
+Sets or moves a full position SL order for `POLUSDT` at 0.1641.
 
-**Example 2:**
+**Example 2 (remove full position SL order):**
 
 ```
 !sl ethusdt 0
 ```
 
-Removes the stop-loss for the current `ETHUSDT` position.
+Removes a full position SL order for the current `ETHUSDT` position.
+
+**Example 3 (partial position SL order):**
+
+```
+!sl btcusdt 101000 40
+```
+
+Sets a partial position SL order for `BTCUSDT` at 101000 that will close 40% of the position.
 
 ---
 
 ### Manage take-profit `!tp`
 
 ```
-!tp [symbol]* [price]*
+!tp [symbol]* [price]* [percent]
 
 * — required parameter
 ```
 
-Updates, sets, or removes the take-profit order for an existing position.
+Updates, sets, or removes a take-profit order for an existing position.
 
 Parameters:
 
-- symbol* — trading pair
-- price* — take-profit price ("0" to remove the take-profit)
+- `symbol*` — trading pair
+- `price*` — take-profit price (`0` to remove a full position TP order)
+- `percent` — percentage of the existing position (for a partial position TP order)
 
-**Example 1:**
+All variations:
+
+```
+!tp [symbol] [price]               — set or move a full position TP order
+!tp [symbol] 0                     — remove a full position TP order
+!tp [symbol] [price] [percent]     — set a partial position TP order
+```
+
+**Example 1 (full position TP order):**
 
 ```
 !tp btcusdt 98000
 ```
 
-Moves the take-profit for `BTCUSDT` to 98000. If no take-profit was set before, this sets a new one.
+Sets or moves a full position TP order for `BTCUSDT` at 98000.
 
-**Example 2:**
+**Example 2 (remove full position TP order):**
 
 ```
 !tp bnbusdt 0
 ```
 
-Removes the take-profit for the current `BNBUSDT` position.
+Removes a full position TP order for the current `BNBUSDT` position.
+
+**Example 3 (partial position TP order):**
+
+```
+!tp ethusdt 3500 50
+```
+
+Sets a partial position TP order for `ETHUSDT` at 3500 that will close 50% of the position.
 
 ---
 
@@ -394,6 +432,10 @@ This command sets the leverage to maximum for the all `BTCUSDT` positions and ne
 
 Displays information about the current positions.
 
+> [!INFO]
+>
+> Shows only full TP/SL orders, not partial ones.
+
 Parameters:
 
 - `symbol` — trading pair
@@ -423,6 +465,10 @@ This command displays position details for `SANDUSDT`.
 
 Displays information about active limit orders.
 
+> [!INFO]
+>
+> Shows only full TP/SL orders, not partial ones.
+
 Parameters:
 
 - `symbol` — trading pair
@@ -451,6 +497,10 @@ This command displays limit orders for `BTCUSDT`.
 ```
 
 Displays information about active conditional orders.
+
+> [!INFO]
+>
+> Shows only full TP/SL orders, not partial ones.
 
 Parameters:
 

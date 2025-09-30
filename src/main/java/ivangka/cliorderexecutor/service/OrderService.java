@@ -180,14 +180,20 @@ public class OrderService {
 
     // close positions
     public void closePositions(String symbol, String percent)
-            throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException, InterruptedException {
+            throws BadRetCodeException, InvalidCommandException, TooSmallOrderSizeException, InterruptedException,
+            OrderNotFoundException {
 
+        // get positions
         List<Position> positions;
         if (symbol.equals("-all")) {
             positions = apiService.positions(); // 2 req (Position)
         } else {
             positions = apiService.positions(symbol); // 1 req (Position)
         }
+        if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
+            throw new OrderNotFoundException("Positions were not found");
+        }
+
         // checking user's percent
         BigDecimal percentBD;
         try {
@@ -251,14 +257,114 @@ public class OrderService {
         }
     }
 
-    // manage stop-loss
+    // manage full stop-loss
     public void manageStopLoss(String symbol, String price) throws BadRetCodeException {
         apiService.manageStopLoss(symbol, price);
     }
 
-    // manage take-profit
+    // manage partial stop-loss
+    public void manageStopLoss(String symbol, String price, String percent)
+            throws BadRetCodeException, OrderNotFoundException, InvalidCommandException, TooSmallOrderSizeException {
+
+        // get the position
+        List<Position> positions = apiService.positions(symbol); // 1 req
+        if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
+            throw new OrderNotFoundException("Positions were not found");
+        }
+        Position position = positions.get(0);
+
+        // checking percent
+        BigDecimal percentBD;
+        try {
+            percentBD = new BigDecimal(percent);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Incorrect command format, try again");
+        }
+        // 0 < percent <= 100
+        if (percentBD.compareTo(BigDecimal.ZERO) <= 0 || percentBD.compareTo(new BigDecimal("100")) > 0) {
+            throw new InvalidCommandException("Percent value is incorrect");
+        }
+
+        // if percent == 100 (full SL)
+        if (percentBD.compareTo(new BigDecimal("100")) == 0) {
+            manageStopLoss(symbol, price);
+            return;
+        }
+
+        // get min order size and step of the symbol
+        Instrument instrument = apiService.instrumentInfo(position.getSymbol()); // 1 req
+        BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
+        BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
+
+        // calculating final size
+        BigDecimal orderSizeBD = new BigDecimal(position.getSize());
+        BigDecimal percentFactor = percentBD.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
+        BigDecimal sizeBD = orderSizeBD.multiply(percentFactor);
+        // formatting size by price step
+        BigDecimal roundedSizeBD = sizeBD.divide(stepBD, 0, RoundingMode.DOWN).multiply(stepBD)
+                .stripTrailingZeros();
+
+        // size >= minOrderSize
+        if (percentBD.compareTo(BigDecimal.valueOf(100)) != 0 && roundedSizeBD.compareTo(minOrderSizeBD) < 0) {
+            throw new TooSmallOrderSizeException("Stop-loss size is too small");
+        }
+
+        apiService.manageStopLoss(position.getSymbol(), price, roundedSizeBD.toPlainString()); // 1 req
+    }
+
+    // manage full take-profit
     public void manageTakeProfit(String symbol, String price) throws BadRetCodeException {
         apiService.manageTakeProfit(symbol, price);
+    }
+
+    // manage partial take-profit
+    public void manageTakeProfit(String symbol, String price, String percent)
+            throws BadRetCodeException, OrderNotFoundException, InvalidCommandException, TooSmallOrderSizeException {
+
+        // get the position
+        List<Position> positions = apiService.positions(symbol); // 1 req
+        if (positions.isEmpty() || positions.get(0).getSize().equals("0")) {
+            throw new OrderNotFoundException("Positions were not found");
+        }
+        Position position = positions.get(0);
+
+        // checking percent
+        BigDecimal percentBD;
+        try {
+            percentBD = new BigDecimal(percent);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Incorrect command format, try again");
+        }
+        // 0 < percent <= 100
+        if (percentBD.compareTo(BigDecimal.ZERO) <= 0 || percentBD.compareTo(new BigDecimal("100")) > 0) {
+            throw new InvalidCommandException("Percent value is incorrect");
+        }
+
+        // if percent == 100 (full TP)
+        if (percentBD.compareTo(new BigDecimal("100")) == 0) {
+            manageTakeProfit(symbol, price);
+            return;
+        }
+
+        // get min order size and step of the symbol
+        Instrument instrument = apiService.instrumentInfo(position.getSymbol()); // 1 req
+        BigDecimal minOrderSizeBD = new BigDecimal(instrument.getMinOrderQty());
+        BigDecimal stepBD = new BigDecimal(instrument.getQtyStep());
+
+        // calculating final size
+        BigDecimal orderSizeBD = new BigDecimal(position.getSize());
+        BigDecimal percentFactor = percentBD.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
+        BigDecimal sizeBD = orderSizeBD.multiply(percentFactor);
+        // formatting size by price step
+        BigDecimal roundedSizeBD = sizeBD.divide(stepBD, 0, RoundingMode.DOWN).multiply(stepBD)
+                .stripTrailingZeros();
+
+        // size >= minOrderSize
+        if (percentBD.compareTo(BigDecimal.valueOf(100)) != 0 && roundedSizeBD.compareTo(minOrderSizeBD) < 0) {
+            throw new TooSmallOrderSizeException("Take-profit size is too small");
+        }
+
+        apiService.manageTakeProfit(position.getSymbol(), price, roundedSizeBD.toPlainString()); // 1 req
     }
 
     // set the leverage for the trading pair

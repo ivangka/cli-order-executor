@@ -239,10 +239,17 @@ public class CliHandler {
 
             // manage stop-loss
             case "!sl": // !sl [symbol] [price]
-                if (commandParts.length == 3) {
+                if (commandParts.length == 3) { // full SL
                     orderService.manageStopLoss(
                             commandParts[1],
                             commandParts[2]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Stop-loss updated successfully").reset());
+                } else if (commandParts.length == 4) { // partial SL
+                    orderService.manageStopLoss(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3]
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Stop-loss updated successfully").reset());
                 } else {
@@ -251,11 +258,18 @@ public class CliHandler {
                 break;
 
             // manage take-profit
-            case "!tp": // !tp [symbol] [price]
-                if (commandParts.length == 3) {
+            case "!tp": // !tp [symbol] [price] [percent]
+                if (commandParts.length == 3) { // full TP
                     orderService.manageTakeProfit(
                             commandParts[1],
                             commandParts[2]
+                    );
+                    System.out.println(ansi().fgBrightGreen().a("  Take-profit updated successfully").reset());
+                } else if (commandParts.length == 4) { // partial TP
+                    orderService.manageTakeProfit(
+                            commandParts[1],
+                            commandParts[2],
+                            commandParts[3]
                     );
                     System.out.println(ansi().fgBrightGreen().a("  Take-profit updated successfully").reset());
                 } else {

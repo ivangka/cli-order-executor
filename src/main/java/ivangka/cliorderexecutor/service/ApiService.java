@@ -494,7 +494,7 @@ public class ApiService {
         }
     }
 
-    // manage stop-loss
+    // manage full stop-loss
     public void manageStopLoss(String symbol, String price) throws BadRetCodeException {
         var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)
@@ -518,7 +518,32 @@ public class ApiService {
         }
     }
 
-    // manage take-profit
+    // manage partial stop-loss
+    public void manageStopLoss(String symbol, String price, String size) throws BadRetCodeException {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .tpslMode(TpslMode.PARTIAL)
+                .positionIdx(PositionIdx.ONE_WAY_MODE)
+                .stopLoss(price)
+                .slSize(size)
+                .build();
+        Object response = bybitApiPositionRestClient.setTradingStop(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // manage full take-profit
     public void manageTakeProfit(String symbol, String price) throws BadRetCodeException {
         var request = PositionDataRequest.builder()
                 .category(CategoryType.LINEAR)
@@ -526,6 +551,31 @@ public class ApiService {
                 .tpslMode(TpslMode.FULL)
                 .positionIdx(PositionIdx.ONE_WAY_MODE)
                 .takeProfit(price)
+                .build();
+        Object response = bybitApiPositionRestClient.setTradingStop(request);
+
+        // checking retCode from the response
+        Map<?, ?> responseMap = (Map<?, ?>) response;
+        String retCode = responseMap.get("retCode").toString();
+        if (!retCode.equals("0")) {
+            String retCodeMessage = BadRetCodeException.RETCODES.get(retCode);
+            if (retCodeMessage != null) {
+                throw new BadRetCodeException(retCodeMessage + " (retCode: " + retCode + ")");
+            } else {
+                throw new BadRetCodeException("Error (retCode: " + retCode + ")");
+            }
+        }
+    }
+
+    // manage partial take-profit
+    public void manageTakeProfit(String symbol, String price, String size) throws BadRetCodeException {
+        var request = PositionDataRequest.builder()
+                .category(CategoryType.LINEAR)
+                .symbol(symbol)
+                .tpslMode(TpslMode.PARTIAL)
+                .positionIdx(PositionIdx.ONE_WAY_MODE)
+                .takeProfit(price)
+                .tpSize(size)
                 .build();
         Object response = bybitApiPositionRestClient.setTradingStop(request);
 

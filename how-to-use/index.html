@@ -175,6 +175,28 @@
   
   
     <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../risk-management/" class="md-nav__link">
         
   
@@ -205,10 +227,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -221,8 +243,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Commands
           </label>
@@ -667,36 +689,20 @@
   <h1>How to Use?</h1>
 
 <p><strong>Follow these steps to get started:</strong></p>
-<ul>
-<li>
-<p>(1) Install <code>Java</code> and <code>Maven</code>.</p>
-</li>
-<li>
-<p>(2) Download or clone this repository:</p>
-</li>
-</ul>
+<p>1) Install <code>Java</code> and <code>Maven</code>.</p>
+<p>2) Download or clone this repository:</p>
 <pre><code>git clone https://github.com/ivangka/cli-order-executor.git
 </code></pre>
-<ul>
-<li>
-<p>(3) Create a Bybit API Key.</p>
-</li>
-<li>
-<p>(4) Configure API credentials in <code>application.properties</code>:</p>
-</li>
-</ul>
+<p>3) Create a Bybit API Key.</p>
+<p>4) Configure API credentials in <code>application.properties</code>:</p>
 <pre><code class="language-properties"># bybit API
 api.bybit.key=&lt;YOUR_BYBIT_API_KEY&gt;
 api.bybit.secret=&lt;YOUR_BYBIT_API_SECRET&gt;
 </code></pre>
-<ul>
-<li>(5) Compile the application:</li>
-</ul>
+<p>5) Compile the application:</p>
 <pre><code>mvn clean package -DskipTests
 </code></pre>
-<ul>
-<li>(6) Run the application:</li>
-</ul>
+<p>6) Run the application:</p>
 <pre><code>java -jar &quot;&lt;PATH&gt;/target/cli-order-executor-0.0.1-SNAPSHOT.jar&quot;
 </code></pre>
 

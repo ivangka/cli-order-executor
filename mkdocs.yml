@@ -7,20 +7,20 @@ extra_css:
 nav:
   - Risk Management: risk-management.md
   - Commands:
-    - Open order by risk: open-order-by-risk.md
-    - Open order by quantity: open-order-by-quantity.md
-    - Close position: close-position.md
-    - Cancel limit orders: cancel-limit-orders.md
-    - Cancel conditional orders: cancel-conditional-orders.md
-    - Manage stop-loss: manage-stop-loss.md
-    - Manage take-profit: manage-take-profit.md
-    - Set leverage: set-leverage.md
-    - Get position info: get-position-info.md
-    - Get limit orders: get-limit-orders.md
-    - Get conditional orders: get-conditional-orders.md
-    - Get wallet balance: get-wallet-balance.md
-    - Send test API request: send-test-api-request.md
-    - Get documentation link: get-documentation-link.md
-    - Exit program: exit-program.md
+    - Open Order by Risk: open-order-by-risk.md
+    - Open Order by Quantity: open-order-by-quantity.md
+    - Close Position: close-position.md
+    - Cancel Limit Orders: cancel-limit-orders.md
+    - Cancel Conditional Orders: cancel-conditional-orders.md
+    - Manage Stop-Loss: manage-stop-loss.md
+    - Manage Take-Profit: manage-take-profit.md
+    - Set Leverage: set-leverage.md
+    - Get Position Info: get-position-info.md
+    - Get Limit Orders: get-limit-orders.md
+    - Get Conditional Orders: get-conditional-orders.md
+    - Get Wallet Balance: get-wallet-balance.md
+    - Send Test API Request: send-test-api-request.md
+    - Get Documentation Link: get-documentation-link.md
+    - Exit Program: exit-program.md
   - How to Use?: how-to-use.md
   - Error 10002: error-10002.md

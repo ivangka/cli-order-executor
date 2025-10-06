@@ -1,0 +1,24 @@
+site_name: CLI Order Executor
+theme:
+  name: swan
+
+nav:
+  - Risk Management: risk-management.md
+  - Commands:
+    - Open order by risk: open-order-by-risk.md
+    - Open order by quantity: open-order-by-quantity.md
+    - Close position: close-position.md
+    - Cancel limit orders: cancel-limit-orders.md
+    - Cancel conditional orders: cancel-conditional-orders.md
+    - Manage stop-loss: manage-stop-loss.md
+    - Manage take-profit: manage-take-profit.md
+    - Set leverage: set-leverage.md
+    - Get position info: get-position-info.md
+    - Get limit orders: get-limit-orders.md
+    - Get conditional orders: get-conditional-orders.md
+    - Get wallet balance: get-wallet-balance.md
+    - Send test API request: send-test-api-request.md
+    - Get documentation link: get-documentation-link.md
+    - Exit program: exit-program.md
+  - How to Use?: how-to-use.md
+  - Error 10002: error-10002.md

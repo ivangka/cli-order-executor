@@ -13,6 +13,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 **Table of contents:**
 
 * [Disclaimer](#disclaimer)
+* [Full documentation](#full-documentation)
 * [Risk Management](#risk-management)
 * [Commands](#commands)
   * [Open order by risk](#open-order-by-risk-o)
@@ -28,7 +29,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
   * [Get conditional orders](#get-conditional-orders-gc)
   * [Get wallet balance](#get-wallet-balance-bal)
   * [Send test API request](#send-test-api-request-ping)
-  * [Get instructions link](#get-instructions-link-help)
+  * [Get documentation link](#get-documentation-link-help)
   * [Exit program](#exit-program-exit)
 * [How to Use?](#how-to-use)
 * [Error 10002](#error-10002)
@@ -41,6 +42,10 @@ This software is provided "as is", without any warranties. Use it at your own ri
 This software is not intended to provide financial or investment advice. Any trading or investment decisions you make using this software are your own responsibility. Consult a qualified financial advisor if needed.
 
 Make sure you fully understand how this software works and how futures markets operate before using it. It is strongly recommended to test it in a safe environment (such as a sandbox account or with demo funds).
+
+## Full Documentation
+
+See the [full documentation](https://ivangka.github.io/cli-order-executor) with usage examples.
 
 ## Risk Management
 
@@ -72,10 +77,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !bal        get wallet balance
 
     !ping       send test API request
-    !help       get instructions link
+    !help       get documentation link
     !exit       exit program
-
----
 
 ### Open order by risk `!o`
 
@@ -100,52 +103,6 @@ Parameters:
 - `-l [price]` — limit order price
 - `-t [trigger]` — trigger price
 
-All variations:
-
-```
-Market:
-!o [symbol] [sl] [tp] [risk]                             — market order with SL and TP
-!o [symbol] [sl] [risk]                                  — market order with SL only
-
-Limit:
-!o [symbol] [sl] [tp] [risk] -l [price]                  — limit order with SL and TP
-!o [symbol] [sl] [risk] -l [price]                       — limit order with SL only
-
-Conditional Market:
-!o [symbol] [sl] [tp] [risk] -t [trigger]                — conditional market order with SL and TP
-!o [symbol] [sl] [risk] -t [trigger]                     — conditional market order with SL only
-
-Conditional Limit:
-!o [symbol] [sl] [tp] [risk] -l [price] -t [trigger]     — conditional limit order with TP and SL
-!o [symbol] [sl] [risk] -l [price] -t [trigger]          — conditional limit order with SL only
-```
-
-**Example 1 (market order):**
-
-```
-!o ethusdt 2550 3100 50
-```
-
-This command opens a market buy order on `ETHUSDT` with a stop-loss at 2550, take-profit at 3100, risking $50.
-
-**Example 2 (limit order):**
-
-```
-!o suiusdt 3.13 2.33 600 -l 2.8
-```
-
-This command places a limit sell order on `SUIUSDT` with a price 2.8, stop-loss at 3.13, take-profit at 2.33, risking $600.
-
-**Example 3 (conditional limit order):**
-
-```
-!o btcusdt 108200 112550 1500 -l 109000 -t 109100
-```
-
-This command places a conditional limit order (Long) on `BTCUSDT` with trigger price at 109100, limit order price 109000, stop-loss at 108200, take-profit 112550, risking $1500.
-
----
-
 ### Open order by quantity `!o`
 
 ```
@@ -154,38 +111,13 @@ This command places a conditional limit order (Long) on `BTCUSDT` with trigger p
 * — required parameter
 ```
 
-This format of the command opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing.
+Opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing.
 
 Parameters:
 
 - `symbol*` — trading pair
 - `-buy/sell [qty]*` — side and quantity of contracts
 - `-l [price]` — limit order price
-
-All variations:
-
-```
-!o [symbol] -buy/sell [qty]                — market order
-!o [symbol] -buy/sell [qty] -l [price]     — limit order
-```
-
-**Example 1 (market order):**
-
-```
-!o btcusdt -buy 0.4
-```
-
-This command opens a market buy order for 0.4 BTC on `BTCUSDT`.
-
-**Example 2 (limit order):**
-
-```
-!o adausdt -sell 200 -l 0.8121
-```
-
-This command places a limit sell order for 200 ADA on `ADAUSDT` with a price 0.8121.
-
----
 
 ### Close position `!x`
 
@@ -200,32 +132,6 @@ Parameters:
 - `symbol` — trading pair
 - `percent` — percentage of position to close
 
-All variations:
-
-```
-!x [symbol]               — closes the whole position for the symbol
-!x [symbol] [percent]     — closes a percentage of the position for the symbol
-!x                        — closes all positions across all pairs
-```
-
-**Example 1 (full close):**
-
-```
-!x solusdt
-```
-
-This command closes 100% of the current `SOLUSDT` position.
-
-**Example 2 (partial close):**
-
-```
-!x ethusdt 50
-```
-
-This command closes 50% of the current `ETHUSDT` position.
-
----
-
 ### Cancel limit orders `!cl`
 
 ```
@@ -238,23 +144,6 @@ Parameters:
 
 - `symbol` — trading pair
 
-All variations:
-
-```
-!cl [symbol]     — cancels all limit orders for the symbol
-!cl              — cancels all limit orders across all pairs
-```
-
-**Example:**
-
-```angular2html
-!cl trumpusdt
-```
-
-This command cancels all limit orders for `TRUMPUSDT`.
-
----
-
 ### Cancel conditional orders `!cc`
 
 ```
@@ -266,23 +155,6 @@ Cancels all open conditional orders (including stop-loss and take-profit orders)
 Parameters:
 
 - `symbol` — trading pair
-
-All variations:
-
-```
-!cc [symbol]     — cancels all open conditional orders for the symbol
-!cc              — cancels all open conditional orders across all pairs
-```
-
-**Example:**
-
-```angular2html
-!cc ethusdt
-```
-
-This command cancels all open conditional orders for `ETHUSDT`.
-
----
 
 ### Manage stop-loss `!sl`
 
@@ -300,40 +172,6 @@ Parameters:
 - `price*` — stop-loss price ("0" to remove a full position SL order)
 - `percent` — percentage of the existing position (for a partial position SL order)
 
-All variations:
-
-```
-!sl [symbol] [price]               — set or move a full position SL order
-!sl [symbol] 0                     — remove a full position SL order
-!sl [symbol] [price] [percent]     — set a partial position SL order
-```
-
-**Example 1 (full position SL order):**
-
-```
-!sl polusdt 0.1641
-```
-
-Sets or moves a full position SL order for `POLUSDT` at 0.1641.
-
-**Example 2 (remove full position SL order):**
-
-```
-!sl ethusdt 0
-```
-
-Removes a full position SL order for the current `ETHUSDT` position.
-
-**Example 3 (partial position SL order):**
-
-```
-!sl btcusdt 101000 40
-```
-
-Sets a partial position SL order for `BTCUSDT` at 101000 that will close 40% of the position.
-
----
-
 ### Manage take-profit `!tp`
 
 ```
@@ -350,40 +188,6 @@ Parameters:
 - `price*` — take-profit price ("0" to remove a full position TP order)
 - `percent` — percentage of the existing position (for a partial position TP order)
 
-All variations:
-
-```
-!tp [symbol] [price]               — set or move a full position TP order
-!tp [symbol] 0                     — remove a full position TP order
-!tp [symbol] [price] [percent]     — set a partial position TP order
-```
-
-**Example 1 (full position TP order):**
-
-```
-!tp btcusdt 98000
-```
-
-Sets or moves a full position TP order for `BTCUSDT` at 98000.
-
-**Example 2 (remove full position TP order):**
-
-```
-!tp bnbusdt 0
-```
-
-Removes a full position TP order for the current `BNBUSDT` position.
-
-**Example 3 (partial position TP order):**
-
-```
-!tp ethusdt 3500 50
-```
-
-Sets a partial position TP order for `ETHUSDT` at 3500 that will close 50% of the position.
-
----
-
 ### Set leverage `!lev`
 
 ```
@@ -399,31 +203,6 @@ Parameters:
 - `symbol*` — trading pair
 - `leverage` — leverage size
 
-All variations
-
-```
-!lev [symbol] [leverage]     — sets specified leverage for the symbol
-!lev [symbol]                — sets maximum leverage for the symbol
-```
-
-**Example 1:**
-
-```
-!lev ethusdt 5.5
-```
-
-This command sets the leverage to 5.5 for the all `ETHUSDT` positions and new orders.
-
-**Example 2:**
-
-```
-!lev btcusdt
-```
-
-This command sets the leverage to maximum for the all `BTCUSDT` positions and new orders.
-
----
-
 ### Get position info `!gp`
 
 ```
@@ -437,23 +216,6 @@ Displays information about the current positions.
 Parameters:
 
 - `symbol` — trading pair
-
-All variations
-
-```
-!gp [symbol]     — shows position info for the symbol
-!gp              — shows all positions
-```
-
-**Example:**
-
-```
-!gp sandusdt
-```
-
-This command displays position details for `SANDUSDT`.
-
----
 
 ### Get limit orders `!gl`
 
@@ -469,23 +231,6 @@ Parameters:
 
 - `symbol` — trading pair
 
-All variations
-
-```
-!gl [symbol]     — shows limit orders for the symbol
-!gl              — shows all limit orders
-```
-
-**Example:**
-
-```
-!gl btcusdt
-```
-
-This command displays limit orders for `BTCUSDT`.
-
----
-
 ### Get conditional orders `!gc`
 
 ```
@@ -500,23 +245,6 @@ Parameters:
 
 - `symbol` — trading pair
 
-All variations
-
-```
-!gc [symbol]     — shows conditional orders for the symbol
-!gc              — shows all conditional orders
-```
-
-**Example:**
-
-```
-!gc hbarusdt
-```
-
-This command displays conditional orders for `HBARUSDT`.
-
----
-
 ### Get wallet balance `!bal`
 
 Displays information about your **unified trading** account balance.
@@ -527,25 +255,17 @@ It shows:
 - **Margin Balance** — balance including unrealized PnL and accrued fees.
 - **Available Balance** — balance available for opening new positions or placing orders.
 
----
-
 ### Send test API request `!ping`
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
 
----
-
-### Get instructions link `!help`
+### Get documentation link `!help`
 
 Displays a link to the usage guide and examples.
-
----
 
 ### Exit program `!exit`
 
 Stops the program.
-
----
 
 ## How to Use?
 

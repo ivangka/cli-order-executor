@@ -1,0 +1,5 @@
+```
+!exit
+```
+
+Stops the program.

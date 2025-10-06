@@ -1,0 +1,19 @@
+/* main grid */
+.md-main__inner.md-grid {
+    max-width: 95% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+/* header grid */
+.md-header__inner.md-grid {
+    max-width: 95% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}

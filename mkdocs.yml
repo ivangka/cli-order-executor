@@ -1,6 +1,8 @@
 site_name: CLI Order Executor
 theme:
   name: swan
+extra_css:
+  - stylesheets/extra.css
 
 nav:
   - Risk Management: risk-management.md

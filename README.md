@@ -80,6 +80,8 @@ With this approach, **leverage does not affect your risk** — your risk is fixe
     !help       get documentation link
     !exit       exit program
 
+---
+
 ### Open order by risk `!o`
 
 ```
@@ -103,6 +105,8 @@ Parameters:
 - `-l [price]` — limit order price
 - `-t [trigger]` — trigger price
 
+---
+
 ### Open order by quantity `!o`
 
 ```
@@ -119,6 +123,8 @@ Parameters:
 - `-buy/sell [qty]*` — side and quantity of contracts
 - `-l [price]` — limit order price
 
+---
+
 ### Close position `!x`
 
 ```
@@ -131,6 +137,8 @@ Parameters:
 
 - `symbol` — trading pair
 - `percent` — percentage of position to close
+
+---
 
 ### Cancel limit orders `!cl`
 

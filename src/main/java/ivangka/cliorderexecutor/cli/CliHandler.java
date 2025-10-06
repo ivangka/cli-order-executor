@@ -384,10 +384,10 @@ public class CliHandler {
                 }
                 break;
 
-            // get instructions link
+            // get documentation link
             case "!help":
                 if (commandParts.length == 1) {
-                    System.out.println("  Usage guide and examples: https://github.com/ivangka/cli-order-executor");
+                    System.out.println("  Usage guide and examples: https://ivangka.github.io/cli-order-executor");
                 } else {
                     throw new InvalidCommandException("Incorrect command format, try again");
                 }

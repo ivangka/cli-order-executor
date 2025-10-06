@@ -13,7 +13,7 @@ A console tool for managing perpetual futures orders on Bybit via API.
 **Table of contents:**
 
 * [Disclaimer](#disclaimer)
-* [Full documentation](#full-documentation)
+* [Full Documentation](#full-documentation)
 * [Risk Management](#risk-management)
 * [Commands](#commands)
   * [Open order by risk](#open-order-by-risk-o)

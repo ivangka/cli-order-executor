@@ -45,7 +45,7 @@ Make sure you fully understand how this software works and how futures markets o
 
 ## Full Documentation
 
-See the [Full Documentation](https://ivangka.github.io/cli-order-executor) with usage examples.
+See the *[Full Documentation](https://ivangka.github.io/cli-order-executor)* with usage examples.
 
 ## Risk Management
 

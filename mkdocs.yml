@@ -5,6 +5,7 @@ extra_css:
   - stylesheets/extra.css
 
 nav:
+  - Introduction: index.md
   - Risk Management: risk-management.md
   - Commands:
     - Open Order by Risk: open-order-by-risk.md

@@ -152,6 +152,8 @@ Parameters:
 
 - `symbol` — trading pair
 
+---
+
 ### Cancel conditional orders `!cc`
 
 ```
@@ -163,6 +165,8 @@ Cancels all open conditional orders (including stop-loss and take-profit orders)
 Parameters:
 
 - `symbol` — trading pair
+
+---
 
 ### Manage stop-loss `!sl`
 
@@ -180,6 +184,8 @@ Parameters:
 - `price*` — stop-loss price ("0" to remove a full position SL order)
 - `percent` — percentage of the existing position (for a partial position SL order)
 
+---
+
 ### Manage take-profit `!tp`
 
 ```
@@ -196,6 +202,8 @@ Parameters:
 - `price*` — take-profit price ("0" to remove a full position TP order)
 - `percent` — percentage of the existing position (for a partial position TP order)
 
+---
+
 ### Set leverage `!lev`
 
 ```
@@ -211,6 +219,8 @@ Parameters:
 - `symbol*` — trading pair
 - `leverage` — leverage size
 
+---
+
 ### Get position info `!gp`
 
 ```
@@ -224,6 +234,8 @@ Displays information about the current positions.
 Parameters:
 
 - `symbol` — trading pair
+
+---
 
 ### Get limit orders `!gl`
 
@@ -239,6 +251,8 @@ Parameters:
 
 - `symbol` — trading pair
 
+---
+
 ### Get conditional orders `!gc`
 
 ```
@@ -253,6 +267,8 @@ Parameters:
 
 - `symbol` — trading pair
 
+---
+
 ### Get wallet balance `!bal`
 
 Displays information about your **unified trading** account balance.
@@ -263,17 +279,25 @@ It shows:
 - **Margin Balance** — balance including unrealized PnL and accrued fees.
 - **Available Balance** — balance available for opening new positions or placing orders.
 
+---
+
 ### Send test API request `!ping`
 
 Sends a test request to the Bybit API to verify that the connection and credentials are working.
+
+---
 
 ### Get documentation link `!help`
 
 Displays a link to the usage guide and examples.
 
+---
+
 ### Exit program `!exit`
 
 Stops the program.
+
+---
 
 ## How to Use?
 

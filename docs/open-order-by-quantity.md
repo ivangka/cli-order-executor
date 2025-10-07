@@ -4,7 +4,7 @@
 
 *\* — required parameter*
 
-Opens a perpetual futures order based on a specific quantity of contracts rather than risk-based position sizing.
+Opens a perpetual futures order based on a specific quantity of contracts.
 
 ---
 

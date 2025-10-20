@@ -4,8 +4,6 @@
 
 Displays information about active conditional orders.
 
-> Shows only full TP/SL orders, not partial ones.
-
 ---
 
 ### Parameters

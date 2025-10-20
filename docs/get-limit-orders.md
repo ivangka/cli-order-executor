@@ -4,8 +4,6 @@
 
 Displays information about active limit orders.
 
-> Shows only full TP/SL orders, not partial ones.
-
 ---
 
 ### Parameters

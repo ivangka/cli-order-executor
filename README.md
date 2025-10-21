@@ -227,9 +227,7 @@ Parameters:
 !gp [symbol]
 ```
 
-Displays information about the current positions.
-
-It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
+Displays information about the current positions. It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
 
 Parameters:
 
@@ -243,9 +241,7 @@ Parameters:
 !gl [symbol]
 ```
 
-Displays information about active limit orders.
-
-It shows symbol name, price, quantity, side, order type, full position stop-loss and take-profit prices.
+Displays information about active limit orders. It shows symbol name, price, quantity, side, order type, full position stop-loss and take-profit prices.
 
 Parameters:
 
@@ -259,9 +255,7 @@ Parameters:
 !gc [symbol]
 ```
 
-Displays information about active conditional orders.
-
-It shows symbol name, trigger price, price, quantity, side, order type, full position stop-loss and take-profit prices.
+Displays information about active conditional orders. It shows symbol name, trigger price, price, quantity, side, order type, full position stop-loss and take-profit prices.
 
 Parameters:
 

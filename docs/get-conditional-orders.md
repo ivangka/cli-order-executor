@@ -4,6 +4,8 @@
 
 Displays information about active conditional orders.
 
+It shows symbol name, trigger price, price, quantity, side, order type, full position stop-loss and take-profit prices.
+
 ---
 
 ### Parameters

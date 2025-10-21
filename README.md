@@ -229,7 +229,7 @@ Parameters:
 
 Displays information about the current positions.
 
-> Shows only full TP/SL orders, not partial ones.
+It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
 
 Parameters:
 
@@ -245,6 +245,8 @@ Parameters:
 
 Displays information about active limit orders.
 
+It shows symbol name, price, quantity, side, order type, full position stop-loss and take-profit prices.
+
 Parameters:
 
 - `symbol` — trading pair
@@ -258,6 +260,8 @@ Parameters:
 ```
 
 Displays information about active conditional orders.
+
+It shows symbol name, trigger price, price, quantity, side, order type, full position stop-loss and take-profit prices.
 
 Parameters:
 

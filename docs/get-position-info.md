@@ -4,7 +4,7 @@
 
 Displays information about the current positions.
 
-> Shows only full TP/SL orders, not partial ones.
+It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
 
 ---
 

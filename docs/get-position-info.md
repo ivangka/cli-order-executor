@@ -2,7 +2,9 @@
 !gp [symbol]
 ```
 
-Displays information about the current positions. It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
+Displays information about the current positions.
+
+It shows symbol name, side, size, average entry price, leverage, liquidation price, full position stop-loss and take-profit prices.
 
 ---
 

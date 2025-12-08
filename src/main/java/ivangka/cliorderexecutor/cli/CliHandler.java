@@ -26,7 +26,7 @@ public class CliHandler {
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n  :: CLI Order Executor ::\n");
+        System.out.println("\n  :: CLI Order Executor (v1.19.3) ::\n");
 
         while (true) {
             System.out.print("> ");
